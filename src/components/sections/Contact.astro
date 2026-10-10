@@ -1,5 +1,7 @@
 ---
 import Social from '../Social.astro';
+import ConsentEmbed from '../ConsentEmbed.astro';
+import { mapIframe } from '../../lib/embeds';
 import info from '../../data/info.json';
 
 // Plain Google Maps iframe embed (no API key). Paste the embed src into info.json → mapsEmbed.
@@ -27,13 +29,7 @@ import info from '../../data/info.json';
     </div>
     <div class="min-w-0 flex-[2_1_480px]" data-reveal style="--i:1">
       {info.mapsEmbed ? (
-        <iframe
-          src={info.mapsEmbed}
-          title="Bistromat na mapi"
-          class="h-[360px] w-full border border-line grayscale"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-        ></iframe>
+        <ConsentEmbed html={mapIframe(360)} label="mapu" provider="Google Maps" class="h-[360px]" />
       ) : (
         <div class="placeholder h-[360px]">[Google Maps embed]</div>
       )}

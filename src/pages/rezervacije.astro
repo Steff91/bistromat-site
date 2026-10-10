@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
+import ConsentEmbed from '../components/ConsentEmbed.astro';
 import info from '../data/info.json';
 import res from '../data/reservations.json';
 
@@ -37,7 +38,7 @@ const alternatives = [
       <!-- Form or provider embed -->
       <div class="min-w-0 flex-[2_1_560px]" data-reveal>
         {info.reservationEmbed ? (
-          <Fragment set:html={info.reservationEmbed} />
+          <ConsentEmbed html={info.reservationEmbed} label="online rezervacije" provider="sistem za rezervacije" />
         ) : (
           <form
             method="POST"

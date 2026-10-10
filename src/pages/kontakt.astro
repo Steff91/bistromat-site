@@ -3,6 +3,8 @@ import Base from '../layouts/Base.astro';
 import InquiryForm from '../components/InquiryForm.astro';
 import Social from '../components/Social.astro';
 import Icon from '../components/Icon.astro';
+import ConsentEmbed from '../components/ConsentEmbed.astro';
+import { mapIframe } from '../lib/embeds';
 import info from '../data/info.json';
 
 const hasEmail = Boolean(info.email);
@@ -72,13 +74,7 @@ const shortcuts = [
     <div class="container-site flex flex-wrap gap-14 py-20">
       <div class="min-w-0 flex-[2_1_520px]" data-reveal>
         {info.mapsEmbed ? (
-          <iframe
-            src={info.mapsEmbed}
-            title="Bistromat na mapi"
-            class="h-[440px] w-full border border-line grayscale"
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-          ></iframe>
+          <ConsentEmbed html={mapIframe(440)} label="mapu" provider="Google Maps" class="h-[440px]" />
         ) : (
           <div class="placeholder h-[440px]">[Google Maps embed]</div>
         )}

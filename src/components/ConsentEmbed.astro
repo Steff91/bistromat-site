@@ -1,0 +1,32 @@
+---
+// Third-party embed (Google Maps, reservation widget…) that loads only after
+// the visitor consents to external content, or clicks "load" on this one embed.
+interface Props {
+  /** Raw HTML of the embed (iframe or provider snippet) */
+  html: string;
+  /** What is being loaded, e.g. "mapu" */
+  label: string;
+  /** Provider name shown in the notice, e.g. "Google Maps" */
+  provider: string;
+  class?: string;
+}
+const { html, label, provider, class: className = '' } = Astro.props;
+---
+
+<div class:list={['consent-embed', className]} data-consent-embed>
+  <div class="placeholder h-full min-h-[300px] flex-col gap-4 p-8 normal-case tracking-normal" data-consent-placeholder>
+    <p class="m-0 max-w-[380px] font-sans text-[14px] text-muted">
+      Ovaj sadržaj učitava {provider}, koji može postaviti kolačiće. Prikazaćemo ga tek uz vašu saglasnost.
+    </p>
+    <div class="flex flex-wrap justify-center gap-3">
+      <button type="button" class="btn btn-outline cursor-pointer bg-transparent" data-consent-load>Prikaži {label}</button>
+      <button type="button" class="cursor-pointer border-0 bg-transparent font-mono text-[13px] text-gold underline-offset-4 hover:underline" data-consent-allow>Uvek prikazuj</button>
+    </div>
+  </div>
+  <template data-consent-content><Fragment set:html={html} /></template>
+</div>
+
+<style>
+  .consent-embed { position: relative; }
+  .consent-embed :global(iframe) { display: block; width: 100%; height: 100%; min-height: 300px; border: 1px solid var(--color-line); }
+</style>

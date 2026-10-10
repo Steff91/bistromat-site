@@ -98,10 +98,28 @@ const links = [
   const toggle = header?.querySelector<HTMLButtonElement>('.menu-toggle');
   const mobileNav = document.getElementById('mobile-nav');
 
-  // Compact header after scrolling
-  const onScroll = () => header?.classList.toggle('is-scrolled', window.scrollY > 10);
-  onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
+  // Compact header after scrolling.
+  // Shrinking the header changes page height, so a single threshold makes the class
+  // flip back and forth near the top (page "vibrates"). Use separate on/off thresholds
+  // wider than the height change, and update at most once per frame.
+  const COMPACT_AT = 80;
+  const EXPAND_AT = 8;
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    if (!header) return;
+    const y = window.scrollY;
+    const compact = header.classList.contains('is-scrolled');
+    if (!compact && y > COMPACT_AT) header.classList.add('is-scrolled');
+    else if (compact && y < EXPAND_AT) header.classList.remove('is-scrolled');
+  };
+  update();
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+  }, { passive: true });
 
   // Mobile menu
   const setOpen = (open: boolean) => {

@@ -36,13 +36,30 @@ const services = defineCollection({
 });
 
 const events = defineCollection({
-  loader: file('src/content/events.json'),
+  loader: glob({ pattern: '**/*.md', base: './src/content/events' }),
   schema: z.object({
     title: z.string(),
-    date: z.string(),
-    time: z.string(),
-    description: z.string(),
+    type: z.enum(['vinyl', 'chef-table', 'wine', 'cocktail', 'guest-chef', 'other']),
+    date: z.string(), // YYYY-MM-DD
+    time: z.string(), // HH:MM
+    endTime: z.string().optional(),
+    excerpt: z.string(),
     image: z.string().optional(),
+    price: z.string().optional(),
+    seatsLeft: z.number().int().min(0).optional(),
+    booking: z.enum(['form', 'phone', 'none']).default('form'),
+    program: z.array(z.object({ time: z.string(), title: z.string() })).default([]),
+    menu: z.array(z.object({ course: z.string(), dish: z.string(), wine: z.string().optional() })).default([]),
+    guest: z
+      .object({
+        name: z.string(),
+        role: z.string(),
+        bio: z.string(),
+        image: z.string().optional(),
+        link: z.string().optional(),
+      })
+      .optional(),
+    gallery: z.array(z.object({ src: z.string().optional(), alt: z.string() })).default([]),
   }),
 });
 

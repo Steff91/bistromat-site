@@ -125,22 +125,6 @@ collections:
               - { name: q, label: Pitanje, widget: string }
               - { name: a, label: Odgovor, widget: text }
 
-      - name: events
-        label: Događaji
-        file: src/content/events.json
-        fields:
-          - name: items
-            label: Događaji
-            widget: list
-            root: true
-            fields:
-              - { name: id, label: ID (bez razmaka), widget: string }
-              - { name: title, label: Naziv, widget: string }
-              - { name: date, label: Datum, widget: string }
-              - { name: time, label: Vreme, widget: string }
-              - { name: description, label: Opis, widget: text }
-              - { name: image, label: Fotografija, widget: image, required: false }
-
       - name: reviews
         label: Recenzije
         file: src/content/reviews.json
@@ -154,6 +138,74 @@ collections:
               - { name: name, label: Ime gosta, widget: string }
               - { name: text, label: Tekst, widget: text }
               - { name: rating, label: Ocena, widget: number, value_type: int, min: 1, max: 5, default: 5 }
+
+  - name: events
+    label: Događaji
+    folder: src/content/events
+    create: true
+    slug: "{{slug}}"
+    sortable_fields: [date, title]
+    summary: "{{date}} · {{title}}"
+    fields:
+      - { name: title, label: Naziv, widget: string }
+      - name: type
+        label: Vrsta
+        widget: select
+        options:
+          - { label: Vinyl & Dine, value: vinyl }
+          - { label: "Chef's Table", value: chef-table }
+          - { label: Vinska večer, value: wine }
+          - { label: Koktel večer, value: cocktail }
+          - { label: Gostujući šef, value: guest-chef }
+          - { label: Ostalo, value: other }
+      - { name: date, label: Datum, widget: datetime, time_format: false, format: YYYY-MM-DD, date_format: DD.MM.YYYY }
+      - { name: time, label: Početak (npr. 20:00), widget: string }
+      - { name: endTime, label: Kraj (opciono), widget: string, required: false }
+      - { name: excerpt, label: Kratak opis, widget: text }
+      - { name: image, label: Fotografija, widget: image, required: false }
+      - { name: price, label: Cena, widget: string, required: false }
+      - { name: seatsLeft, label: Slobodna mesta (prazno = ne prikazuj, 0 = popunjeno), widget: number, value_type: int, required: false }
+      - name: booking
+        label: Rezervacija
+        widget: select
+        default: form
+        options:
+          - { label: Forma na stranici, value: form }
+          - { label: Telefonom, value: phone }
+          - { label: Bez rezervacije, value: none }
+      - name: program
+        label: Program
+        widget: list
+        required: false
+        fields:
+          - { name: time, label: Vreme, widget: string }
+          - { name: title, label: Stavka, widget: string }
+      - name: menu
+        label: Meni večeri
+        widget: list
+        required: false
+        fields:
+          - { name: course, label: Sled, widget: string }
+          - { name: dish, label: Jelo, widget: string }
+          - { name: wine, label: Vino, widget: string, required: false }
+      - name: guest
+        label: Gost
+        widget: object
+        required: false
+        fields:
+          - { name: name, label: Ime, widget: string }
+          - { name: role, label: Uloga (DJ, šef, vinarija…), widget: string }
+          - { name: bio, label: Biografija, widget: text }
+          - { name: image, label: Fotografija, widget: image, required: false }
+          - { name: link, label: Link, widget: string, required: false }
+      - name: gallery
+        label: Fotografije sa večeri (posle događaja)
+        widget: list
+        required: false
+        fields:
+          - { name: src, label: Fotografija, widget: image, required: false }
+          - { name: alt, label: Opis, widget: string }
+      - { name: body, label: Opis večeri, widget: markdown, required: false }
 
   - name: services
     label: Usluge

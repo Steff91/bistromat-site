@@ -1,23 +1,27 @@
 ---
-import { getCollection } from 'astro:content';
-import Placeholder from '../Placeholder.astro';
+import EventCard from '../EventCard.astro';
+import Icon from '../Icon.astro';
+import { getEventItems } from '../../lib/events';
 
-const events = await getCollection('events');
+const { upcoming } = await getEventItems();
+const next = upcoming.slice(0, 3);
 ---
 
 <section id="dogadjaji" class="container-site py-24">
-  <p class="eyebrow" data-reveal>Događaji</p>
-  <h2 class="h-section m-0 mb-11" data-reveal style="--i:1">Narednih večeri u Bistromatu</h2>
-  <div class="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-7">
-    {events.map((e, i) => (
-      <article class="border border-line" data-reveal style={`--i:${i}`}>
-        <Placeholder label="Foto događaja" src={e.data.image} alt={e.data.title} class="h-[220px] border-0" />
-        <div class="p-6">
-          <p class="m-0 text-[13px] text-gold">{e.data.date} · {e.data.time}</p>
-          <h3 class="mt-2.5 mb-2 text-lg font-semibold uppercase tracking-[0.03em]">{e.data.title}</h3>
-          <p class="m-0 font-sans text-muted">{e.data.description}</p>
-        </div>
-      </article>
-    ))}
+  <div class="mb-11 flex flex-wrap items-end justify-between gap-6">
+    <div>
+      <p class="eyebrow" data-reveal>Događaji</p>
+      <h2 class="h-section m-0" data-reveal style="--i:1">Narednih večeri u Bistromatu</h2>
+    </div>
+    <a href="/dogadjaji/" class="inline-flex items-center gap-2 text-[13px]" data-reveal style="--i:2">
+      Svi događaji <Icon name="chevron-right" size={10} />
+    </a>
   </div>
+  {next.length > 0 ? (
+    <div class="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-7">
+      {next.map((item, i) => <EventCard item={item} index={i} />)}
+    </div>
+  ) : (
+    <p class="m-0 font-sans text-muted">Novi događaji uskoro. <a href="/dogadjaji/">Pogledajte prethodne večeri</a>.</p>
+  )}
 </section>

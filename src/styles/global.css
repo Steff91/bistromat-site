@@ -28,6 +28,8 @@
 
 @layer base {
   html { scroll-behavior: smooth; }
+  /* Keep anchored sections clear of the sticky header */
+  [id] { scroll-margin-top: 88px; }
   body {
     @apply bg-ink text-paper font-mono antialiased;
     font-size: 15px;

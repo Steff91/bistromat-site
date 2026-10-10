@@ -46,7 +46,7 @@ const mobileLink = 'border-b border-line py-3.5 font-medium no-underline text-pa
         const active = l.href.startsWith('/') && !l.href.includes('#') && path.startsWith(l.href);
         return <a href={l.href} class:list={[navLink, active && '!text-gold']} aria-current={active ? 'page' : undefined}>{l.label}</a>;
       })}
-      <a href="/#rezervacija" class="btn btn-primary !px-5 !py-[11px]">Rezerviši</a>
+      <a href="/rezervacije/" class="btn btn-primary !px-5 !py-[11px]">Rezerviši</a>
     </nav>
 
     <button
@@ -122,7 +122,7 @@ const mobileLink = 'border-b border-line py-3.5 font-medium no-underline text-pa
         const active = l.href.startsWith('/') && !l.href.includes('#') && path.startsWith(l.href);
         return <a href={l.href} class:list={[mobileLink, active && '!text-gold']} aria-current={active ? 'page' : undefined}>{l.label}</a>;
       })}
-      <a href="/#rezervacija" class="btn btn-primary mt-5 justify-center">Rezerviši</a>
+      <a href="/rezervacije/" class="btn btn-primary mt-5 justify-center">Rezerviši</a>
     </div>
   </nav>
 </header>

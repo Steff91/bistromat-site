@@ -27,7 +27,7 @@ const mainPdf = menu.cards[0]?.pdf;
       </div>
       <div class="flex flex-col items-start gap-4" data-reveal style="--i:3">
         <div class="flex flex-wrap gap-3.5">
-          <a href="/#rezervacija" class="btn btn-primary">Rezerviši sto</a>
+          <a href="/rezervacije/" class="btn btn-primary">Rezerviši sto</a>
           {mainPdf && (
             <a href={mainPdf} class="btn btn-outline" download>
               <Icon name="download" size={14} /> Preuzmi PDF
@@ -95,7 +95,7 @@ const mainPdf = menu.cards[0]?.pdf;
       </div>
       <div class="flex flex-wrap items-center gap-6" data-reveal style="--i:1">
         <a href={`tel:${info.phoneHref}`} class="text-[28px] font-medium text-paper no-underline hover:text-gold">{info.phone}</a>
-        <a href="/#rezervacija" class="btn btn-primary">Rezerviši</a>
+        <a href="/rezervacije/" class="btn btn-primary">Rezerviši</a>
       </div>
     </div>
   </section>

@@ -46,6 +46,20 @@ collections:
           - { name: reservationEmbed, label: Embed kod za rezervacije, widget: text, required: false }
           - { name: formAction, label: Adresa za slanje forme (npr. Formspree), widget: string, required: false }
 
+      - name: reservations
+        label: Rezervacije
+        file: src/data/reservations.json
+        fields:
+          - { name: intro, label: Uvod, widget: text }
+          - { name: maxGuests, label: Najviše osoba online, widget: number, value_type: int, min: 1 }
+          - { name: timeSlots, label: Termini (npr. 19:30), widget: list }
+          - name: notes
+            label: Dobro je da znate
+            widget: list
+            fields:
+              - { name: title, label: Naslov, widget: string }
+              - { name: text, label: Tekst, widget: text }
+
       - name: menu
         label: Meni
         file: src/data/menu.json

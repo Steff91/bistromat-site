@@ -1,0 +1,13 @@
+{
+  "intro": "Rezervišite sto online ili nas pozovite. Rezervaciju potvrđujemo porukom ili pozivom, a za grupe veće od [N] osoba javite se direktno.",
+  "maxGuests": 8,
+  "timeSlots": ["12:00", "12:30", "13:00", "13:30", "14:00", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30"],
+  "notes": [
+    { "title": "Potvrda", "text": "Rezervacija preko forme važi kada je potvrdimo porukom ili pozivom, obično u roku od [N] sati." },
+    { "title": "Kašnjenje", "text": "Sto čuvamo [15] minuta od rezervisanog vremena. Ako kasnite, javite nam se." },
+    { "title": "Veće grupe", "text": "Za više od [N] osoba ili zakup celog restorana pogledajte privatne proslave." },
+    { "title": "Alergije", "text": "Navedite alergije i posebne zahteve u napomeni, kuhinja će se pripremiti." },
+    { "title": "Otkazivanje", "text": "Ako ne možete da dođete, javite nam najkasnije [N] sata ranije." },
+    { "title": "[Deca i ljubimci]", "text": "[Pravila za decu i kućne ljubimce.]" }
+  ]
+}

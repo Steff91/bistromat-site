@@ -9,6 +9,9 @@ import info from '../../data/info.json';
       <h2 class="h-section m-0" data-reveal style="--i:1">Rezervišite sto</h2>
       <p class="mt-5 font-sans text-muted" data-reveal style="--i:2">Pozovite nas ili rezervišite online.</p>
       <a href={`tel:${info.phoneHref}`} class="mt-4 inline-block text-[32px] font-medium text-paper no-underline hover:text-gold" data-reveal style="--i:3">{info.phone}</a>
+      <div class="mt-6" data-reveal style="--i:4">
+        <a href="/rezervacije/" class="btn btn-primary">Rezerviši online</a>
+      </div>
     </div>
     <div class="min-w-0 flex-[1_1_460px]" data-reveal style="--i:2">
       {info.reservationEmbed ? (

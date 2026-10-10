@@ -1,5 +1,9 @@
 ---
 import Placeholder from '../Placeholder.astro';
+import Icon from '../Icon.astro';
+import { nextAvailable, formatDate } from '../../lib/chef-table';
+
+const next = nextAvailable();
 ---
 
 <section id="chef-table" class="bg-paper text-ink">
@@ -8,10 +12,24 @@ import Placeholder from '../Placeholder.astro';
       <p class="eyebrow !text-gold-dark" data-reveal>Chef's Table</p>
       <h2 class="h-section m-0" data-reveal style="--i:1">Večera za šefovim stolom</h2>
       <p class="mt-5 max-w-[500px] font-sans text-body-dark" data-reveal style="--i:2">
-        Degustacioni meni u više sledova, uparen sa vinima, za mali broj gostiju. Šef vodi kroz svako jelo. [Broj sledova, cena po osobi, broj mesta]
+        Degustacioni meni u više sledova, uparen sa vinima, za mali broj gostiju. Šef vodi kroz svako jelo.
       </p>
-      <div class="mt-8" data-reveal style="--i:3">
-        <a href="/usluge/chefs-table/" class="btn btn-dark">Prijavi se za sledeći termin</a>
+
+      {next && (
+        <div class="mt-8 border-y border-[#BDB7AD] py-5" data-reveal style="--i:3">
+          <p class="m-0 text-[13px] uppercase tracking-[0.12em] text-gold-dark">Sledeći termin</p>
+          <p class="mt-2 mb-0 text-lg font-semibold">{formatDate(next.date)} · {next.time}h</p>
+          <p class="mt-1 mb-0 font-sans text-body-dark">
+            {next.theme}{next.guest && ` ${next.guest}`} · još {next.seatsLeft} mesta
+          </p>
+        </div>
+      )}
+
+      <div class="mt-8 flex flex-wrap gap-3.5" data-reveal style="--i:4">
+        <a href="/chefs-table/#termini" class="btn btn-dark">Rezerviši mesto</a>
+        <a href="/chefs-table/" class="btn btn-outline-dark">
+          Saznaj više <Icon name="chevron-right" size={11} />
+        </a>
       </div>
     </div>
     <div class="min-w-0 flex-[1_1_380px]" data-reveal style="--i:2">

@@ -61,6 +61,70 @@ collections:
               - { name: price, label: Cena, widget: string }
           - { name: allergens, label: Napomena o alergenima, widget: text }
 
+      - name: chefTable
+        label: Chef's Table
+        file: src/data/chef-table.json
+        fields:
+          - { name: intro, label: Uvod, widget: text }
+          - name: facts
+            label: Ključne informacije
+            widget: list
+            fields:
+              - { name: label, label: Oznaka, widget: string }
+              - { name: value, label: Vrednost, widget: string }
+          - name: dates
+            label: Termini
+            widget: list
+            summary: "{{fields.date}} · {{fields.theme}}"
+            fields:
+              - { name: date, label: Datum, widget: datetime, time_format: false, format: YYYY-MM-DD, date_format: DD.MM.YYYY }
+              - { name: time, label: Vreme (npr. 19:00), widget: string }
+              - { name: theme, label: Tema, widget: string }
+              - { name: guest, label: Gost (šef ili vinarija), widget: string, required: false }
+              - { name: price, label: Cena, widget: string }
+              - { name: seatsLeft, label: Slobodna mesta (0 = popunjeno), widget: number, value_type: int, min: 0 }
+          - name: timeline
+            label: Kako izgleda veče
+            widget: list
+            fields:
+              - { name: time, label: Vreme, widget: string }
+              - { name: title, label: Naslov, widget: string }
+              - { name: text, label: Tekst, widget: string }
+          - name: chef
+            label: Šef
+            widget: object
+            fields:
+              - { name: name, label: Ime, widget: string }
+              - { name: role, label: Uloga, widget: string }
+              - { name: bio, label: Biografija, widget: text }
+              - { name: quote, label: Citat, widget: text }
+              - { name: image, label: Fotografija, widget: image, required: false }
+          - name: sampleMenu
+            label: Primer menija
+            widget: object
+            fields:
+              - { name: title, label: Naslov, widget: string }
+              - name: courses
+                label: Sledovi
+                widget: list
+                fields:
+                  - { name: course, label: Sled, widget: string }
+                  - { name: dish, label: Jelo, widget: string }
+                  - { name: wine, label: Vino, widget: string }
+          - name: past
+            label: Prethodne večeri
+            widget: list
+            fields:
+              - { name: title, label: Naziv, widget: string }
+              - { name: caption, label: Opis (gost, datum), widget: string }
+              - { name: image, label: Fotografija, widget: image, required: false }
+          - name: faq
+            label: Česta pitanja
+            widget: list
+            fields:
+              - { name: q, label: Pitanje, widget: string }
+              - { name: a, label: Odgovor, widget: text }
+
       - name: events
         label: Događaji
         file: src/content/events.json

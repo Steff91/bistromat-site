@@ -3,20 +3,48 @@ import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Placeholder from '../../components/Placeholder.astro';
 import InquiryForm from '../../components/InquiryForm.astro';
+import Icon from '../../components/Icon.astro';
 
 export async function getStaticPaths() {
-  const services = await getCollection('services');
-  return services.map((s) => ({ params: { slug: s.id }, props: { service: s } }));
+  const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+  return services.map((s, i) => {
+    // Related: the next three services in order, wrapping around
+    const related = [1, 2, 3].map((k) => services[(i + k) % services.length]).filter((r) => r.id !== s.id);
+    return { params: { slug: s.id }, props: { service: s, related } };
+  });
 }
 
-const { service } = Astro.props;
+const { service, related } = Astro.props;
 const d = service.data;
 const { Content } = await render(service);
 const hasBody = Boolean(service.body?.trim());
+
+const defaultSteps = [
+  { title: 'Pošaljete upit', text: 'Datum, broj gostiju i šta želite da proslavite.' },
+  { title: 'Dogovorimo detalje', text: 'Javljamo se u roku od [24h] sa predlogom menija i ponudom.' },
+  { title: 'Potvrda termina', text: 'Termin je vaš uz avans od [X%]. Ostalo prepustite nama.' },
+];
+const steps = d.steps.length ? d.steps : defaultSteps;
+
+const faqSchema = d.faq.length
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: d.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+    }
+  : null;
+
+// Gallery fills a 4-column, 2-row grid: first photo large; with 4 photos the last one spans 2 columns.
+const gallery = d.gallery.slice(0, 5);
+const galleryLayout = (i: number) =>
+  i === 0 ? 'md:col-span-2 md:row-span-2' : gallery.length === 4 && i === 3 ? 'md:col-span-2' : '';
 ---
 
 <Base title={`${d.title} — Bistromat`} description={d.intro}>
-  <section class="container-site pt-16 pb-[88px]">
+  {faqSchema && <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+
+  <!-- Hero -->
+  <section class="container-site pt-16 pb-20">
     <p class="mb-7 text-[13px] text-dim">
       <a href="/" class="text-dim hover:text-paper">Početna</a> / <a href="/#usluge" class="text-dim hover:text-paper">Usluge</a> / {d.title}
     </p>
@@ -28,19 +56,31 @@ const hasBody = Boolean(service.body?.trim());
         </h1>
         <p class="mt-6 max-w-[500px] font-sans text-base text-muted" data-reveal style="--i:2">{d.intro}</p>
         <div class="mt-9 flex flex-wrap gap-3.5" data-reveal style="--i:3">
-          <a href="#upit" class="btn btn-primary">Proveri slobodan termin</a>
-          {d.packages.length > 0 && <a href="#paketi" class="btn btn-outline">Paketi</a>}
+          {d.form !== 'none' && <a href="#upit" class="btn btn-primary">{d.form === 'voucher' ? 'Naruči vaučer' : 'Proveri slobodan termin'}</a>}
+          {d.packages.length > 0 && <a href="#paketi" class="btn btn-outline">{d.packagesTitle}</a>}
         </div>
       </div>
       <div class="min-w-0 flex-[1_1_420px]" data-reveal style="--i:2">
         <Placeholder label={`Foto: ${d.title.toLowerCase()}`} src={d.image} alt={d.title} class="h-[480px]" />
       </div>
     </div>
+
+    {d.facts.length > 0 && (
+      <dl class="mt-14 mb-0 grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-px border border-line bg-line">
+        {d.facts.map((f, i) => (
+          <div class="bg-ink px-6 py-5" data-reveal style={`--i:${i}`}>
+            <dt class="text-xs uppercase tracking-[0.12em] text-dim">{f.label}</dt>
+            <dd class="m-0 mt-1.5 text-[17px] font-medium">{f.value}</dd>
+          </div>
+        ))}
+      </dl>
+    )}
   </section>
 
+  <!-- Occasions -->
   {d.occasions.length > 0 && (
     <section aria-label="Prilike" class="border-y border-line">
-      <div class="container-site flex flex-wrap items-center gap-x-7 gap-y-3 py-12">
+      <div class="container-site flex flex-wrap items-center gap-x-7 gap-y-3 py-10">
         <span class="text-[13px] uppercase tracking-[0.16em] text-gold">Za prilike:</span>
         {d.occasions.map((o, i) => (
           <>
@@ -52,6 +92,26 @@ const hasBody = Boolean(service.body?.trim());
     </section>
   )}
 
+  <!-- What's included -->
+  {d.included.length > 0 && (
+    <section aria-labelledby="ukljuceno" class="bg-paper text-ink">
+      <div class="container-site py-24">
+        <p class="eyebrow !text-gold-dark" data-reveal>Šta je uključeno</p>
+        <h2 id="ukljuceno" class="h-section m-0 mb-12" data-reveal style="--i:1">{d.includedTitle}</h2>
+        <div class="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-x-12 gap-y-10">
+          {d.included.map((item, i) => (
+            <div class="border-t border-[#BDB7AD] pt-5" data-reveal style={`--i:${i % 3}`}>
+              <p class="m-0 text-[13px] text-gold-dark">[0{i + 1}]</p>
+              <h3 class="mt-2 mb-2 text-[17px] font-semibold uppercase tracking-[0.03em]">{item.title}</h3>
+              <p class="m-0 font-sans text-body-dark">{item.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Optional free text -->
   {hasBody && (
     <section class="container-site py-20">
       <div class="max-w-[720px] font-sans text-base text-muted [&_h2]:font-mono [&_h2]:text-paper" data-reveal>
@@ -60,11 +120,25 @@ const hasBody = Boolean(service.body?.trim());
     </section>
   )}
 
+  <!-- Gallery -->
+  {d.gallery.length > 0 && (
+    <section aria-label="Galerija" class="container-site py-24">
+      <div class="grid auto-rows-[220px] grid-cols-1 gap-4 md:grid-cols-4">
+        {gallery.map((g, i) => (
+          <div class:list={['min-h-0', galleryLayout(i)]} data-reveal style={`--i:${i}`}>
+            <Placeholder label={g.alt} src={g.src} alt={g.alt} class="h-full" />
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- Packages -->
   {d.packages.length > 0 && (
-    <section id="paketi" class="container-site py-24">
+    <section id="paketi" class:list={['container-site py-24', d.gallery.length > 0 && 'pt-0']}>
       <p class="eyebrow" data-reveal>Paketi</p>
-      <h2 class="h-section m-0 mb-11" data-reveal style="--i:1">Izaberite format</h2>
-      <div class="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-7">
+      <h2 class="h-section m-0 mb-11" data-reveal style="--i:1">{d.packagesTitle}</h2>
+      <div class="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-7">
         {d.packages.map((p, i) => (
           <article class:list={['flex flex-col gap-4 rounded-md border p-8', p.featured ? 'border-gold' : 'border-line']} data-reveal style={`--i:${i}`}>
             <p class="m-0 text-[13px] text-gold">{p.label}</p>
@@ -73,31 +147,86 @@ const hasBody = Boolean(service.body?.trim());
               {p.features.map((f) => <li>— {f}</li>)}
             </ul>
             <p class="mt-2 mb-0 text-xl font-medium">{p.price}</p>
-            <a href="#upit" class:list={['btn mt-auto justify-center', p.featured ? 'btn-primary' : 'btn-outline']}>Izaberi</a>
+            {d.form !== 'none' && (
+              <a href="#upit" class:list={['btn mt-auto justify-center', p.featured ? 'btn-primary' : 'btn-outline']}>Izaberi</a>
+            )}
           </article>
         ))}
       </div>
     </section>
   )}
 
+  <!-- How it works -->
   <section aria-label="Kako funkcioniše" class="bg-paper text-ink">
     <div class="container-site py-[88px]">
       <p class="eyebrow !text-gold-dark" data-reveal>Kako funkcioniše</p>
       <div class="mt-7 grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-10">
-        {[
-          ['Pošaljete upit', 'Datum, termin, broj gostiju i vrsta događaja.'],
-          ['Dogovorimo detalje', 'Javljamo se u roku od [24h] sa predlogom menija i ponudom.'],
-          ['Potvrda termina', 'Termin je vaš uz avans od [X%]. Ostalo prepustite nama.'],
-        ].map(([t, x], i) => (
+        {steps.map((s, i) => (
           <div data-reveal style={`--i:${i}`}>
             <p class="m-0 text-[40px] font-medium">0{i + 1}</p>
-            <h3 class="my-2 text-[17px] font-semibold uppercase">{t}</h3>
-            <p class="m-0 font-sans text-body-dark">{x}</p>
+            <h3 class="my-2 text-[17px] font-semibold uppercase">{s.title}</h3>
+            <p class="m-0 font-sans text-body-dark">{s.text}</p>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  {d.showInquiry && <InquiryForm service={d.title} packages={d.packages.map((p) => p.name)} />}
+  <!-- FAQ -->
+  {d.faq.length > 0 && (
+    <section aria-labelledby="pitanja" class="container-site py-24">
+      <div class="flex flex-wrap gap-14">
+        <div class="min-w-0 flex-[1_1_280px]">
+          <p class="eyebrow" data-reveal>Česta pitanja</p>
+          <h2 id="pitanja" class="h-section m-0" data-reveal style="--i:1">Pre nego što pitate</h2>
+        </div>
+        <div class="min-w-0 flex-[2_1_520px] border-t border-line">
+          {d.faq.map((f, i) => (
+            <details class="faq group border-b border-line" data-reveal style={`--i:${i % 4}`}>
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-5 font-medium">
+                {f.q}
+                <span class="faq-icon inline-flex shrink-0 text-gold"><Icon name="chevron-right" size={11} /></span>
+              </summary>
+              <p class="mt-0 mb-6 max-w-[620px] font-sans text-muted">{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Inquiry -->
+  {d.form !== 'none' && (
+    <div class="border-t border-line">
+      <InquiryForm service={d.title} variant={d.form} options={d.packages.map((p) => p.name)} />
+    </div>
+  )}
+
+  <!-- Other services -->
+  <section aria-labelledby="ostale" class="border-t border-line">
+    <div class="container-site py-20">
+      <p class="eyebrow" data-reveal>Ostale usluge</p>
+      <h2 id="ostale" class="h-section m-0 mb-10" data-reveal style="--i:1">Možda vas zanima i</h2>
+      <div class="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-px border border-line bg-line">
+        {related.map((r, i) => (
+          <a href={`/usluge/${r.id}/`} class="group flex min-h-[200px] flex-col gap-3 bg-ink p-8 text-paper no-underline hover:text-paper" data-reveal style={`--i:${i}`}>
+            <span class="text-[13px] text-gold">[0{r.data.order}]</span>
+            <span class="text-lg font-semibold uppercase tracking-[0.03em]">{r.data.title}</span>
+            <span class="font-sans text-muted">{r.data.excerpt}</span>
+            <span class="mt-auto inline-flex items-center gap-2 text-[13px] text-gold">
+              Saznaj više <Icon name="chevron-right" size={11} class="transition-transform duration-200 group-hover:translate-x-1" />
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
 </Base>
+
+<style>
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq-icon { transform: rotate(90deg); transition: transform .25s ease; }
+  .faq[open] .faq-icon { transform: rotate(-90deg); }
+  .faq summary:hover { color: var(--color-gold); }
+  @media (prefers-reduced-motion: reduce) { .faq-icon { transition: none; } }
+</style>

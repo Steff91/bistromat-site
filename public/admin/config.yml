@@ -100,12 +100,35 @@ collections:
     fields:
       - { name: title, label: Naziv, widget: string }
       - { name: order, label: Redosled, widget: number, value_type: int }
-      - { name: excerpt, label: Kratak opis (kartica), widget: string }
+      - { name: excerpt, label: Kratak opis (kartica i mega meni), widget: string }
       - { name: heroTitle, label: Naslov, widget: string }
       - { name: heroTitleEm, label: Naslov – drugi red (kurziv), widget: string, required: false }
       - { name: intro, label: Uvod, widget: text }
-      - { name: image, label: Fotografija, widget: image, required: false }
+      - { name: image, label: Glavna fotografija, widget: image, required: false }
+      - name: facts
+        label: Ključne informacije
+        widget: list
+        required: false
+        fields:
+          - { name: label, label: Oznaka (npr. Kapacitet), widget: string }
+          - { name: value, label: Vrednost, widget: string }
       - { name: occasions, label: Prilike, widget: list, required: false }
+      - { name: includedTitle, label: Naslov sekcije „Šta je uključeno“, widget: string, required: false }
+      - name: included
+        label: Šta je uključeno
+        widget: list
+        required: false
+        fields:
+          - { name: title, label: Naslov, widget: string }
+          - { name: text, label: Tekst, widget: text }
+      - name: gallery
+        label: Galerija
+        widget: list
+        required: false
+        fields:
+          - { name: src, label: Fotografija, widget: image, required: false }
+          - { name: alt, label: Opis fotografije, widget: string }
+      - { name: packagesTitle, label: Naslov sekcije paketa, widget: string, required: false }
       - name: packages
         label: Paketi
         widget: list
@@ -116,5 +139,28 @@ collections:
           - { name: features, label: Stavke, widget: list }
           - { name: price, label: Cena, widget: string }
           - { name: featured, label: Istaknut, widget: boolean, default: false }
-      - { name: showInquiry, label: Prikaži formu za upit, widget: boolean, default: true }
-      - { name: body, label: Tekst, widget: markdown, required: false }
+      - name: steps
+        label: Kako funkcioniše (prazno = podrazumevani koraci)
+        widget: list
+        required: false
+        fields:
+          - { name: title, label: Korak, widget: string }
+          - { name: text, label: Tekst, widget: text }
+      - name: faq
+        label: Česta pitanja
+        widget: list
+        required: false
+        fields:
+          - { name: q, label: Pitanje, widget: string }
+          - { name: a, label: Odgovor, widget: text }
+      - name: form
+        label: Forma za upit
+        widget: select
+        default: event
+        options:
+          - { label: Događaj, value: event }
+          - { label: Ketering, value: catering }
+          - { label: Radionica, value: workshop }
+          - { label: Vaučer, value: voucher }
+          - { label: Bez forme, value: none }
+      - { name: body, label: Dodatni tekst, widget: markdown, required: false }

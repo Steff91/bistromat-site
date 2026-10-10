@@ -50,6 +50,7 @@ const schema = {
     <meta name="theme-color" content="#0F0F0F" />
     <script is:inline>document.documentElement.classList.add('js');</script>
     <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    <slot name="head" />
   </head>
   <body>
     <Header />

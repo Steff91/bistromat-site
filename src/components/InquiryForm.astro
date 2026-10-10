@@ -1,11 +1,23 @@
 ---
 import info from '../data/info.json';
 
+type Variant = 'event' | 'catering' | 'workshop' | 'voucher';
+
 interface Props {
   service: string;
-  packages?: string[];
+  variant?: Variant;
+  /** Package / workshop / voucher names offered in a select */
+  options?: string[];
 }
-const { service, packages = [] } = Astro.props;
+const { service, variant = 'event', options = [] } = Astro.props;
+
+const copy: Record<Variant, { title: string; lead: string; submit: string }> = {
+  event: { title: 'Proverite slobodan termin', lead: 'Ili pozovite direktno:', submit: 'Pošalji upit' },
+  catering: { title: 'Zatražite ponudu', lead: 'Ili pozovite direktno:', submit: 'Pošalji upit' },
+  workshop: { title: 'Prijavite se', lead: 'Za privatne termine ili pitanja pozovite:', submit: 'Pošalji prijavu' },
+  voucher: { title: 'Naručite vaučer', lead: 'Ili pozovite direktno:', submit: 'Naruči vaučer' },
+};
+const c = copy[variant];
 
 // Static site: the form posts to an external handler (e.g. Formspree) set in info.json → formAction.
 const field = 'flex flex-col gap-2 text-[13px] uppercase tracking-[0.06em] text-muted';
@@ -15,8 +27,8 @@ const input = 'rounded-md border border-[#3A3A3A] bg-[#161616] p-3.5 font-sans t
 <section id="upit" class="container-site flex flex-wrap gap-14 py-24">
   <div class="min-w-0 flex-[1_1_320px]">
     <p class="eyebrow" data-reveal>Upit · {service}</p>
-    <h2 class="h-section m-0" data-reveal style="--i:1">Proverite slobodan termin</h2>
-    <p class="mt-5 font-sans text-muted" data-reveal style="--i:2">Ili pozovite direktno:</p>
+    <h2 class="h-section m-0" data-reveal style="--i:1">{c.title}</h2>
+    <p class="mt-5 font-sans text-muted" data-reveal style="--i:2">{c.lead}</p>
     <a href={`tel:${info.phoneHref}`} class="mt-2 inline-block text-[28px] font-medium text-paper no-underline hover:text-gold" data-reveal style="--i:3">{info.phone}</a>
   </div>
 
@@ -28,30 +40,89 @@ const input = 'rounded-md border border-[#3A3A3A] bg-[#161616] p-3.5 font-sans t
     style="--i:1"
   >
     <input type="hidden" name="usluga" value={service} />
-    <label class={field}>Datum
-      <input type="date" name="datum" required class={input} />
-    </label>
-    <label class={field}>Trajanje
-      <select name="trajanje" class={input}>
-        <option>4 sata</option><option>6 sati</option><option>Ceo dan</option>
-      </select>
-    </label>
-    <label class={field}>Broj gostiju
-      <input type="number" name="gosti" min="1" placeholder="npr. 30" required class={input} />
-    </label>
-    <label class={field}>Vrsta događaja
-      <select name="vrsta" class={input}>
-        <option>Rođendan</option><option>Godišnjica</option><option>Veridba</option><option>Svadba</option>
-        <option>Krštenje / slava</option><option>Poslovni događaj</option><option>Drugo</option>
-      </select>
-    </label>
-    {packages.length > 0 && (
-      <label class={field}>Paket
-        <select name="paket" class={input}>
-          {packages.map((p) => <option>{p}</option>)}
-        </select>
-      </label>
+
+    {variant === 'event' && (
+      <>
+        <label class={field}>Datum
+          <input type="date" name="datum" required class={input} />
+        </label>
+        <label class={field}>Trajanje
+          <select name="trajanje" class={input}>
+            <option>4 sata</option><option>6 sati</option><option>Ceo dan</option>
+          </select>
+        </label>
+        <label class={field}>Broj gostiju
+          <input type="number" name="gosti" min="1" placeholder="npr. 30" required class={input} />
+        </label>
+        <label class={field}>Vrsta događaja
+          <select name="vrsta" class={input}>
+            <option>Rođendan</option><option>Godišnjica</option><option>Veridba</option><option>Svadba</option>
+            <option>Krštenje / slava</option><option>Poslovni događaj</option><option>Drugo</option>
+          </select>
+        </label>
+        {options.length > 0 && (
+          <label class={field}>Paket
+            <select name="paket" class={input}>{options.map((o) => <option>{o}</option>)}</select>
+          </label>
+        )}
+      </>
     )}
+
+    {variant === 'catering' && (
+      <>
+        <label class={field}>Datum
+          <input type="date" name="datum" required class={input} />
+        </label>
+        <label class={field}>Broj gostiju
+          <input type="number" name="gosti" min="1" placeholder="npr. 50" required class={input} />
+        </label>
+        <label class={field}>Vrsta događaja
+          <select name="vrsta" class={input}>
+            <option>Kućna proslava</option><option>Poslovni događaj</option><option>Koktel prijem</option><option>Drugo</option>
+          </select>
+        </label>
+        <label class={field}>Adresa događaja
+          <input type="text" name="adresa" autocomplete="street-address" required class={input} />
+        </label>
+      </>
+    )}
+
+    {variant === 'workshop' && (
+      <>
+        {options.length > 0 && (
+          <label class={field}>Radionica
+            <select name="radionica" class={input}>{options.map((o) => <option>{o}</option>)}</select>
+          </label>
+        )}
+        <label class={field}>Broj učesnika
+          <input type="number" name="ucesnici" min="1" placeholder="npr. 2" required class={input} />
+        </label>
+        <label class="col-span-full flex items-center gap-3 font-sans text-[15px] text-muted">
+          <input type="checkbox" name="privatni_termin" class="h-4 w-4 accent-[#D4AF6A]" />
+          Želim privatni termin za svoju grupu
+        </label>
+      </>
+    )}
+
+    {variant === 'voucher' && (
+      <>
+        {options.length > 0 && (
+          <label class={field}>Vrsta vaučera
+            <select name="vaucer" class={input}>{options.map((o) => <option>{o}</option>)}</select>
+          </label>
+        )}
+        <label class={field}>Broj vaučera
+          <input type="number" name="kolicina" min="1" value="1" required class={input} />
+        </label>
+        <label class={field}>Ime primaoca
+          <input type="text" name="primalac" class={input} />
+        </label>
+        <label class:list={[field, 'col-span-full']}>Posveta na vaučeru (opciono)
+          <input type="text" name="posveta" maxlength="120" class={input} />
+        </label>
+      </>
+    )}
+
     <label class={field}>Ime i prezime
       <input type="text" name="ime" autocomplete="name" required class={input} />
     </label>
@@ -61,11 +132,13 @@ const input = 'rounded-md border border-[#3A3A3A] bg-[#161616] p-3.5 font-sans t
     <label class={field}>Telefon
       <input type="tel" name="telefon" autocomplete="tel" class={input} />
     </label>
-    <label class:list={[field, 'col-span-full']}>Poruka (alergije, posebne želje)
-      <textarea name="poruka" rows="4" class:list={[input, 'resize-y']}></textarea>
-    </label>
+    {variant !== 'voucher' && (
+      <label class:list={[field, 'col-span-full']}>Poruka (alergije, posebne želje)
+        <textarea name="poruka" rows="4" class:list={[input, 'resize-y']}></textarea>
+      </label>
+    )}
     <div class="col-span-full">
-      <button type="submit" class="btn btn-primary cursor-pointer border-0">Pošalji upit</button>
+      <button type="submit" class="btn btn-primary cursor-pointer border-0">{c.submit}</button>
     </div>
   </form>
 </section>

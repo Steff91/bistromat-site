@@ -12,7 +12,12 @@ const services = defineCollection({
     heroTitleEm: z.string().optional(),
     intro: z.string(),
     image: z.string().optional(),
+    facts: z.array(z.object({ label: z.string(), value: z.string() })).default([]),
     occasions: z.array(z.string()).default([]),
+    includedTitle: z.string().default('Sve je spremno pre nego što stignete'),
+    included: z.array(z.object({ title: z.string(), text: z.string() })).default([]),
+    gallery: z.array(z.object({ src: z.string().optional(), alt: z.string() })).default([]),
+    packagesTitle: z.string().default('Izaberite format'),
     packages: z
       .array(
         z.object({
@@ -24,7 +29,9 @@ const services = defineCollection({
         }),
       )
       .default([]),
-    showInquiry: z.boolean().default(true),
+    steps: z.array(z.object({ title: z.string(), text: z.string() })).default([]),
+    faq: z.array(z.object({ q: z.string(), a: z.string() })).default([]),
+    form: z.enum(['event', 'catering', 'workshop', 'voucher', 'none']).default('event'),
   }),
 });
 

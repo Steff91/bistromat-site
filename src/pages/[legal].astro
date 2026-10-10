@@ -1,0 +1,64 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const pages = await getCollection('legal');
+  return pages.map((p) => ({ params: { legal: p.id }, props: { page: p } }));
+}
+
+const { page } = Astro.props;
+const { Content, headings } = await render(page);
+const toc = headings.filter((h) => h.depth === 2);
+---
+
+<Base title={`${page.data.title} — Bistromat`} description={page.data.description}>
+  <section class="container-site pt-16 pb-12">
+    <p class="mb-7 text-[13px] text-dim">
+      <a href="/" class="text-dim hover:text-paper">Početna</a> / {page.data.title}
+    </p>
+    <h1 class="m-0 font-medium leading-[1.1] tracking-[-0.02em] [font-size:clamp(30px,3.8vw,48px)]">{page.data.title}</h1>
+    <p class="mt-4 mb-0 text-[13px] text-dim">Poslednja izmena: {page.data.updated}</p>
+  </section>
+
+  <section class="border-t border-line">
+    <div class="container-site flex flex-wrap gap-14 py-16">
+      {toc.length > 2 && (
+        <nav aria-label="Sadržaj" class="min-w-0 flex-[1_1_220px] self-start lg:sticky lg:top-28">
+          <p class="eyebrow mb-4">Sadržaj</p>
+          <ol class="m-0 flex list-none flex-col gap-2.5 p-0 text-[14px]">
+            {toc.map((h) => (
+              <li><a href={`#${h.slug}`} class="text-muted no-underline hover:text-gold">{h.text}</a></li>
+            ))}
+          </ol>
+        </nav>
+      )}
+      <article class="legal min-w-0 flex-[3_1_560px] max-w-[760px] font-sans text-[16px] leading-[1.75] text-muted">
+        <Content />
+      </article>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .legal :global(h2) {
+    margin: 2.75rem 0 1rem;
+    font-family: var(--font-mono);
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    color: var(--color-paper);
+  }
+  .legal :global(h2:first-child) { margin-top: 0; }
+  .legal :global(p) { margin: 0 0 1rem; }
+  .legal :global(strong) { color: var(--color-paper); font-weight: 500; }
+  .legal :global(ul) { margin: 0 0 1.25rem; padding-left: 1.25rem; list-style: disc; }
+  .legal :global(li) { margin-bottom: .4rem; }
+  .legal :global(li::marker) { color: var(--color-gold); }
+  .legal :global(table) { width: 100%; margin: 0 0 1.5rem; border-collapse: collapse; font-size: 15px; }
+  .legal :global(th), .legal :global(td) { padding: .75rem .9rem .75rem 0; border-bottom: 1px solid var(--color-line); text-align: left; vertical-align: top; }
+  .legal :global(th) { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--color-dim); }
+  .legal :global(thead:has(th:empty)) { display: none; }
+  .legal :global(td:first-child) { color: var(--color-paper); width: 40%; }
+</style>

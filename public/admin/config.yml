@@ -301,3 +301,14 @@ collections:
           - { label: Vaučer, value: voucher }
           - { label: Bez forme, value: none }
       - { name: body, label: Dodatni tekst, widget: markdown, required: false }
+
+  - name: legal
+    label: Pravne stranice
+    folder: src/content/legal
+    create: false
+    delete: false
+    fields:
+      - { name: title, label: Naslov, widget: string }
+      - { name: description, label: Opis (za pretraživače), widget: string }
+      - { name: updated, label: Poslednja izmena, widget: string }
+      - { name: body, label: Tekst, widget: markdown }

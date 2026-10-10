@@ -72,4 +72,13 @@ const reviews = defineCollection({
   }),
 });
 
-export const collections = { services, events, reviews };
+const legal = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/legal' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    updated: z.string(),
+  }),
+});
+
+export const collections = { services, events, reviews, legal };

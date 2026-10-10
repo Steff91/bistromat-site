@@ -6,7 +6,7 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   // TODO: set the production domain
   site: 'https://bistromat.rs',
-  integrations: [sitemap()],
+  integrations: [sitemap({ filter: (page) => !page.includes('/admin/') })],
   vite: {
     plugins: [tailwindcss()],
   },

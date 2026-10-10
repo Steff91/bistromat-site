@@ -1,0 +1,36 @@
+{
+  "name": "bistromat-site",
+  "version": "1.0.0",
+  "description": "Website for Bistromat, a French open-kitchen restaurant in Belgrade. Astro + Tailwind, Sveltia CMS, deployed via GitHub Actions.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Steff91/bistromat-site.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Steff91/bistromat-site/issues"
+  },
+  "homepage": "https://github.com/Steff91/bistromat-site#readme",
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "@fontsource/ibm-plex-sans": "^5.3.0",
+    "astro": "^7.3.8"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "tailwindcss": "^4.3.3"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}

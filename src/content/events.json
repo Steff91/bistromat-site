@@ -1,0 +1,23 @@
+[
+  {
+    "id": "vinyl-dine",
+    "title": "Vinyl & Dine",
+    "date": "[DATUM]",
+    "time": "[VREME]",
+    "description": "Deep house set uz večeru. [Ime DJ-a, opis]"
+  },
+  {
+    "id": "chef-table-vinarija",
+    "title": "Chef's Table × [Vinarija]",
+    "date": "[DATUM]",
+    "time": "[VREME]",
+    "description": "Degustacija sa uparenim vinima. [Opis]"
+  },
+  {
+    "id": "koktel-vece",
+    "title": "Koktel večer",
+    "date": "[DATUM]",
+    "time": "[VREME]",
+    "description": "Signature kokteli bar majstora [Ime]. [Opis]"
+  }
+]

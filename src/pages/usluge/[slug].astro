@@ -1,0 +1,103 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Placeholder from '../../components/Placeholder.astro';
+import InquiryForm from '../../components/InquiryForm.astro';
+
+export async function getStaticPaths() {
+  const services = await getCollection('services');
+  return services.map((s) => ({ params: { slug: s.id }, props: { service: s } }));
+}
+
+const { service } = Astro.props;
+const d = service.data;
+const { Content } = await render(service);
+const hasBody = Boolean(service.body?.trim());
+---
+
+<Base title={`${d.title} — Bistromat`} description={d.intro}>
+  <section class="container-site pt-16 pb-[88px]">
+    <p class="mb-7 text-[13px] text-dim">
+      <a href="/" class="text-dim hover:text-paper">Početna</a> / <a href="/#usluge" class="text-dim hover:text-paper">Usluge</a> / {d.title}
+    </p>
+    <div class="flex flex-wrap items-center gap-14">
+      <div class="min-w-0 flex-[1_1_460px]">
+        <p class="eyebrow mb-[18px]" data-reveal>// {d.title}</p>
+        <h1 class="m-0 font-medium leading-[1.1] tracking-[-0.02em] [font-size:clamp(32px,4.4vw,56px)]" data-reveal style="--i:1">
+          {d.heroTitle}{d.heroTitleEm && (<><br /><em class="font-normal">{d.heroTitleEm}</em></>)}
+        </h1>
+        <p class="mt-6 max-w-[500px] font-sans text-base text-muted" data-reveal style="--i:2">{d.intro}</p>
+        <div class="mt-9 flex flex-wrap gap-3.5" data-reveal style="--i:3">
+          <a href="#upit" class="btn btn-primary">Proveri slobodan termin</a>
+          {d.packages.length > 0 && <a href="#paketi" class="btn btn-outline">Paketi</a>}
+        </div>
+      </div>
+      <div class="min-w-0 flex-[1_1_420px]" data-reveal style="--i:2">
+        <Placeholder label={`Foto: ${d.title.toLowerCase()}`} src={d.image} alt={d.title} class="h-[480px]" />
+      </div>
+    </div>
+  </section>
+
+  {d.occasions.length > 0 && (
+    <section aria-label="Prilike" class="border-y border-line">
+      <div class="container-site flex flex-wrap items-center gap-x-7 gap-y-3 py-12">
+        <span class="text-[13px] uppercase tracking-[0.16em] text-gold">// Za prilike:</span>
+        {d.occasions.map((o, i) => (
+          <>
+            {i > 0 && <span class="text-[#4A4A4A]" aria-hidden="true">/</span>}
+            <span>{o}</span>
+          </>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {hasBody && (
+    <section class="container-site py-20">
+      <div class="max-w-[720px] font-sans text-base text-muted [&_h2]:font-mono [&_h2]:text-paper" data-reveal>
+        <Content />
+      </div>
+    </section>
+  )}
+
+  {d.packages.length > 0 && (
+    <section id="paketi" class="container-site py-24">
+      <p class="eyebrow" data-reveal>// Paketi</p>
+      <h2 class="h-section m-0 mb-11" data-reveal style="--i:1">Izaberite format</h2>
+      <div class="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-7">
+        {d.packages.map((p, i) => (
+          <article class:list={['flex flex-col gap-4 rounded-md border p-8', p.featured ? 'border-gold' : 'border-line']} data-reveal style={`--i:${i}`}>
+            <p class="m-0 text-[13px] text-gold">{p.label}</p>
+            <h3 class="m-0 text-[22px] font-semibold uppercase tracking-[0.03em]">{p.name}</h3>
+            <ul class="m-0 flex list-none flex-col gap-2 p-0 font-sans text-muted">
+              {p.features.map((f) => <li>— {f}</li>)}
+            </ul>
+            <p class="mt-2 mb-0 text-xl font-medium">{p.price}</p>
+            <a href="#upit" class:list={['btn mt-auto justify-center', p.featured ? 'btn-primary' : 'btn-outline']}>Izaberi</a>
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <section aria-label="Kako funkcioniše" class="bg-paper text-ink">
+    <div class="container-site py-[88px]">
+      <p class="eyebrow !text-gold-dark" data-reveal>// Kako funkcioniše</p>
+      <div class="mt-7 grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-10">
+        {[
+          ['Pošaljete upit', 'Datum, termin, broj gostiju i vrsta događaja.'],
+          ['Dogovorimo detalje', 'Javljamo se u roku od [24h] sa predlogom menija i ponudom.'],
+          ['Potvrda termina', 'Termin je vaš uz avans od [X%]. Ostalo prepustite nama.'],
+        ].map(([t, x], i) => (
+          <div data-reveal style={`--i:${i}`}>
+            <p class="m-0 text-[40px] font-medium">0{i + 1}</p>
+            <h3 class="my-2 text-[17px] font-semibold uppercase">{t}</h3>
+            <p class="m-0 font-sans text-body-dark">{x}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {d.showInquiry && <InquiryForm service={d.title} packages={d.packages.map((p) => p.name)} />}
+</Base>

@@ -1,0 +1,46 @@
+---
+import { getCollection } from 'astro:content';
+import Icon from '../Icon.astro';
+import info from '../../data/info.json';
+
+// Curated Google reviews, edited in the CMS (src/content/reviews.json).
+const reviews = await getCollection('reviews');
+---
+
+<section id="utisci" class="bg-paper text-ink">
+  <div class="container-site py-24">
+    <div class="mb-11 flex flex-wrap items-end justify-between gap-6">
+      <div class="min-w-0 flex-[1_1_480px]">
+        <p class="eyebrow !text-gold-dark" data-reveal>// Utisci gostiju</p>
+        <h2 class="h-section m-0" data-reveal style="--i:1">Šta kažu naši gosti</h2>
+      </div>
+      <div class="flex items-center gap-3.5" data-reveal style="--i:2">
+        <span class="text-[40px] font-medium">{info.googleRating}</span>
+        <div>
+          <div class="flex gap-[3px] text-star" aria-label="Ocena 5 od 5">
+            {[1, 2, 3, 4, 5].map(() => <Icon name="star" size={14} />)}
+          </div>
+          <p class="m-0 mt-1 text-[13px] text-[#5A554E]">{info.googleReviewCount} recenzija na Google-u</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-7">
+      {reviews.map((r, i) => (
+        <figure class="m-0 flex flex-col gap-4 rounded-md border border-paper-dark bg-white p-8 shadow-[0_12px_30px_-20px_rgba(0,0,0,0.3)]" data-reveal style={`--i:${i}`}>
+          <div class="flex gap-[3px] text-star" aria-label={`Ocena ${r.data.rating} od 5`}>
+            {Array.from({ length: r.data.rating }).map(() => <Icon name="star" size={12} />)}
+          </div>
+          <blockquote class="m-0 font-sans text-base text-[#2A2723]">{r.data.text}</blockquote>
+          <figcaption class="mt-auto text-[13px] text-[#5A554E]">— {r.data.name} · Google</figcaption>
+        </figure>
+      ))}
+    </div>
+
+    <div class="mt-9" data-reveal>
+      <a href={info.googleProfile} class="btn btn-outline-dark" target="_blank" rel="noopener">
+        Sve recenzije na Google-u <Icon name="chevron-right" size={11} />
+      </a>
+    </div>
+  </div>
+</section>

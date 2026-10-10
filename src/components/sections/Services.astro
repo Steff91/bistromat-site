@@ -1,0 +1,52 @@
+---
+import { getCollection } from 'astro:content';
+import Icon from '../Icon.astro';
+
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<section id="usluge" class="border-t border-line">
+  <div class="container-site py-24">
+    <div class="mb-12 flex flex-wrap items-end justify-between gap-6">
+      <div class="min-w-0 flex-[1_1_520px]">
+        <p class="eyebrow" data-reveal>// Usluge</p>
+        <h2 class="h-section m-0" data-reveal style="--i:1">Restoran samo za vas</h2>
+        <p class="mt-4 max-w-[560px] font-sans text-muted" data-reveal style="--i:2">
+          Zakupite ceo Bistromat na 4–6 sati za proslavu, poslovnu večeru ili privatnu degustaciju. Meni i vino prilagođavamo prilici.
+        </p>
+      </div>
+      <a href="/usluge/privatne-proslave/#upit" class="btn btn-primary" data-reveal style="--i:2">Pošalji upit</a>
+    </div>
+
+    <div class="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-px border border-line bg-line">
+      {services.map((s, i) => (
+        <a
+          href={`/usluge/${s.id}/`}
+          class="group flex min-h-[220px] flex-col gap-3 bg-ink p-8 text-paper no-underline hover:text-paper"
+          data-reveal
+          style={`--i:${i % 4}`}
+        >
+          <span class="text-[13px] text-gold">[0{s.data.order}]</span>
+          <span class="text-lg font-semibold uppercase tracking-[0.03em]">{s.data.title}</span>
+          <span class="font-sans text-muted">{s.data.excerpt}</span>
+          <span class="mt-auto inline-flex items-center gap-2 text-[13px] text-gold">
+            Saznaj više <Icon name="chevron-right" size={11} class="transition-transform duration-200 group-hover:translate-x-1" />
+          </span>
+        </a>
+      ))}
+      <a
+        href="/usluge/privatne-proslave/#upit"
+        class="group flex min-h-[220px] flex-col gap-3 bg-gold p-8 text-ink no-underline hover:text-ink"
+        data-reveal
+        style={`--i:${services.length % 4}`}
+      >
+        <span class="text-[13px]">[+]</span>
+        <span class="text-lg font-semibold uppercase tracking-[0.03em]">Imate drugu ideju?</span>
+        <span class="font-sans">Pišite nam, osmislićemo događaj po vašoj meri.</span>
+        <span class="mt-auto inline-flex items-center gap-2 text-[13px] font-semibold">
+          Pošalji upit <Icon name="chevron-right" size={11} class="transition-transform duration-200 group-hover:translate-x-1" />
+        </span>
+      </a>
+    </div>
+  </div>
+</section>

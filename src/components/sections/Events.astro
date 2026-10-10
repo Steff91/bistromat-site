@@ -1,0 +1,23 @@
+---
+import { getCollection } from 'astro:content';
+import Placeholder from '../Placeholder.astro';
+
+const events = await getCollection('events');
+---
+
+<section id="dogadjaji" class="container-site py-24">
+  <p class="eyebrow" data-reveal>// Događaji</p>
+  <h2 class="h-section m-0 mb-11" data-reveal style="--i:1">Narednih večeri u Bistromatu</h2>
+  <div class="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-7">
+    {events.map((e, i) => (
+      <article class="border border-line" data-reveal style={`--i:${i}`}>
+        <Placeholder label="Foto događaja" src={e.data.image} alt={e.data.title} class="h-[220px] border-0" />
+        <div class="p-6">
+          <p class="m-0 text-[13px] text-gold">{e.data.date} · {e.data.time}</p>
+          <h3 class="mt-2.5 mb-2 text-lg font-semibold uppercase tracking-[0.03em]">{e.data.title}</h3>
+          <p class="m-0 font-sans text-muted">{e.data.description}</p>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>

@@ -1,0 +1,13 @@
+---
+import Icon from './Icon.astro';
+import info from '../data/info.json';
+---
+
+<div class="flex gap-5">
+  <a href={info.instagram} aria-label="Instagram" class="inline-flex h-11 min-w-6 items-center text-paper hover:text-gold" target="_blank" rel="noopener">
+    <Icon name="instagram" size={18} />
+  </a>
+  <a href={info.facebook} aria-label="Facebook" class="inline-flex h-11 min-w-6 items-center text-paper hover:text-gold" target="_blank" rel="noopener">
+    <Icon name="facebook" size={18} />
+  </a>
+</div>

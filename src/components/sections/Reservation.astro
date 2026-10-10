@@ -1,0 +1,21 @@
+---
+import info from '../../data/info.json';
+---
+
+<section id="rezervacija" class="border-t border-line">
+  <div class="container-site flex flex-wrap gap-14 py-24">
+    <div class="min-w-0 flex-[1_1_380px]">
+      <p class="eyebrow" data-reveal>// Rezervacije</p>
+      <h2 class="h-section m-0" data-reveal style="--i:1">Rezervišite sto</h2>
+      <p class="mt-5 font-sans text-muted" data-reveal style="--i:2">Pozovite nas ili rezervišite online.</p>
+      <a href={`tel:${info.phoneHref}`} class="mt-4 inline-block text-[32px] font-medium text-paper no-underline hover:text-gold" data-reveal style="--i:3">{info.phone}</a>
+    </div>
+    <div class="min-w-0 flex-[1_1_460px]" data-reveal style="--i:2">
+      {info.reservationEmbed ? (
+        <Fragment set:html={info.reservationEmbed} />
+      ) : (
+        <div class="placeholder min-h-[300px] border-dashed border-[#4A4A4A] bg-transparent p-6">[Embed skripte za rezervacije]</div>
+      )}
+    </div>
+  </div>
+</section>

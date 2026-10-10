@@ -1,0 +1,23 @@
+{
+  "name": "Bistromat",
+  "tagline": "Open Kitchen Concept",
+  "address": "Mutapova 9",
+  "city": "Beograd",
+  "phone": "063 417 063",
+  "phoneHref": "+38163417063",
+  "email": "[EMAIL]",
+  "hours": [
+    { "day": "Pon–Pet", "time": "[VREME]" },
+    { "day": "Sub–Ned", "time": "[VREME]" }
+  ],
+  "notice": "",
+  "instagram": "https://www.instagram.com/bistromat_/",
+  "facebook": "[FACEBOOK_URL]",
+  "googleProfile": "[GOOGLE_PROFILE_URL]",
+  "googleRating": "[4.X]",
+  "googleReviewCount": "[N]",
+  "mapsEmbed": "",
+  "reservationEmbed": "",
+  "menuPdf": "/uploads/meni.pdf",
+  "formAction": ""
+}

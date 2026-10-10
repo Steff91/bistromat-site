@@ -1,0 +1,44 @@
+---
+import Logo from './Logo.astro';
+
+const path = Astro.url.pathname;
+const links = [
+  { href: '/#meni', label: 'Meni' },
+  { href: '/usluge/privatne-proslave/', label: 'Usluge', match: '/usluge' },
+  { href: '/#chef-table', label: "Chef's Table" },
+  { href: '/#dogadjaji', label: 'Događaji' },
+  { href: '/#kontakt', label: 'Kontakt' },
+];
+---
+
+<header class="border-b border-line">
+  <div class="container-site flex flex-wrap items-center justify-between gap-4 py-[18px]">
+    <Logo />
+    <nav aria-label="Glavna navigacija" class="flex flex-wrap items-center gap-6 text-[13px] uppercase tracking-[0.06em]">
+      {links.map((l) => {
+        const active = l.match && path.startsWith(l.match);
+        return (
+          <a
+            href={l.href}
+            class:list={['nav-link no-underline', active ? 'text-gold' : 'text-paper hover:text-paper']}
+            aria-current={active ? 'page' : undefined}
+          >{l.label}</a>
+        );
+      })}
+      <a href="/#rezervacija" class="btn btn-primary !px-5 !py-[11px]">Rezerviši</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .nav-link {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size .3s ease;
+    padding-bottom: 2px;
+  }
+  .nav-link:hover { background-size: 100% 1px; }
+  @media (prefers-reduced-motion: reduce) { .nav-link { transition: none; } }
+</style>

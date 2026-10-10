@@ -1,0 +1,5 @@
+[
+  { "id": "review-1", "name": "[Ime gosta]", "text": "[Tekst recenzije sa Google profila]", "rating": 5 },
+  { "id": "review-2", "name": "[Ime gosta]", "text": "[Tekst recenzije sa Google profila]", "rating": 5 },
+  { "id": "review-3", "name": "[Ime gosta]", "text": "[Tekst recenzije sa Google profila]", "rating": 5 }
+]

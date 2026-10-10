@@ -20,6 +20,7 @@ collections:
           - { name: tagline, label: Slogan, widget: string }
           - { name: address, label: Adresa, widget: string }
           - { name: city, label: Grad, widget: string }
+          - { name: mapsLink, label: Link ka Google mapama, widget: string }
           - { name: phone, label: Telefon (prikaz), widget: string }
           - { name: phoneHref, label: Telefon (link, +381...), widget: string }
           - { name: email, label: Email, widget: string }
@@ -30,6 +31,12 @@ collections:
               - { name: day, label: Dani, widget: string }
               - { name: time, label: Vreme, widget: string }
           - { name: notice, label: Obaveštenje (praznici, zatvoreno…), widget: string, required: false }
+          - name: directions
+            label: Kako do nas
+            widget: list
+            fields:
+              - { name: title, label: Naslov, widget: string }
+              - { name: text, label: Tekst, widget: text }
           - { name: instagram, label: Instagram URL, widget: string }
           - { name: facebook, label: Facebook URL, widget: string }
           - { name: googleProfile, label: Google profil URL, widget: string }

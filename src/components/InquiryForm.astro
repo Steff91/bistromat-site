@@ -1,7 +1,7 @@
 ---
 import info from '../data/info.json';
 
-type Variant = 'event' | 'catering' | 'workshop' | 'voucher' | 'seats';
+type Variant = 'event' | 'catering' | 'workshop' | 'voucher' | 'seats' | 'contact';
 
 interface Props {
   service: string;
@@ -19,6 +19,7 @@ const copy: Record<Variant, { title: string; lead: string; submit: string }> = {
   workshop: { title: 'Prijavite se', lead: 'Za privatne termine ili pitanja pozovite:', submit: 'Pošalji prijavu' },
   voucher: { title: 'Naručite vaučer', lead: 'Ili pozovite direktno:', submit: 'Naruči vaučer' },
   seats: { title: 'Rezervišite mesto', lead: 'Ili pozovite direktno:', submit: 'Rezerviši mesto' },
+  contact: { title: 'Pišite nam', lead: 'Za rezervacije stola najbrže je telefonom:', submit: 'Pošalji poruku' },
 };
 const c = copy[variant];
 
@@ -29,7 +30,7 @@ const input = 'rounded-md border border-[#3A3A3A] bg-[#161616] p-3.5 font-sans t
 
 <section id="upit" class="container-site flex flex-wrap gap-14 py-24">
   <div class="min-w-0 flex-[1_1_320px]">
-    <p class="eyebrow" data-reveal>Upit · {service}</p>
+    <p class="eyebrow" data-reveal>{variant === 'contact' ? service : `Upit · ${service}`}</p>
     <h2 class="h-section m-0" data-reveal style="--i:1">{c.title}</h2>
     <p class="mt-5 font-sans text-muted" data-reveal style="--i:2">{c.lead}</p>
     <a href={`tel:${info.phoneHref}`} class="mt-2 inline-block text-[28px] font-medium text-paper no-underline hover:text-gold" data-reveal style="--i:3">{info.phone}</a>
@@ -120,6 +121,15 @@ const input = 'rounded-md border border-[#3A3A3A] bg-[#161616] p-3.5 font-sans t
       </>
     )}
 
+    {variant === 'contact' && (
+      <label class:list={[field, 'col-span-full']}>Tema
+        <select name="tema" class={input}>
+          <option>Rezervacija stola</option><option>Privatni događaj</option><option>Ketering</option>
+          <option>Poklon vaučer</option><option>Saradnja</option><option>Posao u Bistromatu</option><option>Ostalo</option>
+        </select>
+      </label>
+    )}
+
     {variant === 'voucher' && (
       <>
         {options.length > 0 && (
@@ -149,7 +159,7 @@ const input = 'rounded-md border border-[#3A3A3A] bg-[#161616] p-3.5 font-sans t
       <input type="tel" name="telefon" autocomplete="tel" class={input} />
     </label>
     {variant !== 'voucher' && (
-      <label class:list={[field, 'col-span-full']}>Poruka (alergije, posebne želje)
+      <label class:list={[field, 'col-span-full']}>{variant === 'contact' ? 'Poruka' : 'Poruka (alergije, posebne želje)'}
         <textarea name="poruka" rows="4" class:list={[input, 'resize-y']}></textarea>
       </label>
     )}

@@ -3,6 +3,7 @@
   "tagline": "Open Kitchen Concept",
   "address": "Mutapova 9",
   "city": "Beograd",
+  "mapsLink": "https://www.google.com/maps/search/?api=1&query=Bistromat%2C+Mutapova+9%2C+Beograd",
   "phone": "063 417 063",
   "phoneHref": "+38163417063",
   "email": "[EMAIL]",
@@ -17,6 +18,20 @@
     }
   ],
   "notice": "",
+  "directions": [
+    {
+      "title": "Parking",
+      "text": "[Gde se najlakše parkira u blizini: zona, garaža, ulica.]"
+    },
+    {
+      "title": "Javni prevoz",
+      "text": "[Najbliže stanice i linije autobusa/trolejbusa.]"
+    },
+    {
+      "title": "Ulaz",
+      "text": "[Kako se pronalazi ulaz, pristupačnost za kolica.]"
+    }
+  ],
   "instagram": "https://www.instagram.com/bistromat_/",
   "facebook": "[FACEBOOK_URL]",
   "googleProfile": "[GOOGLE_PROFILE_URL]",

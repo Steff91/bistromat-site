@@ -1,14 +1,21 @@
 ---
+import { getCollection } from 'astro:content';
 import Logo from './Logo.astro';
+import Icon from './Icon.astro';
 
 const path = Astro.url.pathname;
-const links = [
-  { href: '/#meni', label: 'Meni' },
-  { href: '/usluge/privatne-proslave/', label: 'Usluge', match: '/usluge' },
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+const servicesActive = path.startsWith('/usluge');
+
+const linksBefore = [{ href: '/#meni', label: 'Meni' }];
+const linksAfter = [
   { href: '/#chef-table', label: "Chef's Table" },
   { href: '/#dogadjaji', label: 'Događaji' },
   { href: '/#kontakt', label: 'Kontakt' },
 ];
+
+const navLink = 'nav-link font-medium no-underline text-paper hover:text-paper';
+const mobileLink = 'border-b border-line py-3.5 font-medium no-underline text-paper hover:text-gold';
 ---
 
 <header id="site-header" class="sticky top-0 z-50 border-b border-line bg-ink/90 backdrop-blur-md">
@@ -16,16 +23,23 @@ const links = [
     <Logo />
 
     <nav aria-label="Glavna navigacija" class="hidden items-center gap-6 text-[13px] uppercase tracking-[0.06em] lg:flex">
-      {links.map((l) => {
-        const active = l.match && path.startsWith(l.match);
-        return (
-          <a
-            href={l.href}
-            class:list={['nav-link font-medium no-underline', active ? 'text-gold' : 'text-paper hover:text-paper']}
-            aria-current={active ? 'page' : undefined}
-          >{l.label}</a>
-        );
-      })}
+      {linksBefore.map((l) => <a href={l.href} class={navLink}>{l.label}</a>)}
+
+      <button
+        type="button"
+        id="mega-trigger"
+        class:list={[
+          'nav-link inline-flex cursor-pointer items-center gap-1.5 border-0 bg-transparent p-0 font-mono text-[13px] font-medium uppercase tracking-[0.06em]',
+          servicesActive ? 'text-gold' : 'text-paper',
+        ]}
+        aria-expanded="false"
+        aria-controls="mega-menu"
+      >
+        Usluge
+        <span class="mega-chevron inline-flex"><Icon name="chevron-right" size={9} /></span>
+      </button>
+
+      {linksAfter.map((l) => <a href={l.href} class={navLink}>{l.label}</a>)}
       <a href="/#rezervacija" class="btn btn-primary !px-5 !py-[11px]">Rezerviši</a>
     </nav>
 
@@ -40,18 +54,62 @@ const links = [
     </button>
   </div>
 
-  <nav id="mobile-nav" aria-label="Mobilna navigacija" class="mobile-nav border-t border-line lg:hidden" hidden>
-    <div class="container-site flex flex-col py-4 text-sm uppercase tracking-[0.06em]">
-      {links.map((l) => {
-        const active = l.match && path.startsWith(l.match);
-        return (
+  <!-- Desktop mega menu -->
+  <div id="mega-menu" class="mega absolute inset-x-0 top-full hidden border-b border-line bg-ink lg:block" data-open="false">
+    <div class="container-site py-10">
+      <div class="grid grid-cols-4 gap-px border border-line bg-line">
+        {services.map((s) => (
           <a
-            href={l.href}
-            class:list={['border-b border-line py-3.5 font-medium no-underline', active ? 'text-gold' : 'text-paper hover:text-gold']}
-            aria-current={active ? 'page' : undefined}
-          >{l.label}</a>
-        );
-      })}
+            href={`/usluge/${s.id}/`}
+            class:list={[
+              'group flex flex-col gap-2 bg-ink p-6 no-underline transition-colors hover:bg-ink-soft',
+              path.startsWith(`/usluge/${s.id}`) ? 'text-gold' : 'text-paper hover:text-paper',
+            ]}
+          >
+            <span class="text-xs text-gold">[0{s.data.order}]</span>
+            <span class="text-sm font-semibold uppercase tracking-[0.03em]">{s.data.title}</span>
+            <span class="font-sans text-[13px] leading-snug text-muted">{s.data.excerpt}</span>
+          </a>
+        ))}
+        <a href="/usluge/privatne-proslave/#upit" class="group flex flex-col gap-2 bg-gold p-6 text-ink no-underline hover:text-ink">
+          <span class="text-xs">[+]</span>
+          <span class="text-sm font-semibold uppercase tracking-[0.03em]">Imate drugu ideju?</span>
+          <span class="mt-auto inline-flex items-center gap-2 text-[13px] font-semibold">
+            Pošalji upit <Icon name="chevron-right" size={10} class="transition-transform duration-200 group-hover:translate-x-1" />
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <nav id="mobile-nav" aria-label="Mobilna navigacija" class="mobile-nav max-h-[calc(100dvh-80px)] overflow-y-auto border-t border-line lg:hidden" hidden>
+    <div class="container-site flex flex-col py-4 text-sm uppercase tracking-[0.06em]">
+      {linksBefore.map((l) => <a href={l.href} class={mobileLink}>{l.label}</a>)}
+
+      <button
+        type="button"
+        id="mobile-services-toggle"
+        class:list={[
+          'flex w-full cursor-pointer items-center justify-between border-0 border-b border-solid border-line bg-transparent px-0 py-3.5 text-left font-mono text-sm font-medium uppercase tracking-[0.06em]',
+          servicesActive ? 'text-gold' : 'text-paper',
+        ]}
+        aria-expanded="false"
+        aria-controls="mobile-services"
+      >
+        Usluge
+        <span class="mega-chevron inline-flex"><Icon name="chevron-right" size={10} /></span>
+      </button>
+      <div id="mobile-services" class="flex flex-col border-b border-line py-2 pl-4" hidden>
+        {services.map((s) => (
+          <a
+            href={`/usluge/${s.id}/`}
+            class:list={['py-2.5 text-[13px] no-underline', path.startsWith(`/usluge/${s.id}`) ? 'text-gold' : 'text-muted hover:text-gold']}
+          >{s.data.title}</a>
+        ))}
+      </div>
+
+      {linksAfter.map((l) => <a href={l.href} class={mobileLink}>{l.label}</a>)}
       <a href="/#rezervacija" class="btn btn-primary mt-5 justify-center">Rezerviši</a>
     </div>
   </nav>
@@ -69,7 +127,24 @@ const links = [
     transition: background-size .3s ease;
     padding-bottom: 2px;
   }
-  .nav-link:hover { background-size: 100% 1px; }
+  .nav-link:hover, #mega-trigger[aria-expanded='true'] { background-size: 100% 1px; }
+
+  .mega-chevron { transform: rotate(90deg); transition: transform .25s ease; }
+  [aria-expanded="true"] .mega-chevron { transform: rotate(-90deg); }
+
+  /* Mega menu open/close */
+  .mega {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity .2s ease, transform .2s ease, visibility 0s linear .2s;
+  }
+  .mega[data-open='true'] {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition: opacity .2s ease, transform .2s ease, visibility 0s;
+  }
 
   /* Hamburger → X */
   .menu-icon, .menu-icon span, .menu-icon::before, .menu-icon::after {
@@ -80,25 +155,23 @@ const links = [
   .menu-icon::before, .menu-icon::after { content: ''; position: absolute; left: 0; }
   .menu-icon::before { top: -7px; }
   .menu-icon::after { top: 7px; }
-  [aria-expanded='true'] .menu-icon span { opacity: 0; }
-  [aria-expanded='true'] .menu-icon::before { transform: translateY(7px) rotate(45deg); }
-  [aria-expanded='true'] .menu-icon::after { transform: translateY(-7px) rotate(-45deg); }
+  .menu-toggle[aria-expanded='true'] .menu-icon span { opacity: 0; }
+  .menu-toggle[aria-expanded='true'] .menu-icon::before { transform: translateY(7px) rotate(45deg); }
+  .menu-toggle[aria-expanded='true'] .menu-icon::after { transform: translateY(-7px) rotate(-45deg); }
 
   .mobile-nav:not([hidden]) { animation: drop .25s ease; }
   @keyframes drop { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
 
   @media (prefers-reduced-motion: reduce) {
-    .header-inner, .nav-link, .menu-icon, .menu-icon span, .menu-icon::before, .menu-icon::after { transition: none; }
+    .header-inner, .nav-link, .mega, .mega-chevron, .menu-icon, .menu-icon span, .menu-icon::before, .menu-icon::after { transition: none; }
     .mobile-nav:not([hidden]) { animation: none; }
   }
 </style>
 
 <script>
   const header = document.getElementById('site-header');
-  const toggle = header?.querySelector<HTMLButtonElement>('.menu-toggle');
-  const mobileNav = document.getElementById('mobile-nav');
 
-  // Compact header after scrolling.
+  // --- Compact header after scrolling ---
   // Shrinking the header changes page height, so a single threshold makes the class
   // flip back and forth near the top (page "vibrates"). Use separate on/off thresholds
   // wider than the height change, and update at most once per frame.
@@ -121,15 +194,67 @@ const links = [
     }
   }, { passive: true });
 
-  // Mobile menu
-  const setOpen = (open: boolean) => {
+  // --- Desktop mega menu ---
+  const trigger = document.getElementById('mega-trigger');
+  const mega = document.getElementById('mega-menu');
+  let closeTimer: number | undefined;
+
+  const setMega = (open: boolean) => {
+    if (!trigger || !mega) return;
+    window.clearTimeout(closeTimer);
+    trigger.setAttribute('aria-expanded', String(open));
+    mega.dataset.open = String(open);
+  };
+  const scheduleClose = () => {
+    window.clearTimeout(closeTimer);
+    closeTimer = window.setTimeout(() => setMega(false), 180);
+  };
+
+  trigger?.addEventListener('click', () => setMega(trigger.getAttribute('aria-expanded') !== 'true'));
+  if (window.matchMedia('(hover: hover)').matches) {
+    [trigger, mega].forEach((el) => {
+      el?.addEventListener('mouseenter', () => setMega(true));
+      el?.addEventListener('mouseleave', scheduleClose);
+    });
+  }
+  mega?.addEventListener('focusout', (e) => {
+    const next = (e as FocusEvent).relatedTarget as Node | null;
+    if (!next || (!mega.contains(next) && next !== trigger)) setMega(false);
+  });
+  document.addEventListener('click', (e) => {
+    const t = e.target as Node;
+    if (mega?.dataset.open === 'true' && !mega.contains(t) && !trigger?.contains(t)) setMega(false);
+  });
+
+  // --- Mobile menu ---
+  const toggle = header?.querySelector<HTMLButtonElement>('.menu-toggle');
+  const mobileNav = document.getElementById('mobile-nav');
+  const setMobile = (open: boolean) => {
     if (!toggle || !mobileNav) return;
     toggle.setAttribute('aria-expanded', String(open));
     toggle.setAttribute('aria-label', open ? 'Zatvori meni' : 'Otvori meni');
     mobileNav.hidden = !open;
   };
-  toggle?.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
-  mobileNav?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
-  window.matchMedia('(min-width: 64rem)').addEventListener('change', (e) => { if (e.matches) setOpen(false); });
+  toggle?.addEventListener('click', () => setMobile(toggle.getAttribute('aria-expanded') !== 'true'));
+  mobileNav?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMobile(false)));
+
+  const servicesToggle = document.getElementById('mobile-services-toggle');
+  const servicesList = document.getElementById('mobile-services');
+  servicesToggle?.addEventListener('click', () => {
+    if (!servicesList) return;
+    const open = servicesToggle.getAttribute('aria-expanded') !== 'true';
+    servicesToggle.setAttribute('aria-expanded', String(open));
+    servicesList.hidden = !open;
+  });
+
+  // --- Shared ---
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    if (mega?.dataset.open === 'true') { setMega(false); trigger?.focus(); }
+    setMobile(false);
+  });
+  window.matchMedia('(min-width: 64rem)').addEventListener('change', (e) => {
+    if (e.matches) setMobile(false);
+    else setMega(false);
+  });
 </script>

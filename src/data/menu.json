@@ -1,0 +1,17 @@
+{
+  "season": "[Jesen 2026]",
+  "updated": "[DATUM]",
+  "intro": "Klasici francuske kuhinje i sezonska jela, spremljena u otvorenoj kuhinji. Meni menjamo sa sezonom, a šef svake nedelje dodaje nekoliko jela van karte. [Kratak opis menija]",
+  "cards": [
+    { "label": "Meni", "pdf": "/uploads/meni.pdf" },
+    { "label": "Vinska karta", "pdf": "/uploads/vinska-karta.pdf" },
+    { "label": "Kokteli", "pdf": "/uploads/kokteli.pdf" }
+  ],
+  "highlights": [
+    { "name": "Escargots de Bourgogne", "description": "[Puževi u puteru sa belim lukom i peršunom]", "price": "[CENA]" },
+    { "name": "[Jelo 2]", "description": "[Kratak opis jela]", "price": "[CENA]" },
+    { "name": "[Jelo 3]", "description": "[Kratak opis jela]", "price": "[CENA]" },
+    { "name": "[Jelo 4]", "description": "[Kratak opis jela]", "price": "[CENA]" }
+  ],
+  "allergens": "Za informacije o alergenima i posebnim zahtevima (vegetarijanski, bez glutena) obratite se osoblju. Rado ćemo prilagoditi jelo."
+}

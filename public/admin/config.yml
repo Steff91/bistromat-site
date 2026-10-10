@@ -13,7 +13,7 @@ collections:
     label: Podešavanja
     files:
       - name: info
-        label: Kontakt, radno vreme i meni
+        label: Kontakt i radno vreme
         file: src/data/info.json
         fields:
           - { name: name, label: Naziv, widget: string }
@@ -30,7 +30,6 @@ collections:
               - { name: day, label: Dani, widget: string }
               - { name: time, label: Vreme, widget: string }
           - { name: notice, label: Obaveštenje (praznici, zatvoreno…), widget: string, required: false }
-          - { name: menuPdf, label: Meni (PDF), widget: file, media_folder: /public/uploads, public_folder: /uploads }
           - { name: instagram, label: Instagram URL, widget: string }
           - { name: facebook, label: Facebook URL, widget: string }
           - { name: googleProfile, label: Google profil URL, widget: string }
@@ -39,6 +38,28 @@ collections:
           - { name: mapsEmbed, label: Google Maps embed URL, widget: string, required: false }
           - { name: reservationEmbed, label: Embed kod za rezervacije, widget: text, required: false }
           - { name: formAction, label: Adresa za slanje forme (npr. Formspree), widget: string, required: false }
+
+      - name: menu
+        label: Meni
+        file: src/data/menu.json
+        fields:
+          - { name: season, label: Sezona, widget: string }
+          - { name: updated, label: Ažurirano, widget: string }
+          - { name: intro, label: Uvod, widget: text }
+          - name: cards
+            label: Karte (PDF)
+            widget: list
+            fields:
+              - { name: label, label: Naziv taba, widget: string }
+              - { name: pdf, label: PDF, widget: file, media_folder: /public/uploads, public_folder: /uploads }
+          - name: highlights
+            label: Preporuka šefa
+            widget: list
+            fields:
+              - { name: name, label: Jelo, widget: string }
+              - { name: description, label: Opis, widget: string }
+              - { name: price, label: Cena, widget: string }
+          - { name: allergens, label: Napomena o alergenima, widget: text }
 
       - name: events
         label: Događaji

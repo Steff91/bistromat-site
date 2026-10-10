@@ -7,8 +7,14 @@
   "phoneHref": "+38163417063",
   "email": "[EMAIL]",
   "hours": [
-    { "day": "Pon–Pet", "time": "[VREME]" },
-    { "day": "Sub–Ned", "time": "[VREME]" }
+    {
+      "day": "Pon–Pet",
+      "time": "[VREME]"
+    },
+    {
+      "day": "Sub–Ned",
+      "time": "[VREME]"
+    }
   ],
   "notice": "",
   "instagram": "https://www.instagram.com/bistromat_/",
@@ -18,6 +24,5 @@
   "googleReviewCount": "[N]",
   "mapsEmbed": "",
   "reservationEmbed": "",
-  "menuPdf": "/uploads/meni.pdf",
   "formAction": ""
 }

@@ -1,0 +1,102 @@
+---
+import Base from '../layouts/Base.astro';
+import MenuFlipbook from '../components/MenuFlipbook.astro';
+import Icon from '../components/Icon.astro';
+import menu from '../data/menu.json';
+import info from '../data/info.json';
+
+const mainPdf = menu.cards[0]?.pdf;
+---
+
+<Base
+  title="Meni — Bistromat, francuska kuhinja · Beograd"
+  description="Sezonski meni restorana Bistromat: klasici francuske kuhinje iz otvorene kuhinje, vinska karta i kokteli. Mutapova 9, Beograd."
+>
+  <!-- Intro -->
+  <section class="container-site pt-16 pb-20">
+    <p class="mb-7 text-[13px] text-dim">
+      <a href="/" class="text-dim hover:text-paper">Početna</a> / Meni
+    </p>
+    <div class="flex flex-wrap items-end justify-between gap-10">
+      <div class="min-w-0 flex-[1_1_560px]">
+        <p class="eyebrow mb-[18px]" data-reveal>Meni · {menu.season}</p>
+        <h1 class="m-0 font-medium leading-[1.1] tracking-[-0.02em] [font-size:clamp(32px,4.4vw,56px)]" data-reveal style="--i:1">
+          Sezonski meni,<br /><em class="font-normal">klasično francuski.</em>
+        </h1>
+        <p class="mt-6 max-w-[560px] font-sans text-base text-muted" data-reveal style="--i:2">{menu.intro}</p>
+      </div>
+      <div class="flex flex-col items-start gap-4" data-reveal style="--i:3">
+        <div class="flex flex-wrap gap-3.5">
+          <a href="/#rezervacija" class="btn btn-primary">Rezerviši sto</a>
+          {mainPdf && (
+            <a href={mainPdf} class="btn btn-outline" download>
+              <Icon name="download" size={14} /> Preuzmi PDF
+            </a>
+          )}
+        </div>
+        <p class="m-0 text-[13px] text-dim">Ažurirano: {menu.updated}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Flipbook -->
+  <section aria-label="Pregled menija" class="border-y border-line bg-ink-deep py-20">
+    <div class="container-site">
+      <MenuFlipbook />
+    </div>
+  </section>
+
+  <!-- Chef's picks (HTML for SEO) -->
+  <section aria-labelledby="preporuka" class="bg-paper text-ink">
+    <div class="container-site py-24">
+      <p class="eyebrow !text-gold-dark" data-reveal>Preporuka šefa</p>
+      <h2 id="preporuka" class="h-section m-0 mb-11" data-reveal style="--i:1">Jela koja ne treba propustiti</h2>
+      <div class="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-x-12 gap-y-8">
+        {menu.highlights.map((d, i) => (
+          <div class="border-b border-dashed border-[#BDB7AD] pb-6" data-reveal style={`--i:${i % 4}`}>
+            <div class="flex items-baseline justify-between gap-4">
+              <h3 class="m-0 text-lg font-semibold">{d.name}</h3>
+              <span class="shrink-0 font-sans text-body-dark">{d.price}</span>
+            </div>
+            <p class="mt-2 mb-0 font-sans text-[15px] text-body-dark">{d.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Practical info -->
+  <section aria-label="Informacije" class="container-site py-20">
+    <div class="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-10">
+      <div data-reveal>
+        <p class="eyebrow mb-2">Alergeni</p>
+        <p class="m-0 font-sans text-muted">{menu.allergens}</p>
+      </div>
+      <div data-reveal style="--i:1">
+        <p class="eyebrow mb-2">Sezonski meni</p>
+        <p class="m-0 font-sans text-muted">Karta prati sezonu, a šef svake nedelje dodaje jela van menija. Pitajte osoblje za današnju ponudu.</p>
+      </div>
+      <div data-reveal style="--i:2">
+        <p class="eyebrow mb-2">Privatni događaji</p>
+        <p class="m-0 font-sans text-muted">Za proslave i poslovne večere meni sastavljamo po vašoj meri.</p>
+        <a href="/usluge/privatne-proslave/" class="mt-3 inline-flex items-center gap-2 text-[13px]">
+          Proslave i događaji <Icon name="chevron-right" size={10} />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="border-t border-line">
+    <div class="container-site flex flex-wrap items-center justify-between gap-8 py-16">
+      <div data-reveal>
+        <h2 class="h-section m-0">Rezervišite sto</h2>
+        <p class="mt-3 mb-0 font-sans text-muted">Pozovite nas ili rezervišite online.</p>
+      </div>
+      <div class="flex flex-wrap items-center gap-6" data-reveal style="--i:1">
+        <a href={`tel:${info.phoneHref}`} class="text-[28px] font-medium text-paper no-underline hover:text-gold">{info.phone}</a>
+        <a href="/#rezervacija" class="btn btn-primary">Rezerviši</a>
+      </div>
+    </div>
+  </section>
+</Base>

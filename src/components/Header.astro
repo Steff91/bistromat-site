@@ -7,7 +7,7 @@ const path = Astro.url.pathname;
 const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
 const servicesActive = path.startsWith('/usluge');
 
-const linksBefore = [{ href: '/#meni', label: 'Meni' }];
+const linksBefore = [{ href: '/meni/', label: 'Meni' }];
 const linksAfter = [
   { href: '/#chef-table', label: "Chef's Table" },
   { href: '/#dogadjaji', label: 'Događaji' },
@@ -23,7 +23,10 @@ const mobileLink = 'border-b border-line py-3.5 font-medium no-underline text-pa
     <Logo />
 
     <nav aria-label="Glavna navigacija" class="hidden items-center gap-6 text-[13px] uppercase tracking-[0.06em] lg:flex">
-      {linksBefore.map((l) => <a href={l.href} class={navLink}>{l.label}</a>)}
+      {linksBefore.map((l) => {
+        const active = path.startsWith(l.href);
+        return <a href={l.href} class:list={[navLink, active && '!text-gold']} aria-current={active ? 'page' : undefined}>{l.label}</a>;
+      })}
 
       <button
         type="button"
@@ -85,7 +88,10 @@ const mobileLink = 'border-b border-line py-3.5 font-medium no-underline text-pa
   <!-- Mobile menu -->
   <nav id="mobile-nav" aria-label="Mobilna navigacija" class="mobile-nav max-h-[calc(100dvh-80px)] overflow-y-auto border-t border-line lg:hidden" hidden>
     <div class="container-site flex flex-col py-4 text-sm uppercase tracking-[0.06em]">
-      {linksBefore.map((l) => <a href={l.href} class={mobileLink}>{l.label}</a>)}
+      {linksBefore.map((l) => {
+        const active = path.startsWith(l.href);
+        return <a href={l.href} class:list={[mobileLink, active && '!text-gold']} aria-current={active ? 'page' : undefined}>{l.label}</a>;
+      })}
 
       <button
         type="button"

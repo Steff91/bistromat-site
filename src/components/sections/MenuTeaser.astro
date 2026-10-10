@@ -1,14 +1,11 @@
 ---
 import Placeholder from '../Placeholder.astro';
 import Icon from '../Icon.astro';
-import info from '../../data/info.json';
+import menu from '../../data/menu.json';
 
-// Highlighted dishes stay in HTML (indexable), the full menu is the PDF.
-const highlights = [
-  { name: 'Escargots de Bourgogne', price: '[CENA]' },
-  { name: '[Jelo 2]', price: '[CENA]' },
-  { name: '[Jelo 3]', price: '[CENA]' },
-];
+// Highlighted dishes stay in HTML (indexable); the full menu lives on /meni/ as a flipbook.
+const highlights = menu.highlights.slice(0, 3);
+const mainPdf = menu.cards[0]?.pdf;
 ---
 
 <section id="meni" class="container-site flex flex-wrap items-center gap-14 py-24">
@@ -27,13 +24,14 @@ const highlights = [
       ))}
     </ul>
     <div class="mt-8 flex flex-wrap gap-3.5" data-reveal style="--i:5">
-      <!-- TODO: open PDF flipbook (PDF.js + StPageFlip) in a modal -->
-      <a href={info.menuPdf} class="btn btn-primary" data-menu-flipbook>
+      <a href="/meni/" class="btn btn-primary">
         <Icon name="book-open" size={14} /> Prelistaj meni
       </a>
-      <a href={info.menuPdf} class="btn btn-outline" download>
-        <Icon name="download" size={14} /> Preuzmi PDF
-      </a>
+      {mainPdf && (
+        <a href={mainPdf} class="btn btn-outline" download>
+          <Icon name="download" size={14} /> Preuzmi PDF
+        </a>
+      )}
     </div>
   </div>
 </section>

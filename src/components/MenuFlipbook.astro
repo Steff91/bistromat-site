@@ -1,0 +1,188 @@
+---
+// PDF flipbook: renders PDF pages with PDF.js and flips them with StPageFlip.
+// Libraries load only when the viewer scrolls into view.
+import Icon from './Icon.astro';
+import menu from '../data/menu.json';
+
+const cards = menu.cards.filter((c) => c.pdf);
+---
+
+<div class="flipbook" data-flipbook>
+  {cards.length > 1 && (
+    <div role="tablist" aria-label="Karte" class="mb-8 flex flex-wrap justify-center gap-2">
+      {cards.map((c, i) => (
+        <button
+          type="button"
+          role="tab"
+          aria-selected={i === 0 ? 'true' : 'false'}
+          data-pdf={c.pdf}
+          class="fb-tab cursor-pointer rounded-md border border-line bg-transparent px-5 py-2.5 font-mono text-[13px] font-medium uppercase tracking-[0.06em] text-muted"
+        >{c.label}</button>
+      ))}
+    </div>
+  )}
+
+  <div class="relative mx-auto max-w-[1000px]">
+    <div class="fb-stage mx-auto" data-pdf={cards[0]?.pdf}></div>
+    <div class="fb-status absolute inset-0 flex items-center justify-center text-[13px] uppercase tracking-[0.08em] text-dim">
+      Učitavanje menija…
+    </div>
+  </div>
+
+  <div class="mt-8 flex items-center justify-center gap-6">
+    <button type="button" class="fb-prev inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-md border border-line bg-transparent text-paper hover:border-gold hover:text-gold" aria-label="Prethodna strana">
+      <Icon name="chevron-right" size={12} class="rotate-180" />
+    </button>
+    <span class="fb-counter min-w-[72px] text-center text-[13px] text-muted" aria-live="polite">– / –</span>
+    <button type="button" class="fb-next inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-md border border-line bg-transparent text-paper hover:border-gold hover:text-gold" aria-label="Sledeća strana">
+      <Icon name="chevron-right" size={12} />
+    </button>
+  </div>
+  <p class="mt-4 mb-0 text-center font-sans text-[13px] text-dim">
+    Prevucite ugao stranice ili koristite strelice. Ne prikazuje se?{' '}
+    <a class="fb-open" href={cards[0]?.pdf} target="_blank" rel="noopener">Otvorite PDF</a>.
+  </p>
+</div>
+
+<style>
+  .fb-tab[aria-selected='true'] { border-color: var(--color-gold); color: var(--color-gold); }
+  .fb-tab:hover { color: var(--color-paper); }
+  .fb-stage { min-height: 420px; }
+  .fb-stage :global(.stf__parent) { margin: 0 auto; }
+  .fb-stage :global(.stf__item) { box-shadow: 0 20px 40px -24px rgba(0, 0, 0, 0.8); }
+  .flipbook[data-ready] .fb-status { display: none; }
+  .fb-prev:disabled, .fb-next:disabled { opacity: .35; cursor: default; }
+</style>
+
+<script>
+  type PageFlipCtor = typeof import('page-flip/dist/js/page-flip.module.js').PageFlip;
+
+  const root = document.querySelector<HTMLElement>('[data-flipbook]');
+
+  async function loadLibs() {
+    const [pdfjs, workerUrl, pf] = await Promise.all([
+      // Legacy build: polyfilled for older (but still current) browsers
+      import('pdfjs-dist/legacy/build/pdf.mjs'),
+      import('pdfjs-dist/legacy/build/pdf.worker.min.mjs?url'),
+      // @ts-ignore — the package ships no type declarations
+      import('page-flip/dist/js/page-flip.module.js'),
+    ]);
+    pdfjs.GlobalWorkerOptions.workerSrc = workerUrl.default;
+    return { pdfjs, PageFlip: pf.PageFlip as PageFlipCtor };
+  }
+
+  async function renderPages(pdfjs: typeof import('pdfjs-dist/legacy/build/pdf.mjs'), url: string) {
+    const pdf = await pdfjs.getDocument({ url }).promise;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const images: string[] = [];
+    let ratio = 1.414;
+    for (let n = 1; n <= pdf.numPages; n++) {
+      const page = await pdf.getPage(n);
+      const base = page.getViewport({ scale: 1 });
+      if (n === 1) ratio = base.height / base.width;
+      const viewport = page.getViewport({ scale: (520 * dpr) / base.width });
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.floor(viewport.width);
+      canvas.height = Math.floor(viewport.height);
+      const ctx = canvas.getContext('2d')!;
+      await page.render({ canvas, canvasContext: ctx, viewport }).promise;
+      images.push(canvas.toDataURL('image/jpeg', 0.88));
+    }
+    return { images, ratio };
+  }
+
+  async function init(el: HTMLElement) {
+    const stage = el.querySelector<HTMLElement>('.fb-stage')!;
+    const status = el.querySelector<HTMLElement>('.fb-status')!;
+    const counter = el.querySelector<HTMLElement>('.fb-counter')!;
+    const prev = el.querySelector<HTMLButtonElement>('.fb-prev')!;
+    const next = el.querySelector<HTMLButtonElement>('.fb-next')!;
+    const openLink = el.querySelector<HTMLAnchorElement>('.fb-open');
+    const tabs = el.querySelectorAll<HTMLButtonElement>('.fb-tab');
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let libs: Awaited<ReturnType<typeof loadLibs>>;
+    try {
+      libs = await loadLibs();
+    } catch (err) {
+      console.error('[flipbook] libraries failed to load', err);
+      status.textContent = 'Meni trenutno nije moguće prikazati.';
+      return;
+    }
+
+    let book: InstanceType<PageFlipCtor> | null = null;
+    let total = 0;
+
+    const setCounter = (i: number) => {
+      counter.textContent = `${i + 1} / ${total}`;
+      prev.disabled = i <= 0;
+      next.disabled = i >= total - 1;
+    };
+
+    async function open(url: string) {
+      el.removeAttribute('data-ready');
+      status.textContent = 'Učitavanje menija…';
+      book?.destroy();
+      book = null;
+      stage.innerHTML = '';
+      if (openLink) openLink.href = url;
+
+      try {
+        const { images, ratio } = await renderPages(libs.pdfjs, url);
+        const host = document.createElement('div');
+        stage.appendChild(host);
+        total = images.length;
+        book = new libs.PageFlip(host, {
+          width: 460,
+          height: Math.round(460 * ratio),
+          size: 'stretch',
+          minWidth: 260,
+          maxWidth: 500,
+          minHeight: Math.round(260 * ratio),
+          maxHeight: Math.round(500 * ratio),
+          showCover: true,
+          usePortrait: true,
+          mobileScrollSupport: false,
+          maxShadowOpacity: 0.35,
+          flippingTime: reduce ? 1 : 800,
+        });
+        book.loadFromImages(images);
+        book.on('flip', (e: { data: number }) => setCounter(e.data));
+        setCounter(0);
+        el.setAttribute('data-ready', '');
+      } catch (err) {
+        console.error('[flipbook] failed to render', url, err);
+        status.textContent = 'Meni trenutno nije moguće prikazati.';
+      }
+    }
+
+    prev.addEventListener('click', () => book?.flipPrev());
+    next.addEventListener('click', () => book?.flipNext());
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') book?.flipPrev();
+      if (e.key === 'ArrowRight') book?.flipNext();
+    });
+    tabs.forEach((tab) =>
+      tab.addEventListener('click', () => {
+        if (tab.getAttribute('aria-selected') === 'true') return;
+        tabs.forEach((t) => t.setAttribute('aria-selected', String(t === tab)));
+        open(tab.dataset.pdf!);
+      }),
+    );
+
+    open(stage.dataset.pdf!);
+  }
+
+  if (root) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          io.disconnect();
+          init(root);
+        }
+      },
+      { rootMargin: '300px 0px' },
+    );
+    io.observe(root);
+  }
+</script>

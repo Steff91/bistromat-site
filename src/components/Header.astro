@@ -21,7 +21,7 @@ const links = [
         return (
           <a
             href={l.href}
-            class:list={['nav-link no-underline', active ? 'text-gold' : 'text-paper hover:text-paper']}
+            class:list={['nav-link font-medium no-underline', active ? 'text-gold' : 'text-paper hover:text-paper']}
             aria-current={active ? 'page' : undefined}
           >{l.label}</a>
         );
@@ -47,7 +47,7 @@ const links = [
         return (
           <a
             href={l.href}
-            class:list={['border-b border-line py-3.5 no-underline', active ? 'text-gold' : 'text-paper hover:text-gold']}
+            class:list={['border-b border-line py-3.5 font-medium no-underline', active ? 'text-gold' : 'text-paper hover:text-gold']}
             aria-current={active ? 'page' : undefined}
           >{l.label}</a>
         );

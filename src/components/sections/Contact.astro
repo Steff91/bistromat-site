@@ -9,18 +9,18 @@ import info from '../../data/info.json';
   <div class="container-site flex flex-wrap gap-14 py-24">
     <div class="flex min-w-0 flex-[1_1_320px] flex-col gap-6">
       <div data-reveal>
-        <p class="eyebrow mb-1.5">// Adresa</p>
+        <p class="eyebrow mb-1.5">Adresa</p>
         <p class="m-0 text-xl">{info.address}, {info.city}</p>
       </div>
       <div data-reveal style="--i:1">
-        <p class="eyebrow mb-1.5">// Radno vreme</p>
+        <p class="eyebrow mb-1.5">Radno vreme</p>
         <p class="m-0 font-sans text-muted">
           {info.hours.map((h) => (<>{h.day}: {h.time}<br /></>))}
         </p>
         {info.notice && <p class="mt-2 font-sans text-gold">{info.notice}</p>}
       </div>
       <div data-reveal style="--i:2">
-        <p class="eyebrow mb-1.5">// Kontakt</p>
+        <p class="eyebrow mb-1.5">Kontakt</p>
         <p class="m-0"><a href={`tel:${info.phoneHref}`}>{info.phone}</a></p>
         <div class="mt-1.5"><Social /></div>
       </div>

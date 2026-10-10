@@ -22,7 +22,7 @@ const hasBody = Boolean(service.body?.trim());
     </p>
     <div class="flex flex-wrap items-center gap-14">
       <div class="min-w-0 flex-[1_1_460px]">
-        <p class="eyebrow mb-[18px]" data-reveal>// {d.title}</p>
+        <p class="eyebrow mb-[18px]" data-reveal>{d.title}</p>
         <h1 class="m-0 font-medium leading-[1.1] tracking-[-0.02em] [font-size:clamp(32px,4.4vw,56px)]" data-reveal style="--i:1">
           {d.heroTitle}{d.heroTitleEm && (<><br /><em class="font-normal">{d.heroTitleEm}</em></>)}
         </h1>
@@ -41,7 +41,7 @@ const hasBody = Boolean(service.body?.trim());
   {d.occasions.length > 0 && (
     <section aria-label="Prilike" class="border-y border-line">
       <div class="container-site flex flex-wrap items-center gap-x-7 gap-y-3 py-12">
-        <span class="text-[13px] uppercase tracking-[0.16em] text-gold">// Za prilike:</span>
+        <span class="text-[13px] uppercase tracking-[0.16em] text-gold">Za prilike:</span>
         {d.occasions.map((o, i) => (
           <>
             {i > 0 && <span class="text-[#4A4A4A]" aria-hidden="true">/</span>}
@@ -62,7 +62,7 @@ const hasBody = Boolean(service.body?.trim());
 
   {d.packages.length > 0 && (
     <section id="paketi" class="container-site py-24">
-      <p class="eyebrow" data-reveal>// Paketi</p>
+      <p class="eyebrow" data-reveal>Paketi</p>
       <h2 class="h-section m-0 mb-11" data-reveal style="--i:1">Izaberite format</h2>
       <div class="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-7">
         {d.packages.map((p, i) => (
@@ -82,7 +82,7 @@ const hasBody = Boolean(service.body?.trim());
 
   <section aria-label="Kako funkcioniše" class="bg-paper text-ink">
     <div class="container-site py-[88px]">
-      <p class="eyebrow !text-gold-dark" data-reveal>// Kako funkcioniše</p>
+      <p class="eyebrow !text-gold-dark" data-reveal>Kako funkcioniše</p>
       <div class="mt-7 grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-10">
         {[
           ['Pošaljete upit', 'Datum, termin, broj gostiju i vrsta događaja.'],

@@ -40,6 +40,7 @@ collections:
           - { name: instagram, label: Instagram URL, widget: string }
           - { name: facebook, label: Facebook URL, widget: string }
           - { name: googleProfile, label: Google profil URL, widget: string }
+          - { name: googleReviewLink, label: Link za ostavljanje recenzije, widget: string, required: false }
           - { name: googleRating, label: Google ocena, widget: string }
           - { name: googleReviewCount, label: Broj Google recenzija, widget: string }
           - { name: mapsEmbed, label: Google Maps embed URL, widget: string, required: false }

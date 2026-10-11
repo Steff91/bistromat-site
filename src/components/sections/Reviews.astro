@@ -37,10 +37,15 @@ const reviews = await getCollection('reviews');
       ))}
     </div>
 
-    <div class="mt-9" data-reveal>
+    <div class="mt-9 flex flex-wrap items-center gap-3.5" data-reveal>
       <a href={info.googleProfile} class="btn btn-outline-dark" target="_blank" rel="noopener">
         Sve recenzije na Google-u <Icon name="chevron-right" size={11} />
       </a>
+      {info.googleReviewLink && (
+        <a href={info.googleReviewLink} class="btn btn-dark" target="_blank" rel="noopener">
+          <Icon name="star" size={12} /> Ostavite recenziju
+        </a>
+      )}
     </div>
   </div>
 </section>

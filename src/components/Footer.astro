@@ -13,12 +13,12 @@ const year = new Date().getFullYear();
   <div class="container-site grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-10 pt-[72px] pb-12">
     <div class="flex flex-col gap-4">
       <Logo mode="wordmark" class="[&_svg]:h-7" />
-      <p class="m-0 font-sans text-sm text-dim">Francuska kuhinja u otvorenoj kuhinji.<br />{info.landmark}.</p>
+      <p class="m-0 font-sans text-[15px] text-dim">Francuska kuhinja u otvorenoj kuhinji.<br />{info.landmark}.</p>
       <Social />
     </div>
 
-    <nav aria-label="Navigacija u podnožju" class="flex flex-col gap-2.5 text-sm">
-      <p class="m-0 mb-1.5 text-xs uppercase tracking-[0.16em] text-gold">Navigacija</p>
+    <nav aria-label="Navigacija u podnožju" class="flex flex-col gap-2.5 text-[15px]">
+      <p class="m-0 mb-1.5 text-[13px] uppercase tracking-[0.16em] text-gold">Navigacija</p>
       <a href="/meni/" class="text-[#D9D4CC] no-underline hover:text-paper">Meni</a>
       <a href="/chefs-table/" class="text-[#D9D4CC] no-underline hover:text-paper">Chef's Table</a>
       <a href="/dogadjaji/" class="text-[#D9D4CC] no-underline hover:text-paper">Događaji</a>
@@ -26,15 +26,15 @@ const year = new Date().getFullYear();
       <a href="/kontakt/" class="text-[#D9D4CC] no-underline hover:text-paper">Kontakt</a>
     </nav>
 
-    <nav aria-label="Usluge" class="flex flex-col gap-2.5 text-sm">
-      <p class="m-0 mb-1.5 text-xs uppercase tracking-[0.16em] text-gold">Usluge</p>
+    <nav aria-label="Usluge" class="flex flex-col gap-2.5 text-[15px]">
+      <p class="m-0 mb-1.5 text-[13px] uppercase tracking-[0.16em] text-gold">Usluge</p>
       {services.map((s) => (
         <a href={`/usluge/${s.id}/`} class="text-[#D9D4CC] no-underline hover:text-paper">{s.data.title}</a>
       ))}
     </nav>
 
-    <div class="flex flex-col gap-2.5 text-sm">
-      <p class="m-0 mb-1.5 text-xs uppercase tracking-[0.16em] text-gold">Kontakt</p>
+    <div class="flex flex-col gap-2.5 text-[15px]">
+      <p class="m-0 mb-1.5 text-[13px] uppercase tracking-[0.16em] text-gold">Kontakt</p>
       <span class="text-[#D9D4CC]">{info.address}, {info.city}</span>
       <a href={`tel:${info.phoneHref}`} class="text-[#D9D4CC] no-underline hover:text-paper">{info.phone}</a>
       <span class="font-sans text-dim">
@@ -48,7 +48,7 @@ const year = new Date().getFullYear();
   </div>
 
   <div class="border-t border-[#1F1F1F]">
-    <div class="container-site flex flex-wrap justify-between gap-3 py-5 text-xs text-dim">
+    <div class="container-site flex flex-wrap justify-between gap-3 py-5 text-[13px] text-dim">
       <span>© {year} Bistromat. Sva prava zadržana.</span>
       <span>
         <a href="/privatnost/" class="text-dim hover:text-paper">Politika privatnosti</a>{' · '}

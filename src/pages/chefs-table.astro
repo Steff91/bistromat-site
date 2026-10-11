@@ -24,7 +24,7 @@ const faqSchema = {
 
   <!-- Hero -->
   <section class="container-site pt-16 pb-20">
-    <p class="mb-7 text-[13px] text-dim">
+    <p class="mb-7 text-[14px] text-dim">
       <a href="/" class="text-dim hover:text-paper">Početna</a> / Chef's Table
     </p>
     <div class="flex flex-wrap items-center gap-14">
@@ -47,7 +47,7 @@ const faqSchema = {
     <dl class="mt-14 mb-0 grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-px border border-line bg-line">
       {ct.facts.map((f, i) => (
         <div class="bg-ink px-6 py-5" data-reveal style={`--i:${i}`}>
-          <dt class="text-xs uppercase tracking-[0.12em] text-dim">{f.label}</dt>
+          <dt class="text-[13px] uppercase tracking-[0.12em] text-dim">{f.label}</dt>
           <dd class="m-0 mt-1.5 text-[17px] font-medium">{f.value}</dd>
         </div>
       ))}
@@ -68,14 +68,14 @@ const faqSchema = {
               <li class="flex flex-wrap items-center gap-x-10 gap-y-3 border-b border-line py-6" data-date={d.date} data-reveal style={`--i:${i % 4}`}>
                 <div class="min-w-[220px] flex-[0_0_auto]">
                   <p class="m-0 text-lg font-semibold">{formatDate(d.date)}</p>
-                  <p class="m-0 mt-1 text-[13px] text-dim">{d.time}h</p>
+                  <p class="m-0 mt-1 text-[14px] text-dim">{d.time}h</p>
                 </div>
                 <div class="min-w-0 flex-[1_1_260px]">
                   <p class="m-0 font-medium">{d.theme} {d.guest && <span class="text-gold">{d.guest}</span>}</p>
-                  <p class="m-0 mt-1 font-sans text-[15px] text-muted">{d.price}</p>
+                  <p class="m-0 mt-1 font-sans text-[16px] text-muted">{d.price}</p>
                 </div>
                 <div class="flex flex-[0_0_auto] items-center gap-6">
-                  <span class:list={['text-[13px] uppercase tracking-[0.08em]', full ? 'text-dim' : 'text-gold']}>
+                  <span class:list={['text-[14px] uppercase tracking-[0.08em]', full ? 'text-dim' : 'text-gold']}>
                     {full ? 'Popunjeno' : `Još ${d.seatsLeft} mesta`}
                   </span>
                   {full ? (
@@ -138,15 +138,15 @@ const faqSchema = {
         <ol class="mt-12 mb-0 list-none p-0">
           {ct.sampleMenu.courses.map((c, i) => (
             <li class="grid grid-cols-1 gap-1 border-b border-dashed border-[#3A3A3A] py-5 sm:grid-cols-[140px_1fr]" data-reveal style={`--i:${i % 4}`}>
-              <span class="text-[13px] uppercase tracking-[0.1em] text-gold">{c.course}</span>
+              <span class="text-[14px] uppercase tracking-[0.1em] text-gold">{c.course}</span>
               <span>
                 <span class="block font-medium">{c.dish}</span>
-                <span class="mt-1 block font-sans text-[14px] text-dim">Uz: {c.wine}</span>
+                <span class="mt-1 block font-sans text-[15px] text-dim">Uz: {c.wine}</span>
               </span>
             </li>
           ))}
         </ol>
-        <p class="mt-6 mb-0 text-center font-sans text-[14px] text-dim">Meni se menja za svako veče. Ovo je primer jedne od prethodnih večeri.</p>
+        <p class="mt-6 mb-0 text-center font-sans text-[15px] text-dim">Meni se menja za svako veče. Ovo je primer jedne od prethodnih večeri.</p>
       </div>
     </div>
   </section>
@@ -160,8 +160,8 @@ const faqSchema = {
         <figure class="m-0" data-reveal style={`--i:${i}`}>
           <Placeholder label="Foto večeri" src={p.image || undefined} alt={p.title} class="aspect-[4/5]" />
           <figcaption class="mt-3">
-            <span class="block text-[15px] font-semibold uppercase tracking-[0.03em]">{p.title}</span>
-            <span class="mt-1 block text-[13px] text-dim">{p.caption}</span>
+            <span class="block text-[16px] font-semibold uppercase tracking-[0.03em]">{p.title}</span>
+            <span class="mt-1 block text-[14px] text-dim">{p.caption}</span>
           </figcaption>
         </figure>
       ))}

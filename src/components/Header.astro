@@ -22,7 +22,7 @@ const mobileLink = 'border-b border-line py-3.5 font-medium no-underline text-pa
   <div class="header-inner container-site flex items-center justify-between gap-4 py-[18px]">
     <Logo />
 
-    <nav aria-label="Glavna navigacija" class="hidden items-center gap-6 text-[13px] uppercase tracking-[0.06em] lg:flex">
+    <nav aria-label="Glavna navigacija" class="hidden items-center gap-6 text-[14px] uppercase tracking-[0.06em] lg:flex">
       {linksBefore.map((l) => {
         const active = path.startsWith(l.href);
         return <a href={l.href} class:list={[navLink, active && '!text-gold']} aria-current={active ? 'page' : undefined}>{l.label}</a>;
@@ -32,7 +32,7 @@ const mobileLink = 'border-b border-line py-3.5 font-medium no-underline text-pa
         type="button"
         id="mega-trigger"
         class:list={[
-          'nav-link inline-flex cursor-pointer items-center gap-1.5 border-0 bg-transparent p-0 font-mono text-[13px] font-medium uppercase tracking-[0.06em]',
+          'nav-link inline-flex cursor-pointer items-center gap-1.5 border-0 bg-transparent p-0 font-mono text-[14px] font-medium uppercase tracking-[0.06em]',
           servicesActive ? 'text-gold' : 'text-paper',
         ]}
         aria-expanded="false"
@@ -72,15 +72,15 @@ const mobileLink = 'border-b border-line py-3.5 font-medium no-underline text-pa
               path.startsWith(`/usluge/${s.id}`) ? 'text-gold' : 'text-paper hover:text-paper',
             ]}
           >
-            <span class="text-xs text-gold">[0{s.data.order}]</span>
-            <span class="text-sm font-semibold uppercase tracking-[0.03em]">{s.data.title}</span>
-            <span class="font-sans text-[13px] leading-snug text-muted">{s.data.excerpt}</span>
+            <span class="text-[13px] text-gold">[0{s.data.order}]</span>
+            <span class="text-[15px] font-semibold uppercase tracking-[0.03em]">{s.data.title}</span>
+            <span class="font-sans text-[14px] leading-snug text-muted">{s.data.excerpt}</span>
           </a>
         ))}
         <a href="/usluge/privatne-proslave/#upit" class="group flex flex-col gap-2 bg-gold p-6 text-ink no-underline hover:text-ink">
-          <span class="text-xs">[+]</span>
-          <span class="text-sm font-semibold uppercase tracking-[0.03em]">Imate drugu ideju?</span>
-          <span class="mt-auto inline-flex items-center gap-2 text-[13px] font-semibold">
+          <span class="text-[13px]">[+]</span>
+          <span class="text-[15px] font-semibold uppercase tracking-[0.03em]">Imate drugu ideju?</span>
+          <span class="mt-auto inline-flex items-center gap-2 text-[14px] font-semibold">
             Pošalji upit <Icon name="chevron-right" size={10} class="transition-transform duration-200 group-hover:translate-x-1" />
           </span>
         </a>
@@ -90,7 +90,7 @@ const mobileLink = 'border-b border-line py-3.5 font-medium no-underline text-pa
 
   <!-- Mobile menu -->
   <nav id="mobile-nav" aria-label="Mobilna navigacija" class="mobile-nav max-h-[calc(100dvh-80px)] overflow-y-auto border-t border-line lg:hidden" hidden>
-    <div class="container-site flex flex-col py-4 text-sm uppercase tracking-[0.06em]">
+    <div class="container-site flex flex-col py-4 text-[15px] uppercase tracking-[0.06em]">
       {linksBefore.map((l) => {
         const active = path.startsWith(l.href);
         return <a href={l.href} class:list={[mobileLink, active && '!text-gold']} aria-current={active ? 'page' : undefined}>{l.label}</a>;
@@ -100,7 +100,7 @@ const mobileLink = 'border-b border-line py-3.5 font-medium no-underline text-pa
         type="button"
         id="mobile-services-toggle"
         class:list={[
-          'flex w-full cursor-pointer items-center justify-between border-0 border-b border-solid border-line bg-transparent px-0 py-3.5 text-left font-mono text-sm font-medium uppercase tracking-[0.06em]',
+          'flex w-full cursor-pointer items-center justify-between border-0 border-b border-solid border-line bg-transparent px-0 py-3.5 text-left font-mono text-[15px] font-medium uppercase tracking-[0.06em]',
           servicesActive ? 'text-gold' : 'text-paper',
         ]}
         aria-expanded="false"
@@ -113,7 +113,7 @@ const mobileLink = 'border-b border-line py-3.5 font-medium no-underline text-pa
         {services.map((s) => (
           <a
             href={`/usluge/${s.id}/`}
-            class:list={['py-2.5 text-[13px] no-underline', path.startsWith(`/usluge/${s.id}`) ? 'text-gold' : 'text-muted hover:text-gold']}
+            class:list={['py-2.5 text-[14px] no-underline', path.startsWith(`/usluge/${s.id}`) ? 'text-gold' : 'text-muted hover:text-gold']}
           >{s.data.title}</a>
         ))}
       </div>

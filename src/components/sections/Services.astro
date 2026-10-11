@@ -27,10 +27,10 @@ const services = (await getCollection('services')).sort((a, b) => a.data.order -
           data-reveal
           style={`--i:${i % 4}`}
         >
-          <span class="text-[13px] text-gold">[0{s.data.order}]</span>
+          <span class="text-[14px] text-gold">[0{s.data.order}]</span>
           <span class="text-lg font-semibold uppercase tracking-[0.03em]">{s.data.title}</span>
           <span class="font-sans text-muted">{s.data.excerpt}</span>
-          <span class="mt-auto inline-flex items-center gap-2 text-[13px] text-gold">
+          <span class="mt-auto inline-flex items-center gap-2 text-[14px] text-gold">
             Saznaj više <Icon name="chevron-right" size={11} class="transition-transform duration-200 group-hover:translate-x-1" />
           </span>
         </a>
@@ -41,10 +41,10 @@ const services = (await getCollection('services')).sort((a, b) => a.data.order -
         data-reveal
         style={`--i:${services.length % 4}`}
       >
-        <span class="text-[13px]">[+]</span>
+        <span class="text-[14px]">[+]</span>
         <span class="text-lg font-semibold uppercase tracking-[0.03em]">Imate drugu ideju?</span>
         <span class="font-sans">Pišite nam, osmislićemo događaj po vašoj meri.</span>
-        <span class="mt-auto inline-flex items-center gap-2 text-[13px] font-semibold">
+        <span class="mt-auto inline-flex items-center gap-2 text-[14px] font-semibold">
           Pošalji upit <Icon name="chevron-right" size={11} class="transition-transform duration-200 group-hover:translate-x-1" />
         </span>
       </a>

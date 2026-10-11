@@ -16,7 +16,7 @@ const cards = menu.cards.filter((c) => c.pdf);
           role="tab"
           aria-selected={i === 0 ? 'true' : 'false'}
           data-pdf={c.pdf}
-          class="fb-tab cursor-pointer rounded-md border border-line bg-transparent px-5 py-2.5 font-mono text-[13px] font-medium uppercase tracking-[0.06em] text-muted"
+          class="fb-tab cursor-pointer rounded-md border border-line bg-transparent px-5 py-2.5 font-mono text-[14px] font-medium uppercase tracking-[0.06em] text-muted"
         >{c.label}</button>
       ))}
     </div>
@@ -24,7 +24,7 @@ const cards = menu.cards.filter((c) => c.pdf);
 
   <div class="relative mx-auto max-w-[1000px]">
     <div class="fb-stage mx-auto" data-pdf={cards[0]?.pdf}></div>
-    <div class="fb-status absolute inset-0 flex items-center justify-center text-[13px] uppercase tracking-[0.08em] text-dim">
+    <div class="fb-status absolute inset-0 flex items-center justify-center text-[14px] uppercase tracking-[0.08em] text-dim">
       Učitavanje menija…
     </div>
   </div>
@@ -33,12 +33,12 @@ const cards = menu.cards.filter((c) => c.pdf);
     <button type="button" class="fb-prev inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-md border border-line bg-transparent text-paper hover:border-gold hover:text-gold" aria-label="Prethodna strana">
       <Icon name="chevron-right" size={12} class="rotate-180" />
     </button>
-    <span class="fb-counter min-w-[72px] text-center text-[13px] text-muted" aria-live="polite">– / –</span>
+    <span class="fb-counter min-w-[72px] text-center text-[14px] text-muted" aria-live="polite">– / –</span>
     <button type="button" class="fb-next inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-md border border-line bg-transparent text-paper hover:border-gold hover:text-gold" aria-label="Sledeća strana">
       <Icon name="chevron-right" size={12} />
     </button>
   </div>
-  <p class="mt-4 mb-0 text-center font-sans text-[13px] text-dim">
+  <p class="mt-4 mb-0 text-center font-sans text-[14px] text-dim">
     Prevucite ugao stranice ili koristite strelice. Ne prikazuje se?{' '}
     <a class="fb-open" href={cards[0]?.pdf} target="_blank" rel="noopener">Otvorite PDF</a>.
   </p>

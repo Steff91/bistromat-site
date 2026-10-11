@@ -45,7 +45,7 @@ const galleryLayout = (i: number) =>
 
   <!-- Hero -->
   <section class="container-site pt-16 pb-20">
-    <p class="mb-7 text-[13px] text-dim">
+    <p class="mb-7 text-[14px] text-dim">
       <a href="/" class="text-dim hover:text-paper">Početna</a> / <a href="/#usluge" class="text-dim hover:text-paper">Usluge</a> / {d.title}
     </p>
     <div class="flex flex-wrap items-center gap-14">
@@ -69,7 +69,7 @@ const galleryLayout = (i: number) =>
       <dl class="mt-14 mb-0 grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-px border border-line bg-line">
         {d.facts.map((f, i) => (
           <div class="bg-ink px-6 py-5" data-reveal style={`--i:${i}`}>
-            <dt class="text-xs uppercase tracking-[0.12em] text-dim">{f.label}</dt>
+            <dt class="text-[13px] uppercase tracking-[0.12em] text-dim">{f.label}</dt>
             <dd class="m-0 mt-1.5 text-[17px] font-medium">{f.value}</dd>
           </div>
         ))}
@@ -81,7 +81,7 @@ const galleryLayout = (i: number) =>
   {d.occasions.length > 0 && (
     <section aria-label="Prilike" class="border-y border-line">
       <div class="container-site flex flex-wrap items-center gap-x-7 gap-y-3 py-10">
-        <span class="text-[13px] uppercase tracking-[0.16em] text-gold">Za prilike:</span>
+        <span class="text-[14px] uppercase tracking-[0.16em] text-gold">Za prilike:</span>
         {d.occasions.map((o, i) => (
           <>
             {i > 0 && <span class="text-[#4A4A4A]" aria-hidden="true">/</span>}
@@ -101,7 +101,7 @@ const galleryLayout = (i: number) =>
         <div class="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-x-12 gap-y-10">
           {d.included.map((item, i) => (
             <div class="border-t border-[#BDB7AD] pt-5" data-reveal style={`--i:${i % 3}`}>
-              <p class="m-0 text-[13px] text-gold-dark">[0{i + 1}]</p>
+              <p class="m-0 text-[14px] text-gold-dark">[0{i + 1}]</p>
               <h3 class="mt-2 mb-2 text-[17px] font-semibold uppercase tracking-[0.03em]">{item.title}</h3>
               <p class="m-0 font-sans text-body-dark">{item.text}</p>
             </div>
@@ -141,7 +141,7 @@ const galleryLayout = (i: number) =>
       <div class="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-7">
         {d.packages.map((p, i) => (
           <article class:list={['flex flex-col gap-4 rounded-md border p-8', p.featured ? 'border-gold' : 'border-line']} data-reveal style={`--i:${i}`}>
-            <p class="m-0 text-[13px] text-gold">{p.label}</p>
+            <p class="m-0 text-[14px] text-gold">{p.label}</p>
             <h3 class="m-0 text-[22px] font-semibold uppercase tracking-[0.03em]">{p.name}</h3>
             <ul class="m-0 flex list-none flex-col gap-2 p-0 font-sans text-muted">
               {p.features.map((f) => <li>— {f}</li>)}
@@ -210,10 +210,10 @@ const galleryLayout = (i: number) =>
       <div class="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-px border border-line bg-line">
         {related.map((r, i) => (
           <a href={`/usluge/${r.id}/`} class="group flex min-h-[200px] flex-col gap-3 bg-ink p-8 text-paper no-underline hover:text-paper" data-reveal style={`--i:${i}`}>
-            <span class="text-[13px] text-gold">[0{r.data.order}]</span>
+            <span class="text-[14px] text-gold">[0{r.data.order}]</span>
             <span class="text-lg font-semibold uppercase tracking-[0.03em]">{r.data.title}</span>
             <span class="font-sans text-muted">{r.data.excerpt}</span>
-            <span class="mt-auto inline-flex items-center gap-2 text-[13px] text-gold">
+            <span class="mt-auto inline-flex items-center gap-2 text-[14px] text-gold">
               Saznaj više <Icon name="chevron-right" size={11} class="transition-transform duration-200 group-hover:translate-x-1" />
             </span>
           </a>

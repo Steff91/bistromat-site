@@ -20,7 +20,7 @@ const reviews = await getCollection('reviews');
           <div class="flex gap-[3px] text-star" aria-label="Ocena 5 od 5">
             {[1, 2, 3, 4, 5].map(() => <Icon name="star" size={14} />)}
           </div>
-          <p class="m-0 mt-1 text-[13px] text-[#5A554E]">{info.googleReviewCount} recenzija na Google-u</p>
+          <p class="m-0 mt-1 text-[14px] text-[#5A554E]">{info.googleReviewCount} recenzija na Google-u</p>
         </div>
       </div>
     </div>
@@ -32,7 +32,7 @@ const reviews = await getCollection('reviews');
             {Array.from({ length: r.data.rating }).map(() => <Icon name="star" size={12} />)}
           </div>
           <blockquote class="m-0 font-sans text-base text-[#2A2723]">{r.data.text}</blockquote>
-          <figcaption class="mt-auto text-[13px] text-[#5A554E]">— {r.data.name} · Google</figcaption>
+          <figcaption class="mt-auto text-[14px] text-[#5A554E]">— {r.data.name} · Google</figcaption>
         </figure>
       ))}
     </div>

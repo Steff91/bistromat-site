@@ -14,11 +14,11 @@ const toc = headings.filter((h) => h.depth === 2);
 
 <Base title={`${page.data.title} — Bistromat`} description={page.data.description}>
   <section class="container-site pt-16 pb-12">
-    <p class="mb-7 text-[13px] text-dim">
+    <p class="mb-7 text-[14px] text-dim">
       <a href="/" class="text-dim hover:text-paper">Početna</a> / {page.data.title}
     </p>
     <h1 class="m-0 font-medium leading-[1.1] tracking-[-0.02em] [font-size:clamp(30px,3.8vw,48px)]">{page.data.title}</h1>
-    <p class="mt-4 mb-0 text-[13px] text-dim">Poslednja izmena: {page.data.updated}</p>
+    <p class="mt-4 mb-0 text-[14px] text-dim">Poslednja izmena: {page.data.updated}</p>
   </section>
 
   <section class="border-t border-line">
@@ -26,7 +26,7 @@ const toc = headings.filter((h) => h.depth === 2);
       {toc.length > 2 && (
         <nav aria-label="Sadržaj" class="min-w-0 flex-[1_1_220px] self-start lg:sticky lg:top-28">
           <p class="eyebrow mb-4">Sadržaj</p>
-          <ol class="m-0 flex list-none flex-col gap-2.5 p-0 text-[14px]">
+          <ol class="m-0 flex list-none flex-col gap-2.5 p-0 text-[15px]">
             {toc.map((h) => (
               <li><a href={`#${h.slug}`} class="text-muted no-underline hover:text-gold">{h.text}</a></li>
             ))}

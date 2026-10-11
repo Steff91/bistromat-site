@@ -1,0 +1,58 @@
+---
+import Icon from './Icon.astro';
+import info from '../data/info.json';
+
+const iconLink = 'inline-flex h-9 w-8 sm:w-9 items-center justify-center text-muted no-underline hover:text-gold';
+---
+
+<div class="border-b border-line bg-ink-deep text-[12px]">
+  <div class="container-site flex min-h-10 items-center justify-between gap-3 py-1 sm:h-10 sm:py-0">
+    <p class="m-0 flex min-w-0 items-center gap-2.5 text-muted">
+      <Icon name="clock" size={12} class="shrink-0 text-gold" />
+      <span class="sr-only">Radno vreme:</span>
+      <span class="min-w-0 leading-snug sm:truncate">
+        {info.hours.map((h, i) => (
+          <span class="block sm:inline">
+            {i > 0 && <span class="mx-2 hidden text-[#4A4A4A] sm:inline" aria-hidden="true">·</span>}
+            <span class="text-paper">{h.day}</span> {h.time}
+          </span>
+        ))}
+        {info.notice && (<span class="block sm:inline"><span class="mx-2 hidden text-[#4A4A4A] sm:inline" aria-hidden="true">·</span><span class="text-gold">{info.notice}</span></span>)}
+      </span>
+    </p>
+
+    <ul class="m-0 flex shrink-0 list-none items-center p-0" aria-label="Kontakt i društvene mreže">
+      <li>
+        <a href={`tel:${info.phoneHref}`} class={iconLink} aria-label={`Pozovite nas: ${info.phone}`}>
+          <Icon name="phone" size={12} />
+          <span class="ml-2 hidden text-paper lg:inline">{info.phone}</span>
+        </a>
+      </li>
+      {info.email && (
+        <li>
+          <a href={`mailto:${info.email}`} class={iconLink} aria-label={`Pišite nam: ${info.email}`}>
+            <Icon name="envelope" size={12} />
+          </a>
+        </li>
+      )}
+      <li aria-hidden="true" class="mx-1 h-4 w-px bg-line sm:mx-1.5"></li>
+      <li>
+        <a href={info.instagram} class={iconLink} aria-label="Instagram" target="_blank" rel="noopener">
+          <Icon name="instagram" size={13} />
+        </a>
+      </li>
+      <li>
+        <a href={info.facebook} class={iconLink} aria-label="Facebook" target="_blank" rel="noopener">
+          <Icon name="facebook" size={13} />
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<style>
+  /* phone link shows the number on wide screens; let it size to content there */
+  @media (min-width: 64rem) {
+    li:first-child a { width: auto; padding-right: .5rem; }
+  }
+</style>

@@ -1,5 +1,20 @@
 [
-  { "id": "review-1", "name": "[Ime gosta]", "text": "[Tekst recenzije sa Google profila]", "rating": 5 },
-  { "id": "review-2", "name": "[Ime gosta]", "text": "[Tekst recenzije sa Google profila]", "rating": 5 },
-  { "id": "review-3", "name": "[Ime gosta]", "text": "[Tekst recenzije sa Google profila]", "rating": 5 }
+  {
+    "id": "anamaria-p",
+    "name": "Anamaria P.",
+    "text": "From the street, you can only see the bar area, but the restaurant opens up beautifully inside. The interior features an open kitchen, a comfortable seating area with three elegant velvet booths, and plenty of additional tables.",
+    "rating": 5
+  },
+  {
+    "id": "milena-m",
+    "name": "Milena M.",
+    "text": "Amazing food! The calm atmosphere and a great service really provide a full experience. We enjoyed it and will be back soon!",
+    "rating": 5
+  },
+  {
+    "id": "alex-b",
+    "name": "Alex B.",
+    "text": "The French Syrah Grenache is super smooth. The reduction and mashed potatoes was delicious. The John Dori fish was good. The chocolate mousse was delicious. Service impeccable.",
+    "rating": 5
+  }
 ]

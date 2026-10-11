@@ -1,17 +1,42 @@
 {
-  "season": "[Jesen 2026]",
-  "updated": "[DATUM]",
-  "intro": "Klasici francuske kuhinje i sezonska jela, spremljena u otvorenoj kuhinji. Meni menjamo sa sezonom, a šef svake nedelje dodaje nekoliko jela van karte. [Kratak opis menija]",
+  "season": "Jesen 2026",
+  "updated": "21. 9. 2026.",
+  "intro": "Ručak i večera iz otvorene kuhinje: francuski klasici poput tartara, puževa, supe od luka i Coq au Vin, uz sezonska jela i domaći brioš. Uz meni ide vinska karta sa vinima iz Srbije, regiona i sveta i kokteli sa našeg bara.",
   "cards": [
-    { "label": "Meni", "pdf": "/uploads/meni.pdf" },
-    { "label": "Vinska karta", "pdf": "/uploads/vinska-karta.pdf" },
-    { "label": "Kokteli", "pdf": "/uploads/kokteli.pdf" }
+    {
+      "label": "Meni",
+      "pdf": "/uploads/meni.pdf"
+    },
+    {
+      "label": "Vinska karta",
+      "pdf": "/uploads/vinska-karta.pdf"
+    },
+    {
+      "label": "Pića i kokteli",
+      "pdf": "/uploads/pica-i-kokteli.pdf"
+    }
   ],
   "highlights": [
-    { "name": "Escargots de Bourgogne", "description": "[Puževi u puteru sa belim lukom i peršunom]", "price": "[CENA]" },
-    { "name": "[Jelo 2]", "description": "[Kratak opis jela]", "price": "[CENA]" },
-    { "name": "[Jelo 3]", "description": "[Kratak opis jela]", "price": "[CENA]" },
-    { "name": "[Jelo 4]", "description": "[Kratak opis jela]", "price": "[CENA]" }
+    {
+      "name": "Escargot Bourguignon",
+      "description": "Puževi na burgundski način, aromatični puter sa belim lukom i peršunom, brioš",
+      "price": "1.570 RSD"
+    },
+    {
+      "name": "Supa od luka",
+      "description": "Francuska supa od luka sa Gruyère sirom i domaćim brioche hlebom",
+      "price": "960 RSD"
+    },
+    {
+      "name": "Coq au Vin",
+      "description": "Petlov batak u prokupcu, pire „Joël Robuchon“, slanina, korenasto povrće, pečurke, vinski sos",
+      "price": "2.230 RSD"
+    },
+    {
+      "name": "Tart od limete",
+      "description": "Klasični francuski tart od limete",
+      "price": "840 RSD"
+    }
   ],
   "allergens": "Za informacije o alergenima i posebnim zahtevima (vegetarijanski, bez glutena) obratite se osoblju. Rado ćemo prilagoditi jelo."
 }

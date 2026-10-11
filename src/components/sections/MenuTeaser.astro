@@ -1,4 +1,5 @@
 ---
+import BrandIcon from '../BrandIcon.astro';
 import Placeholder from '../Placeholder.astro';
 import Icon from '../Icon.astro';
 import menu from '../../data/menu.json';
@@ -13,13 +14,14 @@ const mainPdf = menu.cards[0]?.pdf;
     <Placeholder label="Foto: escargots" class="h-[420px]" />
   </div>
   <div class="min-w-0 flex-[1_1_420px]">
-    <p class="eyebrow" data-reveal>Meni</p>
+    <p class="eyebrow inline-flex items-center gap-2.5" data-reveal><BrandIcon name="fork" size={14} />Meni</p>
     <h2 class="h-section m-0" data-reveal style="--i:1">Sezonski meni, klasično francuski</h2>
     <ul class="mt-8 flex list-none flex-col gap-4 p-0">
       {highlights.map((d, i) => (
-        <li class="flex justify-between gap-4 border-b border-dashed border-[#3A3A3A] pb-3" data-reveal style={`--i:${i + 2}`}>
+        <li class="flex items-baseline gap-3" data-reveal style={`--i:${i + 2}`}>
           <span>{d.name}</span>
-          <span class="font-sans text-muted">{d.price}</span>
+          <span class="leader" aria-hidden="true"></span>
+          <span class="shrink-0 font-sans text-muted">{d.price}</span>
         </li>
       ))}
     </ul>

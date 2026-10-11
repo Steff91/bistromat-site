@@ -68,6 +68,26 @@
   }
 }
 
+/* Dotted leader between a dish and its price, like a printed bistro menu */
+.leader {
+  flex: 1;
+  min-width: 1.5rem;
+  border-bottom: 2px dotted currentColor;
+  opacity: .28;
+  transform: translateY(-.3em);
+}
+
+/* Fine film grain over the whole page — warmth on flat blacks */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  pointer-events: none;
+  opacity: .05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
 /* Subtle reveal on scroll — only when JS runs and motion is allowed */
 @media (prefers-reduced-motion: no-preference) {
   .js [data-reveal] {

@@ -1,4 +1,5 @@
 ---
+import BrandIcon from '../components/BrandIcon.astro';
 import Base from '../layouts/Base.astro';
 import Placeholder from '../components/Placeholder.astro';
 import InquiryForm from '../components/InquiryForm.astro';
@@ -28,7 +29,7 @@ const faqSchema = {
     </p>
     <div class="flex flex-wrap items-center gap-14">
       <div class="min-w-0 flex-[1_1_460px]">
-        <p class="eyebrow mb-[18px]" data-reveal>Chef's Table</p>
+        <p class="eyebrow inline-flex items-center gap-2.5 mb-[18px]" data-reveal><BrandIcon name="plate" size={14} />Chef's Table</p>
         <h1 class="m-0 font-medium leading-[1.1] tracking-[-0.02em] [font-size:clamp(32px,4.4vw,56px)]" data-reveal style="--i:1">
           Večera za<br /><em class="font-normal">šefovim stolom.</em>
         </h1>

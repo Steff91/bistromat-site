@@ -1,0 +1,21 @@
+---
+// Section divider: hairline — brand icon row — hairline.
+import BrandIcon, { type BrandIconName } from './BrandIcon.astro';
+
+interface Props {
+  light?: boolean;
+  class?: string;
+}
+const { light = false, class: className } = Astro.props;
+const row: BrandIconName[] = ['fork', 'plate', 'knife', 'spoon', 'glass', 'bottle'];
+---
+
+<div class:list={['container-site', className]} aria-hidden="true">
+  <div class:list={['flex items-center gap-6', light ? 'text-[#B9B2A6]' : 'text-[#3A3A3A]']}>
+    <span class="h-px flex-1 bg-current opacity-60"></span>
+    <span class="flex items-end gap-4">
+      {row.map((n) => <BrandIcon name={n} size={22} />)}
+    </span>
+    <span class="h-px flex-1 bg-current opacity-60"></span>
+  </div>
+</div>

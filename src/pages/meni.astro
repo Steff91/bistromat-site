@@ -1,4 +1,5 @@
 ---
+import BrandIcon from '../components/BrandIcon.astro';
 import Base from '../layouts/Base.astro';
 import MenuFlipbook from '../components/MenuFlipbook.astro';
 import Icon from '../components/Icon.astro';
@@ -19,7 +20,7 @@ const mainPdf = menu.cards[0]?.pdf;
     </p>
     <div class="flex flex-wrap items-end justify-between gap-10">
       <div class="min-w-0 flex-[1_1_560px]">
-        <p class="eyebrow mb-[18px]" data-reveal>Meni · {menu.season}</p>
+        <p class="eyebrow inline-flex items-center gap-2.5 mb-[18px]" data-reveal><BrandIcon name="fork" size={14} />Meni · {menu.season}</p>
         <h1 class="m-0 font-medium leading-[1.1] tracking-[-0.02em] [font-size:clamp(32px,4.4vw,56px)]" data-reveal style="--i:1">
           Sezonski meni,<br /><em class="font-normal">klasično francuski.</em>
         </h1>
@@ -54,8 +55,9 @@ const mainPdf = menu.cards[0]?.pdf;
       <div class="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-x-12 gap-y-8">
         {menu.highlights.map((d, i) => (
           <div class="border-b border-dashed border-[#BDB7AD] pb-6" data-reveal style={`--i:${i % 4}`}>
-            <div class="flex items-baseline justify-between gap-4">
+            <div class="flex items-baseline gap-3">
               <h3 class="m-0 text-lg font-semibold">{d.name}</h3>
+              <span class="leader" aria-hidden="true"></span>
               <span class="shrink-0 font-sans text-body-dark">{d.price}</span>
             </div>
             <p class="mt-2 mb-0 font-sans text-[15px] text-body-dark">{d.description}</p>

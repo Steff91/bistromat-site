@@ -1,4 +1,5 @@
 ---
+import BrandIcon from '../BrandIcon.astro';
 import Placeholder from '../Placeholder.astro';
 import Icon from '../Icon.astro';
 import { nextAvailable, formatDate } from '../../lib/chef-table';
@@ -9,7 +10,7 @@ const next = nextAvailable();
 <section id="chef-table" class="bg-paper text-ink">
   <div class="container-site flex flex-wrap items-center gap-14 py-24">
     <div class="min-w-0 flex-[1_1_460px]">
-      <p class="eyebrow !text-gold-dark" data-reveal>Chef's Table</p>
+      <p class="eyebrow inline-flex items-center gap-2.5 !text-gold-dark" data-reveal><BrandIcon name="plate" size={14} />Chef's Table</p>
       <h2 class="h-section m-0" data-reveal style="--i:1">Večera za šefovim stolom</h2>
       <p class="mt-5 max-w-[500px] font-sans text-body-dark" data-reveal style="--i:2">
         Degustacioni meni u više sledova, uparen sa vinima, za mali broj gostiju. Šef vodi kroz svako jelo.

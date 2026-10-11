@@ -1,4 +1,5 @@
 ---
+import BrandIcon from '../BrandIcon.astro';
 import EventCard from '../EventCard.astro';
 import Icon from '../Icon.astro';
 import { getEventItems } from '../../lib/events';
@@ -10,7 +11,7 @@ const next = upcoming.slice(0, 3);
 <section id="dogadjaji" class="container-site py-24">
   <div class="mb-11 flex flex-wrap items-end justify-between gap-6">
     <div>
-      <p class="eyebrow" data-reveal>Događaji</p>
+      <p class="eyebrow inline-flex items-center gap-2.5" data-reveal><BrandIcon name="glass" size={14} />Događaji</p>
       <h2 class="h-section m-0" data-reveal style="--i:1">Narednih večeri u Bistromatu</h2>
     </div>
     <a href="/dogadjaji/" class="inline-flex items-center gap-2 text-[13px]" data-reveal style="--i:2">

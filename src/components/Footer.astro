@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Logo from './Logo.astro';
+import LogoMark from './LogoMark.astro';
 import Social from './Social.astro';
 import info from '../data/info.json';
 
@@ -40,6 +41,10 @@ const year = new Date().getFullYear();
         {info.hours.map((h) => (<>{h.day}: {h.time}<br /></>))}
       </span>
     </div>
+  </div>
+
+  <div class="container-site pb-10" aria-hidden="true">
+    <LogoMark variant="wordmark" class="block h-auto w-full text-[#1A1A1A]" />
   </div>
 
   <div class="border-t border-[#1F1F1F]">

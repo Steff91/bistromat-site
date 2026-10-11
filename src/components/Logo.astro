@@ -1,14 +1,25 @@
 ---
+import LogoMark from './LogoMark.astro';
+
 interface Props {
-  size?: number;
+  /** "responsive": icon on phones, wordmark from sm up. "wordmark": always the full logo. */
+  mode?: 'responsive' | 'wordmark';
+  class?: string;
 }
-const { size = 40 } = Astro.props;
+const { mode = 'responsive', class: className } = Astro.props;
 ---
 
-<a href="/" class="flex items-center gap-3 text-paper no-underline hover:text-paper" aria-label="Bistromat — početna">
-  <svg width={size} height={size} viewBox="0 0 100 100" aria-hidden="true">
-    <polygon points="30,4 70,4 96,30 96,70 70,96 30,96 4,70 4,30" fill="#000" stroke="currentColor" stroke-width="6"></polygon>
-    <text x="50" y="74" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="64" fill="currentColor">b</text>
-  </svg>
-  <span class="text-xl font-semibold tracking-[0.02em]">bistromat_</span>
+<a href="/" class:list={['flex items-center text-paper no-underline hover:text-paper', className]} aria-label="Bistromat — početna">
+  {mode === 'responsive' && <LogoMark variant="icon" class="logo-icon block h-11 w-11 sm:hidden" />}
+  <LogoMark
+    variant="wordmark"
+    class:list={['logo-wordmark h-8 w-auto', mode === 'responsive' ? 'hidden sm:block' : 'block']}
+  />
 </a>
+
+<style>
+  .logo-wordmark, .logo-icon { transition: height .25s ease, width .25s ease; }
+  :global(#site-header.is-scrolled) .logo-wordmark { height: 1.625rem; }
+  :global(#site-header.is-scrolled) .logo-icon { height: 2.25rem; width: 2.25rem; }
+  @media (prefers-reduced-motion: reduce) { .logo-wordmark, .logo-icon { transition: none; } }
+</style>

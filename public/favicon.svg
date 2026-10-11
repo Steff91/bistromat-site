@@ -1,1 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="30,4 70,4 96,30 96,70 70,96 30,96 4,70 4,30" fill="#000" stroke="#F2EFEA" stroke-width="6"/><text x="50" y="74" text-anchor="middle" font-family="monospace" font-weight="700" font-size="64" fill="#F2EFEA">b</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="177.44 188.01 700 700">
+<style>path{color:#0F0F0F}@media (prefers-color-scheme:dark){path{color:#F9F7F7}}</style>
+<path fill="none" stroke-width="28" stroke-linecap="butt" stroke-linejoin="miter" stroke="currentColor" stroke-miterlimit="10" d="M 0.001 0.001 L -201.385 0.001 L -364.310 -118.370 L -426.545 -309.901 L -364.310 -501.432 L -201.385 -619.803 L 0.001 -619.803 L 162.923 -501.432 L 225.157 -309.901 L 162.923 -118.370 Z M 0.001 0.001 " transform="matrix(1, 0, 0, -1, 628.139, 229.110)"/>
+<path fill="currentColor" d="M 579.433 696.246 L 488.125 696.246 L 488.125 471.890 L 579.433 471.890 Z M 488.125 323.710 L 443.777 323.710 L 443.777 732.769 L 615.957 732.769 L 615.957 435.367 L 488.125 435.367 Z M 488.125 323.710 "/>
+</svg>

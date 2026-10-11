@@ -40,6 +40,7 @@ const shortcuts = [
         <div class="flex flex-col gap-2 bg-ink p-8" data-reveal>
           <dt class="eyebrow mb-1">Adresa</dt>
           <dd class="m-0 text-lg">{info.address}<br />{info.city}</dd>
+          <dd class="m-0 font-sans text-[14px] text-dim">{info.landmark}</dd>
           <dd class="m-0 mt-auto pt-3">
             <a href={info.mapsLink} target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-[13px]">
               Otvori u Google mapama <Icon name="chevron-right" size={10} />
@@ -81,7 +82,7 @@ const shortcuts = [
       </div>
       <div class="min-w-0 flex-[1_1_300px]">
         <p class="eyebrow" data-reveal>Kako do nas</p>
-        <h2 id="kako-do-nas" class="h-section m-0 mb-8" data-reveal style="--i:1">Na Vračaru, kod [orijentir]</h2>
+        <h2 id="kako-do-nas" class="h-section m-0 mb-8" data-reveal style="--i:1">Na Vračaru, kod Hrama Svetog Save</h2>
         <dl class="m-0 flex flex-col gap-6">
           {info.directions.map((d, i) => (
             <div data-reveal style={`--i:${i + 2}`}>

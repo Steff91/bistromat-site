@@ -20,6 +20,7 @@ collections:
           - { name: tagline, label: Slogan, widget: string }
           - { name: address, label: Adresa, widget: string }
           - { name: city, label: Grad, widget: string }
+          - { name: landmark, label: Lokacija (kraj, orijentir), widget: string }
           - { name: mapsLink, label: Link ka Google mapama, widget: string }
           - { name: phone, label: Telefon (prikaz), widget: string }
           - { name: phoneHref, label: Telefon (link, +381...), widget: string }

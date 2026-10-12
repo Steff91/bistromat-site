@@ -9,6 +9,11 @@ const ACCESS_TOKEN    = '203abd1f175fa5a73f9183848388bf2659e3a9cb2574678b';
 const COOKIE_NAME     = 'bm_preview';
 const COOKIE_DAYS     = 30;
 
+// PHP 7.x compatibility
+if (!function_exists('str_starts_with')) {
+  function str_starts_with($h, $n) { return strncmp($h, $n, strlen($n)) === 0; }
+}
+
 header('X-Robots-Tag: noindex, nofollow');
 header('Cache-Control: no-store');
 
@@ -25,13 +30,11 @@ $error = false;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $given = (string)($_POST['password'] ?? '');
   if (hash_equals(PASSWORD_SHA256, hash('sha256', $given))) {
-    setcookie(COOKIE_NAME, ACCESS_TOKEN, [
-      'expires'  => time() + COOKIE_DAYS * 86400,
-      'path'     => '/',
-      'secure'   => $https,
-      'httponly' => true,
-      'samesite' => 'Lax',
-    ]);
+    // Plain header instead of setcookie() options array: works on every PHP version
+    header(sprintf(
+      'Set-Cookie: %s=%s; Max-Age=%d; Path=/; HttpOnly; SameSite=Lax%s',
+      COOKIE_NAME, ACCESS_TOKEN, COOKIE_DAYS * 86400, $https ? '; Secure' : ''
+    ), false);
     header('Location: ' . $target, true, 303);
     exit;
   }
@@ -65,7 +68,7 @@ $t = $en ? [
   'switch' => 'English',
   'switchTo' => '/en/',
 ];
-$h = fn($s) => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
+$h = function ($s) { return htmlspecialchars($s, ENT_QUOTES, 'UTF-8'); };
 ?><!doctype html>
 <html lang="<?= $t['lang'] ?>">
 <head>

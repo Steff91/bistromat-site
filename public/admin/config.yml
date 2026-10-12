@@ -18,6 +18,8 @@ collections:
         fields:
           - { name: name, label: Naziv, widget: string }
           - { name: tagline, label: Slogan, widget: string }
+          - { name: about, label: Opis restorana (O nama), widget: text }
+          - { name: aboutShort, label: Kratak opis (hero, Google opis), widget: text }
           - { name: address, label: Adresa, widget: string }
           - { name: city, label: Grad, widget: string }
           - { name: landmark, label: Lokacija (kraj, orijentir), widget: string }

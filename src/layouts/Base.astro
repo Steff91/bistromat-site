@@ -14,7 +14,7 @@ interface Props {
 
 const {
   title,
-  description = 'Bistromat — restoran francuske kuhinje sa otvorenom kuhinjom u Mutapovoj 9, na Vračaru, kod Hrama Svetog Save u Beogradu. Rezervacije, privatne proslave, Chef\'s Table i koktel večeri.',
+  description = `Bistromat, Mutapova 9, Beograd: ${info.aboutShort}`,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -23,6 +23,7 @@ const schema = {
   '@context': 'https://schema.org',
   '@type': 'Restaurant',
   name: info.name,
+  description: info.about,
   servesCuisine: 'French',
   telephone: info.phoneHref,
   url: Astro.site?.toString(),

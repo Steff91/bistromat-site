@@ -1,17 +1,28 @@
 ---
+import info from '../../data/info.json';
+
 const pillars = [
   { title: 'Otvorena kuhinja', text: 'Gledate kako nastaje svako jelo, od pripreme do tanjira.' },
-  { title: 'Francuski klasici', text: 'Escargots, terine, confit i deserti po tradicionalnim recepturama.' },
+  { title: 'Francuski klasici', text: 'Tehnike po Escoffier-u, pažljivo birane lokalne namirnice i klasici poput puževa, supe od luka i Coq au Vin.' },
   { title: 'Vino, kokteli, muzika', text: 'Vinske večeri, Vinyl & Dine, koktel večeri i gostujući šefovi.' },
 ];
 ---
 
-<section aria-label="Koncept" class="border-b border-line">
+<section aria-labelledby="o-nama" class="border-b border-line">
+  <div class="border-b border-line">
+  <div class="container-site grid grid-cols-1 gap-x-14 gap-y-6 py-20 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
+    <div>
+      <p class="eyebrow" data-reveal>O nama</p>
+      <h2 id="o-nama" class="h-section m-0" data-reveal style="--i:1">Daleko od gradske buke.</h2>
+    </div>
+    <p class="m-0 max-w-[760px] self-end font-sans text-[18px] leading-[1.75] text-muted lg:text-[19px]" data-reveal style="--i:2">{info.about}</p>
+  </div>
+  </div>
   <div class="container-site grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-10 py-14">
     {pillars.map((p, i) => (
       <div data-reveal style={`--i:${i}`}>
         <p class="m-0 text-[14px] text-gold">[0{i + 1}]</p>
-        <h2 class="mt-2.5 mb-2 text-lg font-semibold uppercase tracking-[0.04em]">{p.title}</h2>
+        <h3 class="mt-2.5 mb-2 text-lg font-semibold uppercase tracking-[0.04em]">{p.title}</h3>
         <p class="m-0 font-sans text-muted">{p.text}</p>
       </div>
     ))}

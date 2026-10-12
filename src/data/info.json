@@ -1,6 +1,8 @@
 {
   "name": "Bistromat",
   "tagline": "Open Kitchen Concept",
+  "about": "Bistromat je intimni restoran sa konceptom otvorene kuhinje, smešten u samom srcu Vračara, blizu Hrama, a daleko od gradske buke. Spajajući francuske kulinarske tehnike, kuvajući po Escoffier-u, sa pažljivo biranim lokalnim namirnicama, kreiramo prefinjena jela evropske gastronomije u toplom, domaćem ambijentu gde se hrana priprema direktno ispred vas, stvarajući nezaboravne ukuse i iskustvo o kome se priča.",
+  "aboutShort": "Intimni restoran sa konceptom otvorene kuhinje u srcu Vračara, kod Hrama. Francuske tehnike po Escoffier-u i pažljivo birane lokalne namirnice.",
   "address": "Mutapova 9",
   "city": "Beograd",
   "landmark": "Vračar, kod Hrama Svetog Save",

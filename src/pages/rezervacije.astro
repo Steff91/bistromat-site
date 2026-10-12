@@ -44,8 +44,10 @@ const alternatives = [
             method="POST"
             action={info.formAction || undefined}
             class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-5"
+            data-form
           >
             <input type="hidden" name="usluga" value="Rezervacija stola" />
+            <input type="hidden" name="redirect" value={new URL('/hvala/?tip=rezervacija', Astro.site).toString()} />
             <label class={field}>Datum
               <input type="date" name="datum" required class={input} data-min-today />
             </label>

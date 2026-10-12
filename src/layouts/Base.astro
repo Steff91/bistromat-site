@@ -89,6 +89,21 @@ const schema = {
       } else {
         items.forEach((el) => el.classList.add('is-visible'));
       }
+
+      // Forms: thank-you redirect points at the current host (works on preview and production).
+      // Until a form handler is set (info.json → formAction), submitting just goes to /hvala/.
+      document.querySelectorAll<HTMLFormElement>('form[data-form]').forEach((form) => {
+        const redirect = form.querySelector<HTMLInputElement>('input[name="redirect"]');
+        if (!redirect) return;
+        const target = new URL(redirect.value);
+        redirect.value = location.origin + target.pathname + target.search;
+        if (!form.getAttribute('action')) {
+          form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            location.href = redirect.value;
+          });
+        }
+      });
     </script>
   </body>
 </html>

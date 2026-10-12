@@ -102,21 +102,6 @@ a:hover .chev, a:focus-visible .chev { translate: 4px 0; }
   transform: translateY(-.3em);
 }
 
-/* Fine film grain over the whole page — warmth on flat blacks */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 45;
-  pointer-events: none;
-  opacity: .05;
-  background-image: url("/grain.png");
-  background-size: 128px;
-  /* own compositor layer: no repaint while scrolling */
-  transform: translateZ(0);
-  will-change: transform;
-}
-
 /* Subtle reveal on scroll — only when JS runs and motion is allowed */
 @media (prefers-reduced-motion: no-preference) {
   .js [data-reveal] {

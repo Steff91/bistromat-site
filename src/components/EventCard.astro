@@ -16,7 +16,7 @@ const full = item.seatsLeft !== undefined && item.seatsLeft <= 0;
 {variant === 'featured' ? (
   <a
     href={item.href}
-    class="group flex flex-wrap border border-line text-paper no-underline hover:text-paper"
+    class="card group flex flex-wrap border border-line text-paper no-underline hover:text-paper"
     data-type={item.type}
     data-date={item.date}
     data-reveal
@@ -33,7 +33,7 @@ const full = item.seatsLeft !== undefined && item.seatsLeft <= 0;
         {item.price && <span class="font-sans text-muted">{item.price}</span>}
         {seats && <span class:list={['uppercase tracking-[0.08em]', full ? 'text-dim' : 'text-gold']}>{seats}</span>}
         <span class="ml-auto inline-flex items-center gap-2 text-gold">
-          Saznaj više <Icon name="chevron-right" size={11} class="transition-transform duration-200 group-hover:translate-x-1" />
+          Saznaj više <Icon name="chevron-right" size={11} />
         </span>
       </div>
     </div>
@@ -47,7 +47,7 @@ const full = item.seatsLeft !== undefined && item.seatsLeft <= 0;
 ) : (
   <a
     href={item.href}
-    class="group flex flex-col border border-line text-paper no-underline hover:text-paper"
+    class="card group flex flex-col border border-line text-paper no-underline hover:text-paper"
     data-type={item.type}
     data-date={item.date}
     data-reveal
@@ -62,7 +62,7 @@ const full = item.seatsLeft !== undefined && item.seatsLeft <= 0;
       <div class="mt-auto flex items-center justify-between gap-4 pt-4 text-[14px]">
         {seats ? <span class:list={['uppercase tracking-[0.08em]', full ? 'text-dim' : 'text-gold']}>{seats}</span> : <span />}
         <span class="inline-flex items-center gap-2 text-gold">
-          Saznaj više <Icon name="chevron-right" size={11} class="transition-transform duration-200 group-hover:translate-x-1" />
+          Saznaj više <Icon name="chevron-right" size={11} />
         </span>
       </div>
     </div>

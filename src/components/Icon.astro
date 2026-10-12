@@ -57,5 +57,5 @@ const width = Math.round((size * w) / h);
   viewBox={icon.viewBox}
   fill="currentColor"
   aria-hidden="true"
-  class={className}
+  class:list={[name === 'chevron-right' && 'chev', className]}
 ><path d={icon.d}></path></svg>

@@ -71,6 +71,28 @@
   }
 }
 
+/* Linked boxes: soft tint on hover (uses the text color, so it works on dark, light and gold) */
+.card { position: relative; isolation: isolate; }
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: currentColor;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .35s ease;
+}
+.card:hover::after, .card:focus-visible::after { opacity: .05; }
+
+/* Forward chevrons nudge right on hover — in linked boxes and plain links alike */
+.chev { transition: translate .25s ease; }
+a:hover .chev, a:focus-visible .chev { translate: 4px 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .card::after, .chev { transition: none; }
+}
+
 /* Dotted leader between a dish and its price, like a printed bistro menu */
 .leader {
   flex: 1;

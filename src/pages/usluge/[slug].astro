@@ -209,12 +209,12 @@ const galleryLayout = (i: number) =>
       <h2 id="ostale" class="h-section m-0 mb-10" data-reveal style="--i:1">Možda vas zanima i</h2>
       <div class="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-px border border-line bg-line">
         {related.map((r, i) => (
-          <a href={`/usluge/${r.id}/`} class="group flex min-h-[200px] flex-col gap-3 bg-ink p-8 text-paper no-underline hover:text-paper" data-reveal style={`--i:${i}`}>
+          <a href={`/usluge/${r.id}/`} class="card group flex min-h-[200px] flex-col gap-3 bg-ink p-8 text-paper no-underline hover:text-paper" data-reveal style={`--i:${i}`}>
             <span class="text-[14px] text-gold">[0{r.data.order}]</span>
             <span class="text-lg font-semibold uppercase tracking-[0.03em]">{r.data.title}</span>
             <span class="font-sans text-muted">{r.data.excerpt}</span>
             <span class="mt-auto inline-flex items-center gap-2 text-[14px] text-gold">
-              Saznaj više <Icon name="chevron-right" size={11} class="transition-transform duration-200 group-hover:translate-x-1" />
+              Saznaj više <Icon name="chevron-right" size={11} />
             </span>
           </a>
         ))}

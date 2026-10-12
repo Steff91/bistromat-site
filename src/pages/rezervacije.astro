@@ -125,11 +125,11 @@ const alternatives = [
     <h2 id="drugacije" class="h-section m-0 mb-10" data-reveal style="--i:1">Druge vrste rezervacija</h2>
     <div class="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-px border border-line bg-line">
       {alternatives.map((a, i) => (
-        <a href={a.href} class="group flex min-h-[180px] flex-col gap-3 bg-ink p-8 text-paper no-underline hover:text-paper" data-reveal style={`--i:${i}`}>
+        <a href={a.href} class="card group flex min-h-[180px] flex-col gap-3 bg-ink p-8 text-paper no-underline hover:text-paper" data-reveal style={`--i:${i}`}>
           <span class="text-lg font-semibold uppercase tracking-[0.03em]">{a.label}</span>
           <span class="font-sans text-muted">{a.text}</span>
           <span class="mt-auto inline-flex items-center gap-2 text-[14px] text-gold">
-            Saznaj više <Icon name="chevron-right" size={11} class="transition-transform duration-200 group-hover:translate-x-1" />
+            Saznaj više <Icon name="chevron-right" size={11} />
           </span>
         </a>
       ))}

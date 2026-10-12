@@ -1,0 +1,158 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import ConsentEmbed from '../components/ConsentEmbed.astro';
+import { getInfo, getLang, getReservations, route, tr } from '../i18n';
+import { serviceHref } from '../i18n/content';
+
+const lang = getLang(Astro.url);
+const info = getInfo(lang);
+const res = getReservations(lang);
+const en = lang === 'en';
+const partiesHref = await serviceHref('privatne-proslave', lang);
+
+const field = 'flex flex-col gap-2 text-[14px] uppercase tracking-[0.06em] text-muted';
+const input = 'rounded-md border border-[#3A3A3A] bg-[#161616] p-3.5 font-sans text-[16px] normal-case tracking-normal text-paper focus:border-gold focus:outline-none';
+const guests = Array.from({ length: res.maxGuests }, (_, i) => i + 1);
+
+const alternatives = [
+  { href: route('chefsTable', lang), label: "Chef's Table", text: tr(lang, 'Degustaciona večer uz šefa, mesta se rezervišu pojedinačno.', 'A tasting evening with the chef; seats are booked individually.') },
+  { href: partiesHref, label: tr(lang, 'Privatne proslave', 'Private parties'), text: tr(lang, `Za grupe veće od ${res.maxGuests} osoba ili ceo restoran.`, `For groups of more than ${res.maxGuests} or the whole restaurant.`) },
+  { href: route('events', lang), label: tr(lang, 'Događaji', 'Events'), text: tr(lang, 'Vinyl & Dine, vinske i koktel večeri.', 'Vinyl & Dine, wine and cocktail evenings.') },
+];
+---
+
+<Base
+  title={tr(lang, 'Rezervacije — Bistromat · Mutapova 9, Beograd', 'Reservations — Bistromat · Mutapova 9, Belgrade')}
+  description={tr(lang, 'Rezervišite sto u restoranu Bistromat online ili telefonom. Francuska kuhinja sa otvorenom kuhinjom, Mutapova 9, Beograd.', 'Book a table at Bistromat online or by phone. French cuisine from an open kitchen, Mutapova 9, Belgrade.')}
+>
+  <!-- Intro -->
+  <section class="container-site pt-16 pb-16">
+    <p class="mb-7 text-[14px] text-dim">
+      <a href={route('home', lang)} class="text-dim hover:text-paper">{tr(lang, 'Početna', 'Home')}</a> / {tr(lang, 'Rezervacije', 'Reservations')}
+    </p>
+    <p class="eyebrow mb-[18px]" data-reveal>{tr(lang, 'Rezervacije', 'Reservations')}</p>
+    <h1 class="m-0 font-medium leading-[1.1] tracking-[-0.02em] [font-size:clamp(32px,4.4vw,56px)]" data-reveal style="--i:1">
+      {en ? <>Book<br /><em class="font-normal">your table.</em></> : <>Rezervišite<br /><em class="font-normal">svoj sto.</em></>}
+    </h1>
+    <p class="mt-6 max-w-[560px] font-sans text-base text-muted" data-reveal style="--i:2">{res.intro}</p>
+  </section>
+
+  <!-- Booking -->
+  <section aria-label={tr(lang, 'Rezervacija stola', 'Table booking')} class="border-t border-line">
+    <div class="container-site flex flex-wrap gap-14 py-20">
+      <!-- Form or provider embed -->
+      <div class="min-w-0 flex-[2_1_560px]" data-reveal>
+        {info.reservationEmbed ? (
+          <ConsentEmbed html={info.reservationEmbed} label={tr(lang, 'online rezervacije', 'online booking')} provider={tr(lang, 'sistem za rezervacije', 'the booking system')} />
+        ) : (
+          <form
+            method="POST"
+            action={info.formAction || undefined}
+            class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-5"
+            data-form
+          >
+            <input type="hidden" name="usluga" value={tr(lang, 'Rezervacija stola', 'Table booking')} />
+            <input type="hidden" name="redirect" value={new URL(`${route('thanks', lang)}?tip=rezervacija`, Astro.site).toString()} />
+            <input type="hidden" name="jezik" value={lang} />
+            <label class={field}>{tr(lang, 'Datum', 'Date')}
+              <input type="date" name="datum" required class={input} data-min-today />
+            </label>
+            <label class={field}>{tr(lang, 'Vreme', 'Time')}
+              <select name="vreme" required class={input}>
+                {res.timeSlots.map((t) => <option>{t}</option>)}
+              </select>
+            </label>
+            <label class={field}>{tr(lang, 'Broj osoba', 'Guests')}
+              <select name="osobe" required class={input}>
+                {guests.map((n) => <option selected={n === 2}>{n}</option>)}
+              </select>
+            </label>
+            <label class={field}>{tr(lang, 'Ime i prezime', 'Full name')}
+              <input type="text" name="ime" autocomplete="name" required class={input} />
+            </label>
+            <label class={field}>{tr(lang, 'Telefon', 'Phone')}
+              <input type="tel" name="telefon" autocomplete="tel" required class={input} />
+            </label>
+            <label class={field}>Email
+              <input type="email" name="email" autocomplete="email" class={input} />
+            </label>
+            <label class:list={[field, 'col-span-full']}>{tr(lang, 'Napomena (prilika, alergije, sto uz kuhinju…)', 'Notes (occasion, allergies, a table by the kitchen…)')}
+              <textarea name="napomena" rows="3" class:list={[input, 'resize-y']}></textarea>
+            </label>
+            <div class="col-span-full flex flex-wrap items-center gap-5">
+              <button type="submit" class="btn btn-primary cursor-pointer border-0">{tr(lang, 'Pošalji rezervaciju', 'Send booking')}</button>
+              {en
+                ? <span class="font-sans text-[15px] text-dim">For more than {res.maxGuests} guests, <a href={`${partiesHref}#upit`}>send an inquiry</a>.</span>
+                : <span class="font-sans text-[15px] text-dim">Za više od {res.maxGuests} osoba <a href={`${partiesHref}#upit`}>pošaljite upit</a>.</span>}
+              <p class="m-0 w-full font-sans text-[14px] text-dim">
+                {en ? <>By sending this form you agree to the processing of your data as described in our <a href={route('privacy', lang)}>Privacy policy</a>.</> : <>Slanjem forme prihvatate obradu podataka u skladu sa <a href={route('privacy', lang)}>Politikom privatnosti</a>.</>}
+              </p>
+            </div>
+          </form>
+        )}
+      </div>
+
+      <!-- Phone + hours -->
+      <aside class="flex min-w-0 flex-[1_1_280px] flex-col gap-8" data-reveal style="--i:1">
+        <div class="border border-line p-7">
+          <p class="eyebrow mb-2">{tr(lang, 'Najbrže telefonom', 'Quickest by phone')}</p>
+          <a href={`tel:${info.phoneHref}`} class="text-[28px] font-medium text-paper no-underline hover:text-gold">{info.phone}</a>
+          <p class="mt-2 mb-0 font-sans text-[15px] text-dim">{tr(lang, 'Za rezervacije za isti dan uvek pozovite.', 'For same-day bookings, please always call.')}</p>
+        </div>
+        <div class="border border-line p-7">
+          <p class="eyebrow mb-3">{tr(lang, 'Radno vreme', 'Opening hours')}</p>
+          {info.hours.map((h) => (
+            <p class="m-0 flex justify-between gap-4 border-b border-dashed border-[#3A3A3A] py-2">
+              <span>{h.day}</span><span class="font-sans text-muted">{h.time}</span>
+            </p>
+          ))}
+          {info.notice && <p class="mt-3 mb-0 font-sans text-[15px] text-gold">{info.notice}</p>}
+          <p class="mt-4 mb-0 text-[14px]">
+            <a href={route('contact', lang)} class="inline-flex items-center gap-2">{tr(lang, 'Adresa i kako do nas', 'Address and directions')} <Icon name="chevron-right" size={10} /></a>
+          </p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Good to know -->
+  <section aria-labelledby="dobro-je-znati" class="bg-paper text-ink">
+    <div class="container-site py-24">
+      <p class="eyebrow !text-gold-dark" data-reveal>{tr(lang, 'Dobro je da znate', 'Good to know')}</p>
+      <h2 id="dobro-je-znati" class="h-section m-0 mb-12" data-reveal style="--i:1">{tr(lang, 'Pre nego što dođete', 'Before you come')}</h2>
+      <div class="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-x-12 gap-y-10">
+        {res.notes.map((n, i) => (
+          <div class="border-t border-[#BDB7AD] pt-5" data-reveal style={`--i:${i % 3}`}>
+            <h3 class="m-0 mb-2 text-[17px] font-semibold uppercase tracking-[0.03em]">{n.title}</h3>
+            <p class="m-0 font-sans text-body-dark">{n.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Other ways -->
+  <section aria-labelledby="drugacije" class="container-site py-20">
+    <p class="eyebrow" data-reveal>{tr(lang, 'Nešto posebno?', 'Something special?')}</p>
+    <h2 id="drugacije" class="h-section m-0 mb-10" data-reveal style="--i:1">{tr(lang, 'Druge vrste rezervacija', 'Other kinds of booking')}</h2>
+    <div class="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-px border border-line bg-line">
+      {alternatives.map((a, i) => (
+        <a href={a.href} class="card group flex min-h-[180px] flex-col gap-3 bg-ink p-8 text-paper no-underline hover:text-paper" data-reveal style={`--i:${i}`}>
+          <span class="text-lg font-semibold uppercase tracking-[0.03em]">{a.label}</span>
+          <span class="font-sans text-muted">{a.text}</span>
+          <span class="mt-auto inline-flex items-center gap-2 text-[14px] text-gold">
+            {tr(lang, 'Saznaj više', 'Learn more')} <Icon name="chevron-right" size={11} />
+          </span>
+        </a>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<script>
+  // No booking in the past
+  const today = new Date();
+  const iso = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+  document.querySelectorAll<HTMLInputElement>('[data-min-today]').forEach((el) => (el.min = iso));
+</script>

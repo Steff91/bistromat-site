@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/sections/Hero.astro';
+import Concept from '../components/sections/Concept.astro';
+import MenuTeaser from '../components/sections/MenuTeaser.astro';
+import Services from '../components/sections/Services.astro';
+import ChefTable from '../components/sections/ChefTable.astro';
+import Events from '../components/sections/Events.astro';
+import Reviews from '../components/sections/Reviews.astro';
+import Reservation from '../components/sections/Reservation.astro';
+import Contact from '../components/sections/Contact.astro';
+import Marquee from '../components/Marquee.astro';
+import IconRule from '../components/IconRule.astro';
+import { getLang, tr } from '../i18n';
+
+const lang = getLang(Astro.url);
+---
+
+<Base title={tr(lang, 'Bistromat — francuska kuhinja, Open Kitchen Concept · Beograd', 'Bistromat — French cuisine, Open Kitchen Concept · Belgrade')}>
+  <Hero />
+  <Marquee />
+  <Concept />
+  <MenuTeaser />
+  <IconRule />
+  <Services />
+  <ChefTable />
+  <Events />
+  <Reviews />
+  <Reservation />
+  <Contact />
+</Base>

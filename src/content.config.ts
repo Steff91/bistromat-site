@@ -2,9 +2,7 @@ import { defineCollection } from 'astro:content';
 import { glob, file } from 'astro/loaders';
 import { z } from 'astro/zod';
 
-const services = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/services' }),
-  schema: z.object({
+const serviceSchema = z.object({
     title: z.string(),
     order: z.number(),
     excerpt: z.string(),
@@ -32,12 +30,14 @@ const services = defineCollection({
     steps: z.array(z.object({ title: z.string(), text: z.string() })).default([]),
     faq: z.array(z.object({ q: z.string(), a: z.string() })).default([]),
     form: z.enum(['event', 'catering', 'workshop', 'voucher', 'none']).default('event'),
-  }),
 });
 
-const events = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/events' }),
-  schema: z.object({
+const services = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/services' }),
+  schema: serviceSchema,
+});
+
+const eventSchema = z.object({
     title: z.string(),
     type: z.enum(['vinyl', 'chef-table', 'wine', 'cocktail', 'guest-chef', 'other']),
     date: z.string(), // YYYY-MM-DD
@@ -60,7 +60,11 @@ const events = defineCollection({
       })
       .optional(),
     gallery: z.array(z.object({ src: z.string().optional(), alt: z.string() })).default([]),
-  }),
+});
+
+const events = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/events' }),
+  schema: eventSchema,
 });
 
 const reviews = defineCollection({
@@ -81,4 +85,22 @@ const legal = defineCollection({
   }),
 });
 
-export const collections = { services, events, reviews, legal };
+// English translations. Each file names the Serbian original in `ref`; only translated
+// fields are needed — everything else (order, dates, seats, images, form) comes from the original.
+// The file name is the English URL slug.
+const servicesEn = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/en/services' }),
+  schema: z.object({ ref: z.string() }).loose(),
+});
+
+const eventsEn = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/en/events' }),
+  schema: z.object({ ref: z.string() }).loose(),
+});
+
+const legalEn = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/en/legal' }),
+  schema: z.object({ ref: z.string(), title: z.string(), description: z.string(), updated: z.string() }),
+});
+
+export const collections = { services, events, reviews, legal, servicesEn, eventsEn, legalEn };

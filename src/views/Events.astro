@@ -1,0 +1,160 @@
+---
+import Base from '../layouts/Base.astro';
+import EventCard from '../components/EventCard.astro';
+import { eventTypes, getEventItems } from '../lib/events';
+import { getInfo, getLang, route, tr } from '../i18n';
+
+const lang = getLang(Astro.url);
+const en = lang === 'en';
+const info = getInfo(lang);
+const EVENT_TYPES = eventTypes(lang);
+const { upcoming, past } = await getEventItems(lang);
+const [featured, ...rest] = upcoming;
+
+// Only show filters for types that actually have events
+const usedTypes = new Set([...upcoming, ...past].map((i) => i.type));
+const filters = Object.entries(EVENT_TYPES).filter(([k]) => usedTypes.has(k as keyof typeof EVENT_TYPES));
+const PAST_VISIBLE = 8;
+---
+
+<Base
+  title={tr(lang, "Događaji — Bistromat · Vinyl & Dine, Chef's Table, vinske i koktel večeri", "Events — Bistromat · Vinyl & Dine, Chef's Table, wine and cocktail evenings")}
+  description={tr(lang, "Predstojeći događaji u Bistromatu: Vinyl & Dine, Chef's Table, vinske i koktel večeri i gostujući šefovi. Mutapova 9, Beograd.", "Upcoming events at Bistromat: Vinyl & Dine, Chef's Table, wine and cocktail evenings and guest chefs. Mutapova 9, Belgrade.")}
+>
+  <!-- Intro + filters -->
+  <section class="container-site pt-16 pb-14">
+    <p class="mb-7 text-[14px] text-dim">
+      <a href={route('home', lang)} class="text-dim hover:text-paper">{tr(lang, 'Početna', 'Home')}</a> / {tr(lang, 'Događaji', 'Events')}
+    </p>
+    <p class="eyebrow mb-[18px]" data-reveal>{tr(lang, 'Događaji', 'Events')}</p>
+    <h1 class="m-0 font-medium leading-[1.1] tracking-[-0.02em] [font-size:clamp(32px,4.4vw,56px)]" data-reveal style="--i:1">
+      {en ? <>Evenings<br /><em class="font-normal">at Bistromat.</em></> : <>Događaji<br /><em class="font-normal">u Bistromatu.</em></>}
+    </h1>
+    <p class="mt-6 max-w-[560px] font-sans text-base text-muted" data-reveal style="--i:2">
+      {tr(lang, 'Vinyl večeri, degustacije uz šefa, vinarije i gostujući šefovi. Mesta su ograničena, pa rezervišite na vreme.', 'Vinyl nights, tastings with the chef, wineries and guest chefs. Seats are limited, so book early.')}
+    </p>
+
+    {filters.length > 1 && (
+      <div role="group" aria-label={tr(lang, 'Filter po vrsti', 'Filter by type')} class="mt-10 flex flex-wrap gap-2" data-reveal style="--i:3">
+        <button type="button" class="ev-filter" data-filter="all" aria-pressed="true">{tr(lang, 'Sve', 'All')}</button>
+        {filters.map(([key, label]) => (
+          <button type="button" class="ev-filter" data-filter={key} aria-pressed="false">{label}</button>
+        ))}
+      </div>
+    )}
+  </section>
+
+  <!-- Upcoming -->
+  <section aria-labelledby="predstojeci" class="border-t border-line">
+    <div class="container-site py-20">
+      <h2 id="predstojeci" class="eyebrow mb-8">{tr(lang, 'Predstojeći', 'Upcoming')}</h2>
+      {featured ? (
+        <div class="flex flex-col gap-7" data-ev-list>
+          <EventCard item={featured} variant="featured" />
+          {rest.length > 0 && (
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-7">
+              {rest.map((item, i) => <EventCard item={item} index={i} />)}
+            </div>
+          )}
+        </div>
+      ) : null}
+      <p class:list={['m-0 font-sans text-muted', featured && 'hidden']} data-ev-empty>
+        {en
+          ? <>No events announced right now. Follow us on <a href={info.instagram}>Instagram</a> for new dates.</>
+          : <>Trenutno nema najavljenih događaja. Pratite nas na <a href={info.instagram}>Instagramu</a> za nove datume.</>}
+      </p>
+    </div>
+  </section>
+
+  <!-- Past -->
+  {past.length > 0 && (
+    <section aria-labelledby="prosli" class="border-t border-line">
+      <div class="container-site py-20">
+        <h2 id="prosli" class="eyebrow mb-8">{tr(lang, 'Prošli događaji', 'Past events')}</h2>
+        <div class="grid grid-cols-2 gap-6 md:grid-cols-4" data-ev-past>
+          {past.map((item, i) => (
+            <div class:list={[i >= PAST_VISIBLE && 'hidden']} data-past-item>
+              <EventCard item={item} variant="compact" index={i} />
+            </div>
+          ))}
+        </div>
+        {past.length > PAST_VISIBLE && (
+          <div class="mt-10 text-center">
+            <button type="button" class="btn btn-outline cursor-pointer bg-transparent" data-ev-more>{tr(lang, 'Prikaži još', 'Show more')}</button>
+          </div>
+        )}
+      </div>
+    </section>
+  )}
+
+  <!-- CTA -->
+  <section class="bg-paper text-ink">
+    <div class="container-site flex flex-wrap items-center justify-between gap-8 py-16">
+      <div class="max-w-[620px]" data-reveal>
+        <h2 class="h-section m-0">{tr(lang, 'Ne propustite sledeće veče', "Don't miss the next evening")}</h2>
+        <p class="mt-3 mb-0 font-sans text-body-dark">{tr(lang, 'Nove datume prvo objavljujemo na Instagramu. Za rezervacije i listu čekanja pozovite nas.', 'We announce new dates on Instagram first. For bookings and the waiting list, give us a call.')}</p>
+      </div>
+      <div class="flex flex-wrap items-center gap-4" data-reveal style="--i:1">
+        <a href={info.instagram} class="btn btn-dark" target="_blank" rel="noopener">Instagram</a>
+        <a href={`tel:${info.phoneHref}`} class="btn btn-outline-dark">{info.phone}</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .ev-filter {
+    cursor: pointer;
+    border: 1px solid var(--color-line);
+    border-radius: 6px;
+    background: transparent;
+    padding: 10px 18px;
+    font: 500 13px/1 var(--font-mono);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    transition: color .2s ease, border-color .2s ease;
+  }
+  .ev-filter:hover { color: var(--color-paper); }
+  .ev-filter[aria-pressed='true'] { border-color: var(--color-gold); color: var(--color-gold); }
+</style>
+
+<script>
+  const today = new Date().toISOString().slice(0, 10);
+
+  // Events that passed since the last build: drop them from "Predstojeći".
+  const list = document.querySelector<HTMLElement>('[data-ev-list]');
+  list?.querySelectorAll<HTMLElement>('[data-date]').forEach((el) => {
+    if ((el.dataset.date ?? '') < today) el.remove();
+  });
+
+  const updateEmpty = () => {
+    const visible = list ? [...list.querySelectorAll<HTMLElement>('[data-date]')].some((el) => !el.hidden) : false;
+    document.querySelector('[data-ev-empty]')?.classList.toggle('hidden', visible);
+  };
+
+  // Type filter
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.ev-filter');
+  buttons.forEach((btn) =>
+    btn.addEventListener('click', () => {
+      const f = btn.dataset.filter;
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+      document.querySelectorAll<HTMLElement>('[data-type]').forEach((card) => {
+        const hide = f !== 'all' && card.dataset.type !== f;
+        const wrapper = card.closest<HTMLElement>('[data-past-item]') ?? card;
+        wrapper.hidden = hide;
+        if (!hide) wrapper.classList.remove('hidden');
+      });
+      document.querySelector<HTMLElement>('[data-ev-more]')?.toggleAttribute('hidden', f !== 'all');
+      updateEmpty();
+    }),
+  );
+
+  // "Prikaži još" for past events
+  document.querySelector<HTMLButtonElement>('[data-ev-more]')?.addEventListener('click', (e) => {
+    document.querySelectorAll('[data-past-item].hidden').forEach((el) => el.classList.remove('hidden'));
+    (e.currentTarget as HTMLElement).remove();
+  });
+
+  updateEmpty();
+</script>

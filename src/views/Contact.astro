@@ -1,0 +1,122 @@
+---
+import Base from '../layouts/Base.astro';
+import InquiryForm from '../components/InquiryForm.astro';
+import Social from '../components/Social.astro';
+import Icon from '../components/Icon.astro';
+import ConsentEmbed from '../components/ConsentEmbed.astro';
+import { mapIframe } from '../lib/embeds';
+import { getInfo, getLang, route, tr } from '../i18n';
+import { serviceHref } from '../i18n/content';
+
+const lang = getLang(Astro.url);
+const info = getInfo(lang);
+const en = lang === 'en';
+const hasEmail = Boolean(info.email);
+const shortcuts = [
+  { href: route('reservations', lang), label: tr(lang, 'Rezervacija stola', 'Table booking'), text: tr(lang, 'Pozovite nas ili rezervišite online.', 'Call us or book online.') },
+  { href: await serviceHref('privatne-proslave', lang), label: tr(lang, 'Privatne proslave', 'Private parties'), text: tr(lang, 'Ceo restoran za vašu proslavu, 4–6 sati.', 'The whole restaurant for your celebration, 4–6 hours.') },
+  { href: await serviceHref('poklon-vauceri', lang), label: tr(lang, 'Poklon vaučeri', 'Gift vouchers'), text: tr(lang, "Večera, Chef's Table ili radionica na poklon.", "A dinner, Chef's Table or workshop as a gift.") },
+];
+---
+
+<Base
+  title={tr(lang, 'Kontakt — Bistromat · Mutapova 9, Beograd', 'Contact — Bistromat · Mutapova 9, Belgrade')}
+  description={tr(lang, 'Kontakt restorana Bistromat: Mutapova 9, Beograd. Telefon za rezervacije, radno vreme, kako do nas i forma za upite.', 'Contact Bistromat: Mutapova 9, Belgrade. Phone for bookings, opening hours, directions and an inquiry form.')}
+>
+  <!-- Intro -->
+  <section class="container-site pt-16 pb-16">
+    <p class="mb-7 text-[14px] text-dim">
+      <a href={route('home', lang)} class="text-dim hover:text-paper">{tr(lang, 'Početna', 'Home')}</a> / {tr(lang, 'Kontakt', 'Contact')}
+    </p>
+    <p class="eyebrow mb-[18px]" data-reveal>{tr(lang, 'Kontakt', 'Contact')}</p>
+    <h1 class="m-0 font-medium leading-[1.1] tracking-[-0.02em] [font-size:clamp(32px,4.4vw,56px)]" data-reveal style="--i:1">
+      {en ? <>See you<br /><em class="font-normal">at Mutapova 9.</em></> : <>Vidimo se<br /><em class="font-normal">u Mutapovoj 9.</em></>}
+    </h1>
+    <p class="mt-6 max-w-[540px] font-sans text-base text-muted" data-reveal style="--i:2">
+      {tr(lang, 'Za rezervaciju stola najbrže je da nas pozovete. Za proslave, ketering, vaučere i sve ostalo pišite nam preko forme ispod.', 'To book a table, calling us is quickest. For parties, catering, vouchers and anything else, write to us using the form below.')}
+    </p>
+  </section>
+
+  <!-- Contact info -->
+  <section aria-label={tr(lang, 'Kontakt podaci', 'Contact details')} class="border-t border-line">
+    <div class="container-site">
+      <dl class="m-0 grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-px border-x border-line bg-line">
+        <div class="flex flex-col gap-2 bg-ink p-8" data-reveal>
+          <dt class="eyebrow mb-1">{tr(lang, 'Adresa', 'Address')}</dt>
+          <dd class="m-0 text-lg">{info.address}<br />{info.city}</dd>
+          <dd class="m-0 font-sans text-[15px] text-dim">{info.landmark}</dd>
+          <dd class="m-0 mt-auto pt-3">
+            <a href={info.mapsLink} target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-[14px]">
+              {tr(lang, 'Otvori u Google mapama', 'Open in Google Maps')} <Icon name="chevron-right" size={10} />
+            </a>
+          </dd>
+        </div>
+        <div class="flex flex-col gap-2 bg-ink p-8" data-reveal style="--i:1">
+          <dt class="eyebrow mb-1">{tr(lang, 'Rezervacije', 'Reservations')}</dt>
+          <dd class="m-0"><a href={`tel:${info.phoneHref}`} class="text-[26px] font-medium text-paper no-underline hover:text-gold">{info.phone}</a></dd>
+          <dd class="m-0 font-sans text-[15px] text-dim">{tr(lang, 'Pozovite nas tokom radnog vremena.', 'Call us during opening hours.')}</dd>
+        </div>
+        <div class="flex flex-col gap-2 bg-ink p-8" data-reveal style="--i:2">
+          <dt class="eyebrow mb-1">{tr(lang, 'Radno vreme', 'Opening hours')}</dt>
+          {info.hours.map((h) => (
+            <dd class="m-0 flex justify-between gap-4 border-b border-dashed border-[#3A3A3A] pb-2">
+              <span>{h.day}</span><span class="font-sans text-muted">{h.time}</span>
+            </dd>
+          ))}
+          {info.notice && <dd class="m-0 pt-1 font-sans text-[15px] text-gold">{info.notice}</dd>}
+        </div>
+        <div class="flex flex-col gap-2 bg-ink p-8" data-reveal style="--i:3">
+          <dt class="eyebrow mb-1">{tr(lang, 'Pišite nam', 'Write to us')}</dt>
+          {hasEmail && <dd class="m-0"><a href={`mailto:${info.email}`} class="text-lg text-paper hover:text-gold">{info.email}</a></dd>}
+          <dd class="m-0 mt-auto pt-1"><Social /></dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- Map + directions -->
+  <section aria-labelledby="kako-do-nas" class="border-y border-line">
+    <div class="container-site flex flex-wrap gap-14 py-20">
+      <div class="min-w-0 flex-[2_1_520px]" data-reveal>
+        {info.mapsEmbed ? (
+          <ConsentEmbed html={mapIframe(440, lang)} label={tr(lang, 'mapu', 'map')} provider="Google Maps" class="h-[440px]" />
+        ) : (
+          <div class="placeholder h-[440px]">[Google Maps embed]</div>
+        )}
+      </div>
+      <div class="min-w-0 flex-[1_1_300px]">
+        <p class="eyebrow" data-reveal>{tr(lang, 'Kako do nas', 'Getting here')}</p>
+        <h2 id="kako-do-nas" class="h-section m-0 mb-8" data-reveal style="--i:1">{tr(lang, 'Na Vračaru, kod Hrama Svetog Save', 'In Vračar, by the Temple of Saint Sava')}</h2>
+        <dl class="m-0 flex flex-col gap-6">
+          {info.directions.map((d, i) => (
+            <div data-reveal style={`--i:${i + 2}`}>
+              <dt class="text-[16px] font-semibold uppercase tracking-[0.03em]">{d.title}</dt>
+              <dd class="m-0 mt-1.5 font-sans text-muted">{d.text}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- Form -->
+  <InquiryForm service={tr(lang, 'Kontakt forma', 'Contact form')} variant="contact" />
+
+  <!-- Shortcuts -->
+  <section aria-label={tr(lang, 'Brzi linkovi', 'Quick links')} class="bg-paper text-ink">
+    <div class="container-site py-20">
+      <p class="eyebrow !text-gold-dark" data-reveal>{tr(lang, 'Možda tražite', 'You may be looking for')}</p>
+      <div class="mt-6 grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-px border border-[#D5CFC5] bg-[#D5CFC5]">
+        {shortcuts.map((s, i) => (
+          <a href={s.href} class="card group flex flex-col gap-2 bg-paper p-8 text-ink no-underline hover:text-ink" data-reveal style={`--i:${i}`}>
+            <span class="text-lg font-semibold uppercase tracking-[0.03em]">{s.label}</span>
+            <span class="font-sans text-body-dark">{s.text}</span>
+            <span class="mt-3 inline-flex items-center gap-2 text-[14px] text-gold-dark">
+              {tr(lang, 'Saznaj više', 'Learn more')} <Icon name="chevron-right" size={10} />
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

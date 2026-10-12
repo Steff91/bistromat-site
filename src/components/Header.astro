@@ -1,18 +1,37 @@
 ---
-import { getCollection } from 'astro:content';
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
+import LangSwitch from './LangSwitch.astro';
+import { getLang, route, servicesBase, tr, type Lang } from '../i18n';
+import { getServices, serviceHref } from '../i18n/content';
 
+interface Props {
+  alternates: Record<Lang, string>;
+}
+const { alternates } = Astro.props;
+
+const lang = getLang(Astro.url);
 const path = Astro.url.pathname;
-const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
-const servicesActive = path.startsWith('/usluge');
+const services = await getServices(lang);
+const servicesActive = path.startsWith(servicesBase(lang));
+const inquiryHref = `${await serviceHref('privatne-proslave', lang)}#upit`;
 
-const linksBefore = [{ href: '/meni/', label: 'Meni' }];
+const linksBefore = [{ href: route('menu', lang), label: tr(lang, 'Meni', 'Menu') }];
 const linksAfter = [
-  { href: '/chefs-table/', label: "Chef's Table" },
-  { href: '/dogadjaji/', label: 'Događaji' },
-  { href: '/kontakt/', label: 'Kontakt' },
+  { href: route('chefsTable', lang), label: "Chef's Table" },
+  { href: route('events', lang), label: tr(lang, 'Događaji', 'Events') },
+  { href: route('contact', lang), label: tr(lang, 'Kontakt', 'Contact') },
 ];
+const t = {
+  nav: tr(lang, 'Glavna navigacija', 'Main navigation'),
+  services: tr(lang, 'Usluge', 'Services'),
+  book: tr(lang, 'Rezerviši', 'Book a table'),
+  open: tr(lang, 'Otvori meni', 'Open menu'),
+  close: tr(lang, 'Zatvori meni', 'Close menu'),
+  idea: tr(lang, 'Imate drugu ideju?', 'Have another idea?'),
+  inquiry: tr(lang, 'Pošalji upit', 'Send an inquiry'),
+  mobileNav: tr(lang, 'Mobilna navigacija', 'Mobile navigation'),
+};
 
 const navLink = 'nav-link font-medium no-underline text-paper hover:text-paper';
 const mobileLink = 'border-b border-line py-3.5 font-medium no-underline text-paper hover:text-gold';
@@ -22,7 +41,7 @@ const mobileLink = 'border-b border-line py-3.5 font-medium no-underline text-pa
   <div class="header-inner container-site flex items-center justify-between gap-4 py-[18px]">
     <Logo />
 
-    <nav aria-label="Glavna navigacija" class="hidden items-center gap-6 text-[14px] uppercase tracking-[0.06em] lg:flex">
+    <nav aria-label={t.nav} class="hidden items-center gap-6 text-[14px] uppercase tracking-[0.06em] lg:flex">
       {linksBefore.map((l) => {
         const active = path.startsWith(l.href);
         return <a href={l.href} class:list={[navLink, active && '!text-gold']} aria-current={active ? 'page' : undefined}>{l.label}</a>;
@@ -38,7 +57,7 @@ const mobileLink = 'border-b border-line py-3.5 font-medium no-underline text-pa
         aria-expanded="false"
         aria-controls="mega-menu"
       >
-        Usluge
+        {t.services}
         <span class="mega-chevron inline-flex"><Icon name="chevron-right" size={9} /></span>
       </button>
 
@@ -46,18 +65,23 @@ const mobileLink = 'border-b border-line py-3.5 font-medium no-underline text-pa
         const active = l.href.startsWith('/') && !l.href.includes('#') && path.startsWith(l.href);
         return <a href={l.href} class:list={[navLink, active && '!text-gold']} aria-current={active ? 'page' : undefined}>{l.label}</a>;
       })}
-      <a href="/rezervacije/" class="btn btn-primary !px-5 !py-[11px]">Rezerviši</a>
+      <a href={route('reservations', lang)} class="btn btn-primary !px-5 !py-[11px]">{t.book}</a>
     </nav>
 
+    <div class="flex items-center gap-3 lg:hidden">
+    <LangSwitch alternates={alternates} class="text-[13px]" />
     <button
       type="button"
       class="menu-toggle inline-flex h-11 w-11 cursor-pointer items-center justify-center border-0 bg-transparent text-paper lg:hidden"
       aria-controls="mobile-nav"
       aria-expanded="false"
-      aria-label="Otvori meni"
+      aria-label={t.open}
+      data-label-open={t.open}
+      data-label-close={t.close}
     >
       <span class="menu-icon" aria-hidden="true"><span></span></span>
     </button>
+    </div>
   </div>
 
   <!-- Desktop mega menu -->
@@ -66,10 +90,10 @@ const mobileLink = 'border-b border-line py-3.5 font-medium no-underline text-pa
       <div class="grid grid-cols-4 gap-px border border-line bg-line">
         {services.map((s) => (
           <a
-            href={`/usluge/${s.id}/`}
+            href={s.href}
             class:list={[
               'card group flex flex-col gap-2 bg-ink p-6 no-underline',
-              path.startsWith(`/usluge/${s.id}`) ? 'text-gold' : 'text-paper hover:text-paper',
+              path.startsWith(s.href) ? 'text-gold' : 'text-paper hover:text-paper',
             ]}
           >
             <span class="text-[13px] text-gold">[0{s.data.order}]</span>
@@ -77,11 +101,11 @@ const mobileLink = 'border-b border-line py-3.5 font-medium no-underline text-pa
             <span class="font-sans text-[14px] leading-snug text-muted">{s.data.excerpt}</span>
           </a>
         ))}
-        <a href="/usluge/privatne-proslave/#upit" class="card group flex flex-col gap-2 bg-gold p-6 text-ink no-underline hover:text-ink">
+        <a href={inquiryHref} class="card group flex flex-col gap-2 bg-gold p-6 text-ink no-underline hover:text-ink">
           <span class="text-[13px]">[+]</span>
-          <span class="text-[15px] font-semibold uppercase tracking-[0.03em]">Imate drugu ideju?</span>
+          <span class="text-[15px] font-semibold uppercase tracking-[0.03em]">{t.idea}</span>
           <span class="mt-auto inline-flex items-center gap-2 text-[14px] font-semibold">
-            Pošalji upit <Icon name="chevron-right" size={10} />
+            {t.inquiry} <Icon name="chevron-right" size={10} />
           </span>
         </a>
       </div>
@@ -89,7 +113,7 @@ const mobileLink = 'border-b border-line py-3.5 font-medium no-underline text-pa
   </div>
 
   <!-- Mobile menu -->
-  <nav id="mobile-nav" aria-label="Mobilna navigacija" class="mobile-nav max-h-[calc(100dvh-80px)] overflow-y-auto border-t border-line lg:hidden" hidden>
+  <nav id="mobile-nav" aria-label={t.mobileNav} class="mobile-nav max-h-[calc(100dvh-80px)] overflow-y-auto border-t border-line lg:hidden" hidden>
     <div class="container-site flex flex-col py-4 text-[15px] uppercase tracking-[0.06em]">
       {linksBefore.map((l) => {
         const active = path.startsWith(l.href);
@@ -106,14 +130,14 @@ const mobileLink = 'border-b border-line py-3.5 font-medium no-underline text-pa
         aria-expanded="false"
         aria-controls="mobile-services"
       >
-        Usluge
+        {t.services}
         <span class="mega-chevron inline-flex"><Icon name="chevron-right" size={10} /></span>
       </button>
       <div id="mobile-services" class="flex flex-col border-b border-line py-2 pl-4" hidden>
         {services.map((s) => (
           <a
-            href={`/usluge/${s.id}/`}
-            class:list={['py-2.5 text-[14px] no-underline', path.startsWith(`/usluge/${s.id}`) ? 'text-gold' : 'text-muted hover:text-gold']}
+            href={s.href}
+            class:list={['py-2.5 text-[14px] no-underline', path.startsWith(s.href) ? 'text-gold' : 'text-muted hover:text-gold']}
           >{s.data.title}</a>
         ))}
       </div>
@@ -122,7 +146,7 @@ const mobileLink = 'border-b border-line py-3.5 font-medium no-underline text-pa
         const active = l.href.startsWith('/') && !l.href.includes('#') && path.startsWith(l.href);
         return <a href={l.href} class:list={[mobileLink, active && '!text-gold']} aria-current={active ? 'page' : undefined}>{l.label}</a>;
       })}
-      <a href="/rezervacije/" class="btn btn-primary mt-5 justify-center">Rezerviši</a>
+      <a href={route('reservations', lang)} class="btn btn-primary mt-5 justify-center">{t.book}</a>
     </div>
   </nav>
 </header>
@@ -244,7 +268,7 @@ const mobileLink = 'border-b border-line py-3.5 font-medium no-underline text-pa
   const setMobile = (open: boolean) => {
     if (!toggle || !mobileNav) return;
     toggle.setAttribute('aria-expanded', String(open));
-    toggle.setAttribute('aria-label', open ? 'Zatvori meni' : 'Otvori meni');
+    toggle.setAttribute('aria-label', (open ? toggle.dataset.labelClose : toggle.dataset.labelOpen) ?? '');
     mobileNav.hidden = !open;
   };
   toggle?.addEventListener('click', () => setMobile(toggle.getAttribute('aria-expanded') !== 'true'));

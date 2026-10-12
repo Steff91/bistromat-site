@@ -316,3 +316,236 @@ collections:
       - { name: description, label: Opis (za pretraživače), widget: string }
       - { name: updated, label: Poslednja izmena, widget: string }
       - { name: body, label: Tekst, widget: markdown }
+
+  # ---------------------------------------------------------------------------
+  # ENGLISH VERSION (/en/)
+  # English entries hold only the translated text. Everything else (dates, prices,
+  # seats, photos, order, links) comes from the Serbian entry. Lists are matched
+  # by position, so keep them in the same order as in Serbian.
+  # ---------------------------------------------------------------------------
+
+  - name: settings_en
+    label: "EN · Podešavanja"
+    files:
+      - name: info_en
+        label: "EN · Kontakt i radno vreme"
+        file: src/data/en/info.json
+        fields:
+          - { name: about, label: Opis restorana (About us), widget: text }
+          - { name: aboutShort, label: Kratak opis (hero, Google), widget: text }
+          - { name: city, label: Grad, widget: string }
+          - { name: landmark, label: Lokacija (kraj, orijentir), widget: string }
+          - name: hours
+            label: Radno vreme (isti redosled kao srpski)
+            widget: list
+            fields:
+              - { name: day, label: Dani, widget: string }
+              - { name: time, label: Vreme, widget: string }
+          - { name: notice, label: Obaveštenje, widget: string, required: false }
+          - name: directions
+            label: Kako do nas (isti redosled kao srpski)
+            widget: list
+            fields:
+              - { name: title, label: Naslov, widget: string }
+              - { name: text, label: Tekst, widget: text }
+
+      - name: reservations_en
+        label: "EN · Rezervacije"
+        file: src/data/en/reservations.json
+        fields:
+          - { name: intro, label: Uvod, widget: text }
+          - name: notes
+            label: Good to know (isti redosled kao srpski)
+            widget: list
+            fields:
+              - { name: title, label: Naslov, widget: string }
+              - { name: text, label: Tekst, widget: text }
+
+      - name: menu_en
+        label: "EN · Meni"
+        file: src/data/en/menu.json
+        fields:
+          - { name: season, label: Sezona, widget: string }
+          - { name: updated, label: Ažurirano, widget: string }
+          - { name: intro, label: Uvod, widget: text }
+          - name: cards
+            label: Nazivi tabova (isti redosled kao srpski)
+            widget: list
+            fields:
+              - { name: label, label: Naziv taba, widget: string }
+          - name: highlights
+            label: Chef's picks (isti redosled kao srpski; cena dolazi iz srpskog)
+            widget: list
+            fields:
+              - { name: name, label: Jelo, widget: string }
+              - { name: description, label: Opis, widget: string }
+          - { name: allergens, label: Napomena o alergenima, widget: text }
+
+      - name: chefTable_en
+        label: "EN · Chef's Table"
+        file: src/data/en/chef-table.json
+        fields:
+          - { name: intro, label: Uvod, widget: text }
+          - name: facts
+            label: Ključne informacije (isti redosled)
+            widget: list
+            fields:
+              - { name: label, label: Oznaka, widget: string }
+              - { name: value, label: Vrednost, widget: string }
+          - name: dates
+            label: Termini (isti redosled; datum, vreme i mesta dolaze iz srpskog)
+            widget: list
+            fields:
+              - { name: theme, label: Tema, widget: string }
+              - { name: guest, label: Gost, widget: string, required: false }
+              - { name: price, label: Cena, widget: string }
+          - name: timeline
+            label: Kako izgleda veče (isti redosled)
+            widget: list
+            fields:
+              - { name: title, label: Naslov, widget: string }
+              - { name: text, label: Tekst, widget: string }
+          - name: chef
+            label: Šef
+            widget: object
+            fields:
+              - { name: role, label: Uloga, widget: string }
+              - { name: bio, label: Biografija, widget: text }
+              - { name: quote, label: Citat, widget: text }
+          - name: sampleMenu
+            label: Primer menija
+            widget: object
+            fields:
+              - { name: title, label: Naslov, widget: string }
+              - name: courses
+                label: Sledovi (isti redosled)
+                widget: list
+                fields:
+                  - { name: dish, label: Jelo, widget: string }
+                  - { name: wine, label: Vino, widget: string }
+          - name: past
+            label: Prethodne večeri (isti redosled)
+            widget: list
+            fields:
+              - { name: title, label: Naziv, widget: string, required: false }
+              - { name: caption, label: Opis, widget: string }
+          - name: faq
+            label: FAQ
+            widget: list
+            fields:
+              - { name: q, label: Pitanje, widget: string }
+              - { name: a, label: Odgovor, widget: text }
+
+  - name: events_en
+    label: "EN · Događaji"
+    label_singular: "EN događaj"
+    folder: src/content/en/events
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} ← {{ref}}"
+    fields:
+      - { name: ref, label: Srpski original, widget: relation, collection: events, value_field: "{{slug}}", search_fields: [title], display_fields: [title] }
+      - { name: title, label: Naziv (engleski; od njega nastaje URL), widget: string }
+      - { name: excerpt, label: Kratak opis, widget: text }
+      - { name: price, label: Cena, widget: string, required: false }
+      - name: program
+        label: Program (isti redosled; vreme dolazi iz srpskog)
+        widget: list
+        required: false
+        fields:
+          - { name: title, label: Stavka, widget: string }
+      - name: menu
+        label: Meni večeri (isti redosled)
+        widget: list
+        required: false
+        fields:
+          - { name: dish, label: Jelo, widget: string }
+          - { name: wine, label: Vino, widget: string, required: false }
+      - name: guest
+        label: Gost
+        widget: object
+        required: false
+        fields:
+          - { name: role, label: Uloga, widget: string }
+          - { name: bio, label: Biografija, widget: text }
+      - name: gallery
+        label: Opisi fotografija (isti redosled)
+        widget: list
+        required: false
+        fields:
+          - { name: alt, label: Opis, widget: string }
+      - { name: body, label: Opis večeri, widget: markdown, required: false }
+
+  - name: services_en
+    label: "EN · Usluge"
+    label_singular: "EN usluga"
+    folder: src/content/en/services
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} ← {{ref}}"
+    fields:
+      - { name: ref, label: Srpski original, widget: relation, collection: services, value_field: "{{slug}}", search_fields: [title], display_fields: [title] }
+      - { name: title, label: Naziv (engleski; od njega nastaje URL), widget: string }
+      - { name: excerpt, label: Kratak opis, widget: string }
+      - { name: heroTitle, label: Naslov, widget: string }
+      - { name: heroTitleEm, label: Naslov – drugi red (kurziv), widget: string, required: false }
+      - { name: intro, label: Uvod, widget: text }
+      - name: facts
+        label: Ključne informacije (isti redosled)
+        widget: list
+        required: false
+        fields:
+          - { name: label, label: Oznaka, widget: string }
+          - { name: value, label: Vrednost, widget: string }
+      - { name: occasions, label: Prilike, widget: list, required: false }
+      - { name: includedTitle, label: Naslov sekcije „What's included“, widget: string, required: false }
+      - name: included
+        label: Šta je uključeno (isti redosled)
+        widget: list
+        required: false
+        fields:
+          - { name: title, label: Naslov, widget: string }
+          - { name: text, label: Tekst, widget: text }
+      - name: gallery
+        label: Opisi fotografija (isti redosled)
+        widget: list
+        required: false
+        fields:
+          - { name: alt, label: Opis, widget: string }
+      - { name: packagesTitle, label: Naslov sekcije paketa, widget: string, required: false }
+      - name: packages
+        label: Paketi (isti redosled)
+        widget: list
+        required: false
+        fields:
+          - { name: label, label: Oznaka, widget: string }
+          - { name: name, label: Naziv, widget: string }
+          - { name: features, label: Stavke, widget: list }
+          - { name: price, label: Cena, widget: string }
+      - name: steps
+        label: Kako funkcioniše (isti redosled)
+        widget: list
+        required: false
+        fields:
+          - { name: title, label: Korak, widget: string }
+          - { name: text, label: Tekst, widget: text }
+      - name: faq
+        label: FAQ
+        widget: list
+        required: false
+        fields:
+          - { name: q, label: Pitanje, widget: string }
+          - { name: a, label: Odgovor, widget: text }
+      - { name: body, label: Dodatni tekst, widget: markdown, required: false }
+
+  - name: legal_en
+    label: "EN · Pravne stranice"
+    folder: src/content/en/legal
+    create: false
+    delete: false
+    fields:
+      - { name: ref, label: Srpski original, widget: hidden }
+      - { name: title, label: Naslov, widget: string }
+      - { name: description, label: Opis (za pretraživače), widget: string }
+      - { name: updated, label: Poslednja izmena, widget: string }
+      - { name: body, label: Tekst, widget: markdown }

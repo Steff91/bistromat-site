@@ -1,5 +1,6 @@
 ---
 import LogoMark from './LogoMark.astro';
+import { getLang, route, tr } from '../i18n';
 
 interface Props {
   /**
@@ -10,9 +11,10 @@ interface Props {
   class?: string;
 }
 const { mode = 'responsive', class: className } = Astro.props;
+const lang = getLang(Astro.url);
 ---
 
-<a href="/" class:list={['flex items-center gap-3.5 text-paper no-underline hover:text-paper', className]} aria-label="Bistromat — početna">
+<a href={route('home', lang)} class:list={['flex items-center gap-3.5 text-paper no-underline hover:text-paper', className]} aria-label={tr(lang, 'Bistromat — početna', 'Bistromat — home')}>
   {mode !== 'wordmark' && <LogoMark variant="icon" class="logo-icon block h-11 w-11 shrink-0" />}
   <LogoMark
     variant="wordmark"

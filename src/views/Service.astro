@@ -1,0 +1,229 @@
+---
+import FaqList from '../components/FaqList.astro';
+import { render, type CollectionEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Placeholder from '../components/Placeholder.astro';
+import InquiryForm from '../components/InquiryForm.astro';
+import Icon from '../components/Icon.astro';
+import { getLang, route, tr } from '../i18n';
+import type { Localized } from '../i18n/content';
+
+type Service = Localized<CollectionEntry<'services'>['data']>;
+interface Props {
+  service: Service;
+  /** All services in this language, sorted */
+  all: Service[];
+}
+
+const { service, all } = Astro.props;
+const lang = getLang(Astro.url);
+const d = service.data;
+const { Content } = await render(service.bodyEntry);
+const hasBody = Boolean(service.bodyEntry.body?.trim());
+
+// Related: the next three services in order, wrapping around
+const idx = all.findIndex((s) => s.ref === service.ref);
+const related = [1, 2, 3].map((k) => all[(idx + k) % all.length]).filter((r) => r.ref !== service.ref);
+
+const defaultSteps = lang === 'en'
+  ? [
+      { title: 'Send an inquiry', text: 'The date, number of guests and what you would like to celebrate.' },
+      { title: 'We agree the details', text: 'We reply within [24h] with a suggested menu and a quote.' },
+      { title: 'Date confirmed', text: 'The date is yours with a [X%] deposit. Leave the rest to us.' },
+    ]
+  : [
+      { title: 'Pošaljete upit', text: 'Datum, broj gostiju i šta želite da proslavite.' },
+      { title: 'Dogovorimo detalje', text: 'Javljamo se u roku od [24h] sa predlogom menija i ponudom.' },
+      { title: 'Potvrda termina', text: 'Termin je vaš uz avans od [X%]. Ostalo prepustite nama.' },
+    ];
+const steps = d.steps.length ? d.steps : defaultSteps;
+
+const faqSchema = d.faq.length
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: d.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+    }
+  : null;
+
+// Gallery fills a 4-column, 2-row grid: first photo large; with 4 photos the last one spans 2 columns.
+const gallery = d.gallery.slice(0, 5);
+const galleryLayout = (i: number) =>
+  i === 0 ? 'md:col-span-2 md:row-span-2' : gallery.length === 4 && i === 3 ? 'md:col-span-2' : '';
+---
+
+<Base title={`${d.title} — Bistromat`} description={d.intro} alternates={service.alternates}>
+  {faqSchema && <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+
+  <!-- Hero -->
+  <section class="container-site pt-16 pb-20">
+    <p class="mb-7 text-[14px] text-dim">
+      <a href={route('home', lang)} class="text-dim hover:text-paper">{tr(lang, 'Početna', 'Home')}</a> / <a href={`${route('home', lang)}#${tr(lang, 'usluge', 'services')}`} class="text-dim hover:text-paper">{tr(lang, 'Usluge', 'Services')}</a> / {d.title}
+    </p>
+    <div class="flex flex-wrap items-center gap-14">
+      <div class="min-w-0 flex-[1_1_460px]">
+        <p class="eyebrow mb-[18px]" data-reveal>{d.title}</p>
+        <h1 class="m-0 font-medium leading-[1.1] tracking-[-0.02em] [font-size:clamp(32px,4.4vw,56px)]" data-reveal style="--i:1">
+          {d.heroTitle}{d.heroTitleEm && (<><br /><em class="font-normal">{d.heroTitleEm}</em></>)}
+        </h1>
+        <p class="mt-6 max-w-[500px] font-sans text-base text-muted" data-reveal style="--i:2">{d.intro}</p>
+        <div class="mt-9 flex flex-wrap gap-3.5" data-reveal style="--i:3">
+          {d.form !== 'none' && <a href="#upit" class="btn btn-primary">{d.form === 'voucher' ? tr(lang, 'Naruči vaučer', 'Order a voucher') : tr(lang, 'Proveri slobodan termin', 'Check availability')}</a>}
+          {d.packages.length > 0 && <a href="#paketi" class="btn btn-outline">{d.packagesTitle}</a>}
+        </div>
+      </div>
+      <div class="min-w-0 flex-[1_1_420px]" data-reveal style="--i:2">
+        <Placeholder label={`${tr(lang, 'Foto', 'Photo')}: ${d.title.toLowerCase()}`} src={d.image} alt={d.title} class="h-[480px]" />
+      </div>
+    </div>
+
+    {d.facts.length > 0 && (
+      <dl class="mt-14 mb-0 grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-px border border-line bg-line">
+        {d.facts.map((f, i) => (
+          <div class="bg-ink px-6 py-5" data-reveal style={`--i:${i}`}>
+            <dt class="text-[13px] uppercase tracking-[0.12em] text-dim">{f.label}</dt>
+            <dd class="m-0 mt-1.5 text-[17px] font-medium">{f.value}</dd>
+          </div>
+        ))}
+      </dl>
+    )}
+  </section>
+
+  <!-- Occasions -->
+  {d.occasions.length > 0 && (
+    <section aria-label={tr(lang, 'Prilike', 'Occasions')} class="border-y border-line">
+      <div class="container-site flex flex-wrap items-center gap-x-7 gap-y-3 py-10">
+        <span class="text-[14px] uppercase tracking-[0.16em] text-gold">{tr(lang, 'Za prilike:', 'For:')}</span>
+        {d.occasions.map((o, i) => (
+          <>
+            {i > 0 && <span class="text-[#4A4A4A]" aria-hidden="true">/</span>}
+            <span>{o}</span>
+          </>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- What's included -->
+  {d.included.length > 0 && (
+    <section aria-labelledby="ukljuceno" class="bg-paper text-ink">
+      <div class="container-site py-24">
+        <p class="eyebrow !text-gold-dark" data-reveal>{tr(lang, 'Šta je uključeno', "What's included")}</p>
+        <h2 id="ukljuceno" class="h-section m-0 mb-12" data-reveal style="--i:1">{d.includedTitle}</h2>
+        <div class="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-x-12 gap-y-10">
+          {d.included.map((item, i) => (
+            <div class="border-t border-[#BDB7AD] pt-5" data-reveal style={`--i:${i % 3}`}>
+              <p class="m-0 text-[14px] text-gold-dark">[0{i + 1}]</p>
+              <h3 class="mt-2 mb-2 text-[17px] font-semibold uppercase tracking-[0.03em]">{item.title}</h3>
+              <p class="m-0 font-sans text-body-dark">{item.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Optional free text -->
+  {hasBody && (
+    <section class="container-site py-20">
+      <div class="max-w-[720px] font-sans text-base text-muted [&_h2]:font-mono [&_h2]:text-paper" data-reveal>
+        <Content />
+      </div>
+    </section>
+  )}
+
+  <!-- Gallery -->
+  {d.gallery.length > 0 && (
+    <section aria-label={tr(lang, 'Galerija', 'Gallery')} class="container-site py-24">
+      <div class="grid auto-rows-[220px] grid-cols-1 gap-4 md:grid-cols-4">
+        {gallery.map((g, i) => (
+          <div class:list={['min-h-0', galleryLayout(i)]} data-reveal style={`--i:${i}`}>
+            <Placeholder label={g.alt} src={g.src} alt={g.alt} class="h-full" />
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- Packages -->
+  {d.packages.length > 0 && (
+    <section id="paketi" class:list={['container-site py-24', d.gallery.length > 0 && 'pt-0']}>
+      <p class="eyebrow" data-reveal>{tr(lang, 'Paketi', 'Packages')}</p>
+      <h2 class="h-section m-0 mb-11" data-reveal style="--i:1">{d.packagesTitle}</h2>
+      <div class="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-7">
+        {d.packages.map((p, i) => (
+          <article class:list={['flex flex-col gap-4 rounded-md border p-8', p.featured ? 'border-gold' : 'border-line']} data-reveal style={`--i:${i}`}>
+            <p class="m-0 text-[14px] text-gold">{p.label}</p>
+            <h3 class="m-0 text-[22px] font-semibold uppercase tracking-[0.03em]">{p.name}</h3>
+            <ul class="m-0 flex list-none flex-col gap-2 p-0 font-sans text-muted">
+              {p.features.map((f) => <li>— {f}</li>)}
+            </ul>
+            <p class="mt-2 mb-0 text-xl font-medium">{p.price}</p>
+            {d.form !== 'none' && (
+              <a href="#upit" class:list={['btn mt-auto justify-center', p.featured ? 'btn-primary' : 'btn-outline']}>{tr(lang, 'Izaberi', 'Choose')}</a>
+            )}
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- How it works -->
+  <section aria-label={tr(lang, 'Kako funkcioniše', 'How it works')} class="bg-paper text-ink">
+    <div class="container-site py-[88px]">
+      <p class="eyebrow !text-gold-dark" data-reveal>{tr(lang, 'Kako funkcioniše', 'How it works')}</p>
+      <div class="mt-7 grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-10">
+        {steps.map((s, i) => (
+          <div data-reveal style={`--i:${i}`}>
+            <p class="m-0 text-[40px] font-medium">0{i + 1}</p>
+            <h3 class="my-2 text-[17px] font-semibold uppercase">{s.title}</h3>
+            <p class="m-0 font-sans text-body-dark">{s.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  {d.faq.length > 0 && (
+    <section aria-labelledby="pitanja" class="container-site py-24">
+      <div class="flex flex-wrap gap-14">
+        <div class="min-w-0 flex-[1_1_280px]">
+          <p class="eyebrow" data-reveal>{tr(lang, 'Česta pitanja', 'FAQ')}</p>
+          <h2 id="pitanja" class="h-section m-0" data-reveal style="--i:1">{tr(lang, 'Pre nego što pitate', 'Before you ask')}</h2>
+        </div>
+        <div class="min-w-0 flex-[2_1_520px]">
+          <FaqList items={d.faq} />
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Inquiry -->
+  {d.form !== 'none' && (
+    <div class="border-t border-line">
+      <InquiryForm service={d.title} variant={d.form} options={d.packages.map((p) => p.name)} />
+    </div>
+  )}
+
+  <!-- Other services -->
+  <section aria-labelledby="ostale" class="border-t border-line">
+    <div class="container-site py-20">
+      <p class="eyebrow" data-reveal>{tr(lang, 'Ostale usluge', 'Other services')}</p>
+      <h2 id="ostale" class="h-section m-0 mb-10" data-reveal style="--i:1">{tr(lang, 'Možda vas zanima i', 'You may also like')}</h2>
+      <div class="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-px border border-line bg-line">
+        {related.map((r, i) => (
+          <a href={r.href} class="card group flex min-h-[200px] flex-col gap-3 bg-ink p-8 text-paper no-underline hover:text-paper" data-reveal style={`--i:${i}`}>
+            <span class="text-[14px] text-gold">[0{r.data.order}]</span>
+            <span class="text-lg font-semibold uppercase tracking-[0.03em]">{r.data.title}</span>
+            <span class="font-sans text-muted">{r.data.excerpt}</span>
+            <span class="mt-auto inline-flex items-center gap-2 text-[14px] text-gold">
+              {tr(lang, 'Saznaj više', 'Learn more')} <Icon name="chevron-right" size={11} />
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+

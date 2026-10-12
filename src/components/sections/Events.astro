@@ -3,19 +3,21 @@ import BrandIcon from '../BrandIcon.astro';
 import EventCard from '../EventCard.astro';
 import Icon from '../Icon.astro';
 import { getEventItems } from '../../lib/events';
+import { getLang, route, tr } from '../../i18n';
 
-const { upcoming } = await getEventItems();
+const lang = getLang(Astro.url);
+const { upcoming } = await getEventItems(lang);
 const next = upcoming.slice(0, 3);
 ---
 
-<section id="dogadjaji" class="container-site py-24">
+<section id={tr(lang, 'dogadjaji', 'events')} class="container-site py-24">
   <div class="mb-11 flex flex-wrap items-end justify-between gap-6">
     <div>
-      <p class="eyebrow inline-flex items-center gap-2.5" data-reveal><BrandIcon name="glass" size={14} />Događaji</p>
-      <h2 class="h-section m-0" data-reveal style="--i:1">Narednih večeri u Bistromatu</h2>
+      <p class="eyebrow inline-flex items-center gap-2.5" data-reveal><BrandIcon name="glass" size={14} />{tr(lang, 'Događaji', 'Events')}</p>
+      <h2 class="h-section m-0" data-reveal style="--i:1">{tr(lang, 'Narednih večeri u Bistromatu', 'Coming up at Bistromat')}</h2>
     </div>
-    <a href="/dogadjaji/" class="inline-flex items-center gap-2 text-[14px]" data-reveal style="--i:2">
-      Svi događaji <Icon name="chevron-right" size={10} />
+    <a href={route('events', lang)} class="inline-flex items-center gap-2 text-[14px]" data-reveal style="--i:2">
+      {tr(lang, 'Svi događaji', 'All events')} <Icon name="chevron-right" size={10} />
     </a>
   </div>
   {next.length > 0 ? (
@@ -23,6 +25,8 @@ const next = upcoming.slice(0, 3);
       {next.map((item, i) => <EventCard item={item} index={i} />)}
     </div>
   ) : (
-    <p class="m-0 font-sans text-muted">Novi događaji uskoro. <a href="/dogadjaji/">Pogledajte prethodne večeri</a>.</p>
+    <p class="m-0 font-sans text-muted">
+      {tr(lang, 'Novi događaji uskoro.', 'New events coming soon.')} <a href={route('events', lang)}>{tr(lang, 'Pogledajte prethodne večeri', 'See past evenings')}</a>.
+    </p>
   )}
 </section>

@@ -2,14 +2,20 @@
 // PDF flipbook: renders PDF pages with PDF.js and flips them with StPageFlip.
 // Libraries load only when the viewer scrolls into view.
 import Icon from './Icon.astro';
-import menu from '../data/menu.json';
+import { getLang, getMenu, tr } from '../i18n';
 
+const lang = getLang(Astro.url);
+const menu = getMenu(lang);
 const cards = menu.cards.filter((c) => c.pdf);
+const msg = {
+  loading: tr(lang, 'Učitavanje menija…', 'Loading the menu…'),
+  error: tr(lang, 'Meni trenutno nije moguće prikazati.', 'The menu cannot be displayed right now.'),
+};
 ---
 
-<div class="flipbook" data-flipbook>
+<div class="flipbook" data-flipbook data-msg-loading={msg.loading} data-msg-error={msg.error}>
   {cards.length > 1 && (
-    <div role="tablist" aria-label="Karte" class="mb-8 flex flex-wrap justify-center gap-2">
+    <div role="tablist" aria-label={tr(lang, 'Karte', 'Menus')} class="mb-8 flex flex-wrap justify-center gap-2">
       {cards.map((c, i) => (
         <button
           type="button"
@@ -25,22 +31,22 @@ const cards = menu.cards.filter((c) => c.pdf);
   <div class="relative mx-auto max-w-[1000px]">
     <div class="fb-stage mx-auto" data-pdf={cards[0]?.pdf}></div>
     <div class="fb-status absolute inset-0 flex items-center justify-center text-[14px] uppercase tracking-[0.08em] text-dim">
-      Učitavanje menija…
+      {msg.loading}
     </div>
   </div>
 
   <div class="mt-8 flex items-center justify-center gap-6">
-    <button type="button" class="fb-prev inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-md border border-line bg-transparent text-paper hover:border-gold hover:text-gold" aria-label="Prethodna strana">
+    <button type="button" class="fb-prev inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-md border border-line bg-transparent text-paper hover:border-gold hover:text-gold" aria-label={tr(lang, 'Prethodna strana', 'Previous page')}>
       <Icon name="chevron-right" size={12} class="rotate-180" />
     </button>
     <span class="fb-counter min-w-[72px] text-center text-[14px] text-muted" aria-live="polite">– / –</span>
-    <button type="button" class="fb-next inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-md border border-line bg-transparent text-paper hover:border-gold hover:text-gold" aria-label="Sledeća strana">
+    <button type="button" class="fb-next inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-md border border-line bg-transparent text-paper hover:border-gold hover:text-gold" aria-label={tr(lang, 'Sledeća strana', 'Next page')}>
       <Icon name="chevron-right" size={12} />
     </button>
   </div>
   <p class="mt-4 mb-0 text-center font-sans text-[14px] text-dim">
-    Prevucite ugao stranice ili koristite strelice. Ne prikazuje se?{' '}
-    <a class="fb-open" href={cards[0]?.pdf} target="_blank" rel="noopener">Otvorite PDF</a>.
+    {tr(lang, 'Prevucite ugao stranice ili koristite strelice. Ne prikazuje se?', "Drag a page corner or use the arrows. Not showing?")}{' '}
+    <a class="fb-open" href={cards[0]?.pdf} target="_blank" rel="noopener">{tr(lang, 'Otvorite PDF', 'Open the PDF')}</a>.
   </p>
 </div>
 
@@ -106,7 +112,7 @@ const cards = menu.cards.filter((c) => c.pdf);
       libs = await loadLibs();
     } catch (err) {
       console.error('[flipbook] libraries failed to load', err);
-      status.textContent = 'Meni trenutno nije moguće prikazati.';
+      status.textContent = el.dataset.msgError ?? '';
       return;
     }
 
@@ -121,7 +127,7 @@ const cards = menu.cards.filter((c) => c.pdf);
 
     async function open(url: string) {
       el.removeAttribute('data-ready');
-      status.textContent = 'Učitavanje menija…';
+      status.textContent = el.dataset.msgLoading ?? '';
       book?.destroy();
       book = null;
       stage.innerHTML = '';
@@ -152,7 +158,7 @@ const cards = menu.cards.filter((c) => c.pdf);
         el.setAttribute('data-ready', '');
       } catch (err) {
         console.error('[flipbook] failed to render', url, err);
-        status.textContent = 'Meni trenutno nije moguće prikazati.';
+        status.textContent = el.dataset.msgError ?? '';
       }
     }
 

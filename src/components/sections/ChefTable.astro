@@ -3,38 +3,41 @@ import BrandIcon from '../BrandIcon.astro';
 import Placeholder from '../Placeholder.astro';
 import Icon from '../Icon.astro';
 import { nextAvailable, formatDate } from '../../lib/chef-table';
+import { getLang, route, timeLabel, tr } from '../../i18n';
 
-const next = nextAvailable();
+const lang = getLang(Astro.url);
+const next = nextAvailable(lang);
+const page = route('chefsTable', lang);
 ---
 
 <section id="chef-table" class="bg-paper text-ink">
   <div class="container-site flex flex-wrap items-center gap-14 py-24">
     <div class="min-w-0 flex-[1_1_460px]">
       <p class="eyebrow inline-flex items-center gap-2.5 !text-gold-dark" data-reveal><BrandIcon name="plate" size={14} />Chef's Table</p>
-      <h2 class="h-section m-0" data-reveal style="--i:1">Večera za šefovim stolom</h2>
+      <h2 class="h-section m-0" data-reveal style="--i:1">{tr(lang, 'Večera za šefovim stolom', "Dinner at the chef's table")}</h2>
       <p class="mt-5 max-w-[500px] font-sans text-body-dark" data-reveal style="--i:2">
-        Degustacioni meni u više sledova, uparen sa vinima, za mali broj gostiju. Šef vodi kroz svako jelo.
+        {tr(lang, 'Degustacioni meni u više sledova, uparen sa vinima, za mali broj gostiju. Šef vodi kroz svako jelo.', 'A multi-course tasting menu with paired wines, for a handful of guests. The chef guides you through every dish.')}
       </p>
 
       {next && (
         <div class="mt-8 border-y border-[#BDB7AD] py-5" data-reveal style="--i:3">
-          <p class="m-0 text-[14px] uppercase tracking-[0.12em] text-gold-dark">Sledeći termin</p>
-          <p class="mt-2 mb-0 text-lg font-semibold">{formatDate(next.date)} · {next.time}h</p>
+          <p class="m-0 text-[14px] uppercase tracking-[0.12em] text-gold-dark">{tr(lang, 'Sledeći termin', 'Next date')}</p>
+          <p class="mt-2 mb-0 text-lg font-semibold">{formatDate(next.date, lang)} · {timeLabel(next.time, lang)}</p>
           <p class="mt-1 mb-0 font-sans text-body-dark">
-            {next.theme}{next.guest && ` ${next.guest}`} · još {next.seatsLeft} mesta
+            {next.theme}{next.guest && ` ${next.guest}`} · {tr(lang, `još ${next.seatsLeft} mesta`, `${next.seatsLeft} seats left`)}
           </p>
         </div>
       )}
 
       <div class="mt-8 flex flex-wrap gap-3.5" data-reveal style="--i:4">
-        <a href="/chefs-table/#termini" class="btn btn-dark">Rezerviši mesto</a>
-        <a href="/chefs-table/" class="btn btn-outline-dark">
-          Saznaj više <Icon name="chevron-right" size={11} />
+        <a href={`${page}#${tr(lang, 'termini', 'dates')}`} class="btn btn-dark">{tr(lang, 'Rezerviši mesto', 'Book a seat')}</a>
+        <a href={page} class="btn btn-outline-dark">
+          {tr(lang, 'Saznaj više', 'Learn more')} <Icon name="chevron-right" size={11} />
         </a>
       </div>
     </div>
     <div class="min-w-0 flex-[1_1_380px]" data-reveal style="--i:2">
-      <Placeholder label="Foto: šef" class="h-[460px]" light />
+      <Placeholder label={tr(lang, 'Foto: šef', 'Photo: chef')} class="h-[460px]" light />
     </div>
   </div>
 </section>

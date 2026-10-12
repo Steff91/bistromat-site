@@ -2,20 +2,22 @@
 import BrandIcon from '../BrandIcon.astro';
 import Placeholder from '../Placeholder.astro';
 import Icon from '../Icon.astro';
-import menu from '../../data/menu.json';
+import { getLang, getMenu, route, tr } from '../../i18n';
 
-// Highlighted dishes stay in HTML (indexable); the full menu lives on /meni/ as a flipbook.
+// Highlighted dishes stay in HTML (indexable); the full menu lives on the menu page as a flipbook.
+const lang = getLang(Astro.url);
+const menu = getMenu(lang);
 const highlights = menu.highlights.slice(0, 3);
 const mainPdf = menu.cards[0]?.pdf;
 ---
 
-<section id="meni" class="container-site flex flex-wrap items-center gap-14 py-24">
+<section id={tr(lang, 'meni', 'menu')} class="container-site flex flex-wrap items-center gap-14 py-24">
   <div class="min-w-0 flex-[1_1_420px]" data-reveal>
-    <Placeholder label="Foto: escargots" class="h-[420px]" />
+    <Placeholder label={tr(lang, 'Foto: escargots', 'Photo: escargots')} class="h-[420px]" />
   </div>
   <div class="min-w-0 flex-[1_1_420px]">
-    <p class="eyebrow inline-flex items-center gap-2.5" data-reveal><BrandIcon name="fork" size={14} />Meni</p>
-    <h2 class="h-section m-0" data-reveal style="--i:1">Sezonski meni, klasično francuski</h2>
+    <p class="eyebrow inline-flex items-center gap-2.5" data-reveal><BrandIcon name="fork" size={14} />{tr(lang, 'Meni', 'Menu')}</p>
+    <h2 class="h-section m-0" data-reveal style="--i:1">{tr(lang, 'Sezonski meni, klasično francuski', 'A seasonal menu, classically French')}</h2>
     <ul class="mt-8 flex list-none flex-col gap-4 p-0">
       {highlights.map((d, i) => (
         <li class="flex items-baseline gap-3" data-reveal style={`--i:${i + 2}`}>
@@ -26,12 +28,12 @@ const mainPdf = menu.cards[0]?.pdf;
       ))}
     </ul>
     <div class="mt-8 flex flex-wrap gap-3.5" data-reveal style="--i:5">
-      <a href="/meni/" class="btn btn-primary">
-        <Icon name="book-open" size={14} /> Prelistaj meni
+      <a href={route('menu', lang)} class="btn btn-primary">
+        <Icon name="book-open" size={14} /> {tr(lang, 'Prelistaj meni', 'Browse the menu')}
       </a>
       {mainPdf && (
         <a href={mainPdf} class="btn btn-outline" download>
-          <Icon name="download" size={14} /> Preuzmi PDF
+          <Icon name="download" size={14} /> {tr(lang, 'Preuzmi PDF', 'Download PDF')}
         </a>
       )}
     </div>

@@ -1,0 +1,16 @@
+{
+  "about": "Bistromat is an intimate open-kitchen restaurant in the heart of Vračar, close to the Temple of Saint Sava and far from the city noise. Combining French culinary technique, cooking the Escoffier way, with carefully sourced local ingredients, we create refined dishes of European gastronomy in a warm, homely setting where the food is prepared right in front of you, for unforgettable flavours and an experience people talk about.",
+  "aboutShort": "An intimate open-kitchen restaurant in the heart of Vračar, by the Temple of Saint Sava. French technique the Escoffier way, with carefully sourced local ingredients.",
+  "landmark": "Vračar, by the Temple of Saint Sava",
+  "city": "Belgrade",
+  "hours": [
+    { "day": "Mon–Sat", "time": "12–23h" },
+    { "day": "Sun", "time": "12–18h" }
+  ],
+  "notice": "",
+  "directions": [
+    { "title": "Parking", "text": "[Where to park nearby: zone, garage, street.]" },
+    { "title": "Public transport", "text": "[Nearest stops and bus/trolleybus lines.]" },
+    { "title": "Entrance", "text": "[How to find the entrance, wheelchair access.]" }
+  ]
+}

@@ -1,0 +1,11 @@
+---
+import Service from '../../../views/Service.astro';
+import { getServices } from '../../../i18n/content';
+
+export async function getStaticPaths() {
+  const list = await getServices('en');
+  return list.map((s) => ({ params: { slug: s.slug }, props: { service: s, all: list } }));
+}
+---
+
+<Service service={Astro.props.service} all={Astro.props.all} />

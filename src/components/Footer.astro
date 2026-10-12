@@ -1,40 +1,46 @@
 ---
-import { getCollection } from 'astro:content';
 import Logo from './Logo.astro';
 import LogoMark from './LogoMark.astro';
 import Social from './Social.astro';
-import info from '../data/info.json';
+import { getInfo, getLang, route, tr } from '../i18n';
+import { getServices } from '../i18n/content';
 
-const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+const lang = getLang(Astro.url);
+const info = getInfo(lang);
+const services = await getServices(lang);
 const year = new Date().getFullYear();
+const link = 'text-[#D9D4CC] no-underline hover:text-paper';
+const nav = [
+  { href: route('menu', lang), label: tr(lang, 'Meni', 'Menu') },
+  { href: route('chefsTable', lang), label: "Chef's Table" },
+  { href: route('events', lang), label: tr(lang, 'Događaji', 'Events') },
+  { href: route('reservations', lang), label: tr(lang, 'Rezervacije', 'Reservations') },
+  { href: route('contact', lang), label: tr(lang, 'Kontakt', 'Contact') },
+];
 ---
 
 <footer class="border-t border-line bg-ink-deep">
   <div class="container-site grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-10 pt-[72px] pb-12">
     <div class="flex flex-col gap-4">
       <Logo mode="full" class="gap-3 [&_.logo-icon]:h-10 [&_.logo-icon]:w-10 [&_.logo-wordmark]:h-7" />
-      <p class="m-0 font-sans text-[15px] text-dim">Intimni restoran sa konceptom otvorene kuhinje.<br />{info.landmark}.</p>
+      <p class="m-0 font-sans text-[15px] text-dim">{tr(lang, 'Intimni restoran sa konceptom otvorene kuhinje.', 'An intimate open-kitchen restaurant.')}<br />{info.landmark}.</p>
       <Social />
     </div>
 
-    <nav aria-label="Navigacija u podnožju" class="flex flex-col gap-2.5 text-[15px]">
-      <p class="m-0 mb-1.5 text-[13px] uppercase tracking-[0.16em] text-gold">Navigacija</p>
-      <a href="/meni/" class="text-[#D9D4CC] no-underline hover:text-paper">Meni</a>
-      <a href="/chefs-table/" class="text-[#D9D4CC] no-underline hover:text-paper">Chef's Table</a>
-      <a href="/dogadjaji/" class="text-[#D9D4CC] no-underline hover:text-paper">Događaji</a>
-      <a href="/rezervacije/" class="text-[#D9D4CC] no-underline hover:text-paper">Rezervacije</a>
-      <a href="/kontakt/" class="text-[#D9D4CC] no-underline hover:text-paper">Kontakt</a>
+    <nav aria-label={tr(lang, 'Navigacija u podnožju', 'Footer navigation')} class="flex flex-col gap-2.5 text-[15px]">
+      <p class="m-0 mb-1.5 text-[13px] uppercase tracking-[0.16em] text-gold">{tr(lang, 'Navigacija', 'Navigation')}</p>
+      {nav.map((l) => <a href={l.href} class={link}>{l.label}</a>)}
     </nav>
 
-    <nav aria-label="Usluge" class="flex flex-col gap-2.5 text-[15px]">
-      <p class="m-0 mb-1.5 text-[13px] uppercase tracking-[0.16em] text-gold">Usluge</p>
+    <nav aria-label={tr(lang, 'Usluge', 'Services')} class="flex flex-col gap-2.5 text-[15px]">
+      <p class="m-0 mb-1.5 text-[13px] uppercase tracking-[0.16em] text-gold">{tr(lang, 'Usluge', 'Services')}</p>
       {services.map((s) => (
-        <a href={`/usluge/${s.id}/`} class="text-[#D9D4CC] no-underline hover:text-paper">{s.data.title}</a>
+        <a href={s.href} class={link}>{s.data.title}</a>
       ))}
     </nav>
 
     <div class="flex flex-col gap-2.5 text-[15px]">
-      <p class="m-0 mb-1.5 text-[13px] uppercase tracking-[0.16em] text-gold">Kontakt</p>
+      <p class="m-0 mb-1.5 text-[13px] uppercase tracking-[0.16em] text-gold">{tr(lang, 'Kontakt', 'Contact')}</p>
       <span class="text-[#D9D4CC]">{info.address}, {info.city}</span>
       <a href={`tel:${info.phoneHref}`} class="text-[#D9D4CC] no-underline hover:text-paper">{info.phone}</a>
       <span class="font-sans text-dim">
@@ -49,12 +55,12 @@ const year = new Date().getFullYear();
 
   <div class="border-t border-[#1F1F1F]">
     <div class="container-site flex flex-wrap justify-between gap-3 py-5 text-[13px] text-dim">
-      <span>© {year} Bistromat. Sva prava zadržana.</span>
+      <span>© {year} Bistromat. {tr(lang, 'Sva prava zadržana.', 'All rights reserved.')}</span>
       <span>
-        <a href="/privatnost/" class="text-dim hover:text-paper">Politika privatnosti</a>{' · '}
-        <a href="/kolacici/" class="text-dim hover:text-paper">Kolačići</a>{' · '}
-        <a href="/impresum/" class="text-dim hover:text-paper">Impresum</a>{' · '}
-        <a href="/kolacici/" class="text-dim hover:text-paper" data-open-cookie-settings>Podešavanja kolačića</a>
+        <a href={route('privacy', lang)} class="text-dim hover:text-paper">{tr(lang, 'Politika privatnosti', 'Privacy policy')}</a>{' · '}
+        <a href={route('cookies', lang)} class="text-dim hover:text-paper">{tr(lang, 'Kolačići', 'Cookies')}</a>{' · '}
+        <a href={route('imprint', lang)} class="text-dim hover:text-paper">{tr(lang, 'Impresum', 'Imprint')}</a>{' · '}
+        <a href={route('cookies', lang)} class="text-dim hover:text-paper" data-open-cookie-settings>{tr(lang, 'Podešavanja kolačića', 'Cookie settings')}</a>
       </span>
     </div>
   </div>

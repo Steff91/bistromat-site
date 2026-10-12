@@ -1,28 +1,32 @@
 ---
 import BrandIcon from '../BrandIcon.astro';
-import { getCollection } from 'astro:content';
 import Icon from '../Icon.astro';
+import { getLang, tr } from '../../i18n';
+import { getServices, serviceHref } from '../../i18n/content';
 
-const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+const lang = getLang(Astro.url);
+const services = await getServices(lang);
+const inquiryHref = `${await serviceHref('privatne-proslave', lang)}#upit`;
+const more = tr(lang, 'Saznaj više', 'Learn more');
 ---
 
-<section id="usluge">
+<section id={tr(lang, 'usluge', 'services')}>
   <div class="container-site py-24">
     <div class="mb-12 flex flex-wrap items-end justify-between gap-6">
       <div class="min-w-0 flex-[1_1_520px]">
-        <p class="eyebrow inline-flex items-center gap-2.5" data-reveal><BrandIcon name="spoon" size={14} />Usluge</p>
-        <h2 class="h-section m-0" data-reveal style="--i:1">Restoran samo za vas</h2>
+        <p class="eyebrow inline-flex items-center gap-2.5" data-reveal><BrandIcon name="spoon" size={14} />{tr(lang, 'Usluge', 'Services')}</p>
+        <h2 class="h-section m-0" data-reveal style="--i:1">{tr(lang, 'Restoran samo za vas', 'The restaurant, just for you')}</h2>
         <p class="mt-4 max-w-[560px] font-sans text-muted" data-reveal style="--i:2">
-          Zakupite ceo Bistromat na 4–6 sati za proslavu, poslovnu večeru ili privatnu degustaciju. Meni i vino prilagođavamo prilici.
+          {tr(lang, 'Zakupite ceo Bistromat na 4–6 sati za proslavu, poslovnu večeru ili privatnu degustaciju. Meni i vino prilagođavamo prilici.', 'Book the whole of Bistromat for 4–6 hours for a celebration, business dinner or private tasting. We tailor the menu and wine to the occasion.')}
         </p>
       </div>
-      <a href="/usluge/privatne-proslave/#upit" class="btn btn-primary" data-reveal style="--i:2">Pošalji upit</a>
+      <a href={inquiryHref} class="btn btn-primary" data-reveal style="--i:2">{tr(lang, 'Pošalji upit', 'Send an inquiry')}</a>
     </div>
 
     <div class="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-px border border-line bg-line">
       {services.map((s, i) => (
         <a
-          href={`/usluge/${s.id}/`}
+          href={s.href}
           class="card group flex min-h-[220px] flex-col gap-3 bg-ink p-8 text-paper no-underline hover:text-paper"
           data-reveal
           style={`--i:${i % 4}`}
@@ -31,21 +35,21 @@ const services = (await getCollection('services')).sort((a, b) => a.data.order -
           <span class="text-lg font-semibold uppercase tracking-[0.03em]">{s.data.title}</span>
           <span class="font-sans text-muted">{s.data.excerpt}</span>
           <span class="mt-auto inline-flex items-center gap-2 text-[14px] text-gold">
-            Saznaj više <Icon name="chevron-right" size={11} />
+            {more} <Icon name="chevron-right" size={11} />
           </span>
         </a>
       ))}
       <a
-        href="/usluge/privatne-proslave/#upit"
+        href={inquiryHref}
         class="card group flex min-h-[220px] flex-col gap-3 bg-gold p-8 text-ink no-underline hover:text-ink"
         data-reveal
         style={`--i:${services.length % 4}`}
       >
         <span class="text-[14px]">[+]</span>
-        <span class="text-lg font-semibold uppercase tracking-[0.03em]">Imate drugu ideju?</span>
-        <span class="font-sans">Pišite nam, osmislićemo događaj po vašoj meri.</span>
+        <span class="text-lg font-semibold uppercase tracking-[0.03em]">{tr(lang, 'Imate drugu ideju?', 'Have another idea?')}</span>
+        <span class="font-sans">{tr(lang, 'Pišite nam, osmislićemo događaj po vašoj meri.', 'Write to us and we will design an event around you.')}</span>
         <span class="mt-auto inline-flex items-center gap-2 text-[14px] font-semibold">
-          Pošalji upit <Icon name="chevron-right" size={11} />
+          {tr(lang, 'Pošalji upit', 'Send an inquiry')} <Icon name="chevron-right" size={11} />
         </span>
       </a>
     </div>

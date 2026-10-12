@@ -1,7 +1,8 @@
 ---
 import Placeholder from './Placeholder.astro';
 import Icon from './Icon.astro';
-import { EVENT_TYPES, formatDate, seatsLabel, type EventItem } from '../lib/events';
+import { eventTypes, formatDate, seatsLabel, type EventItem } from '../lib/events';
+import { getLang, timeLabel, tr } from '../i18n';
 
 interface Props {
   item: EventItem;
@@ -9,7 +10,11 @@ interface Props {
   index?: number;
 }
 const { item, variant = 'default', index = 0 } = Astro.props;
-const seats = seatsLabel(item.seatsLeft);
+const lang = getLang(Astro.url);
+const EVENT_TYPES = eventTypes(lang);
+const seats = seatsLabel(item.seatsLeft, lang);
+const more = tr(lang, 'Saznaj više', 'Learn more');
+const photo = tr(lang, 'Foto događaja', 'Event photo');
 const full = item.seatsLeft !== undefined && item.seatsLeft <= 0;
 ---
 
@@ -22,26 +27,26 @@ const full = item.seatsLeft !== undefined && item.seatsLeft <= 0;
     data-reveal
   >
     <div class="min-w-0 flex-[1_1_480px] overflow-hidden">
-      <Placeholder label="Foto događaja" src={item.image} alt={item.title} class="h-full min-h-[340px] border-0" />
+      <Placeholder label={photo} src={item.image} alt={item.title} class="h-full min-h-[340px] border-0" />
     </div>
     <div class="flex min-w-0 flex-[1_1_380px] flex-col gap-4 p-10">
-      <p class="m-0 text-[14px] uppercase tracking-[0.12em] text-gold">Sledeći događaj · {EVENT_TYPES[item.type]}</p>
-      <p class="m-0 text-2xl font-semibold leading-tight">{formatDate(item.date)}<span class="text-dim"> · {item.time}h</span></p>
+      <p class="m-0 text-[14px] uppercase tracking-[0.12em] text-gold">{tr(lang, 'Sledeći događaj', 'Next event')} · {EVENT_TYPES[item.type]}</p>
+      <p class="m-0 text-2xl font-semibold leading-tight">{formatDate(item.date, lang)}<span class="text-dim"> · {timeLabel(item.time, lang)}</span></p>
       <h3 class="m-0 text-[28px] font-medium leading-tight tracking-[-0.01em]">{item.title}</h3>
       <p class="m-0 font-sans text-muted">{item.excerpt}</p>
       <div class="mt-auto flex flex-wrap items-center gap-x-6 gap-y-2 pt-4 text-[14px]">
         {item.price && <span class="font-sans text-muted">{item.price}</span>}
         {seats && <span class:list={['uppercase tracking-[0.08em]', full ? 'text-dim' : 'text-gold']}>{seats}</span>}
         <span class="ml-auto inline-flex items-center gap-2 text-gold">
-          Saznaj više <Icon name="chevron-right" size={11} />
+          {more} <Icon name="chevron-right" size={11} />
         </span>
       </div>
     </div>
   </a>
 ) : variant === 'compact' ? (
   <a href={item.href} class="group block text-paper no-underline hover:text-paper" data-type={item.type} data-date={item.date} data-reveal style={`--i:${index % 4}`}>
-    <Placeholder label="Foto" src={item.image} alt={item.title} class="aspect-[4/3]" />
-    <p class="mt-3 mb-0 text-[13px] uppercase tracking-[0.1em] text-dim">{formatDate(item.date)} · {EVENT_TYPES[item.type]}</p>
+    <Placeholder label={tr(lang, 'Foto', 'Photo')} src={item.image} alt={item.title} class="aspect-[4/3]" />
+    <p class="mt-3 mb-0 text-[13px] uppercase tracking-[0.1em] text-dim">{formatDate(item.date, lang)} · {EVENT_TYPES[item.type]}</p>
     <p class="mt-1 mb-0 font-semibold group-hover:text-gold">{item.title}</p>
   </a>
 ) : (
@@ -53,16 +58,16 @@ const full = item.seatsLeft !== undefined && item.seatsLeft <= 0;
     data-reveal
     style={`--i:${index % 3}`}
   >
-    <Placeholder label="Foto događaja" src={item.image} alt={item.title} class="h-[220px] border-0" />
+    <Placeholder label={photo} src={item.image} alt={item.title} class="h-[220px] border-0" />
     <div class="flex flex-1 flex-col gap-2 p-6">
-      <p class="m-0 text-[14px] text-gold">{formatDate(item.date)} · {item.time}h</p>
+      <p class="m-0 text-[14px] text-gold">{formatDate(item.date, lang)} · {timeLabel(item.time, lang)}</p>
       <p class="m-0 text-[13px] uppercase tracking-[0.1em] text-dim">{EVENT_TYPES[item.type]}</p>
       <h3 class="m-0 mt-1 text-lg font-semibold uppercase tracking-[0.03em]">{item.title}</h3>
       <p class="m-0 font-sans text-muted">{item.excerpt}</p>
       <div class="mt-auto flex items-center justify-between gap-4 pt-4 text-[14px]">
         {seats ? <span class:list={['uppercase tracking-[0.08em]', full ? 'text-dim' : 'text-gold']}>{seats}</span> : <span />}
         <span class="inline-flex items-center gap-2 text-gold">
-          Saznaj više <Icon name="chevron-right" size={11} />
+          {more} <Icon name="chevron-right" size={11} />
         </span>
       </div>
     </div>

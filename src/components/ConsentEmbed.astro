@@ -11,16 +11,18 @@ interface Props {
   class?: string;
 }
 const { html, label, provider, class: className = '' } = Astro.props;
+import { getLang, tr } from '../i18n';
+const lang = getLang(Astro.url);
 ---
 
 <div class:list={['consent-embed', className]} data-consent-embed>
   <div class="placeholder h-full min-h-[300px] flex-col gap-4 p-8 normal-case tracking-normal" data-consent-placeholder>
     <p class="m-0 max-w-[380px] font-sans text-[15px] text-muted">
-      Ovaj sadržaj učitava {provider}, koji može postaviti kolačiće. Prikazaćemo ga tek uz vašu saglasnost.
+      {tr(lang, `Ovaj sadržaj učitava ${provider}, koji može postaviti kolačiće. Prikazaćemo ga tek uz vašu saglasnost.`, `This content is loaded by ${provider}, which may set cookies. We will show it only with your consent.`)}
     </p>
     <div class="flex flex-wrap justify-center gap-3">
-      <button type="button" class="btn btn-outline cursor-pointer bg-transparent" data-consent-load>Prikaži {label}</button>
-      <button type="button" class="cursor-pointer border-0 bg-transparent font-mono text-[14px] text-gold underline-offset-4 hover:underline" data-consent-allow>Uvek prikazuj</button>
+      <button type="button" class="btn btn-outline cursor-pointer bg-transparent" data-consent-load>{tr(lang, 'Prikaži', 'Show')} {label}</button>
+      <button type="button" class="cursor-pointer border-0 bg-transparent font-mono text-[14px] text-gold underline-offset-4 hover:underline" data-consent-allow>{tr(lang, 'Uvek prikazuj', 'Always show')}</button>
     </div>
   </div>
   <template data-consent-content><Fragment set:html={html} /></template>

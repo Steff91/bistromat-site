@@ -5,16 +5,22 @@ import TopBar from '../components/TopBar.astro';
 import Footer from '../components/Footer.astro';
 import CookieBanner from '../components/CookieBanner.astro';
 import BackToTop from '../components/BackToTop.astro';
-import info from '../data/info.json';
+import { getInfo, getLang, staticAlternates, route, type Lang } from '../i18n';
 
 interface Props {
   title: string;
   description?: string;
+  /** This page in each language (for the language switcher and hreflang). Static routes are found automatically. */
+  alternates?: Record<Lang, string>;
 }
+
+const lang = getLang(Astro.url);
+const info = getInfo(lang);
 
 const {
   title,
-  description = `Bistromat, Mutapova 9, Beograd: ${info.aboutShort}`,
+  description = `Bistromat, ${info.address}, ${info.city}: ${info.aboutShort}`,
+  alternates = staticAlternates(Astro.url.pathname) ?? { sr: route('home', 'sr'), en: route('home', 'en') },
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -39,13 +45,16 @@ const schema = {
 ---
 
 <!doctype html>
-<html lang="sr">
+<html lang={lang === 'en' ? 'en' : 'sr-Latn'}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="sr" href={new URL(alternates.sr, Astro.site)} />
+    <link rel="alternate" hreflang="en" href={new URL(alternates.en, Astro.site)} />
+    <link rel="alternate" hreflang="x-default" href={new URL(alternates.sr, Astro.site)} />
     <!-- ?v= busts the browser's favicon cache when the icon changes -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=3" />
@@ -56,14 +65,15 @@ const schema = {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={lang === 'en' ? 'en_GB' : 'sr_RS'} />
     <meta name="theme-color" content="#0F0F0F" />
     <script is:inline>document.documentElement.classList.add('js');</script>
     <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     <slot name="head" />
   </head>
   <body>
-    <TopBar />
-    <Header />
+    <TopBar alternates={alternates} />
+    <Header alternates={alternates} />
     <main>
       <slot />
     </main>
@@ -92,7 +102,7 @@ const schema = {
       }
 
       // Forms: thank-you redirect points at the current host (works on preview and production).
-      // Until a form handler is set (info.json → formAction), submitting just goes to /hvala/.
+      // Until a form handler is set (info.json → formAction), submitting just goes to the thank-you page.
       document.querySelectorAll<HTMLFormElement>('form[data-form]').forEach((form) => {
         const redirect = form.querySelector<HTMLInputElement>('input[name="redirect"]');
         if (!redirect) return;

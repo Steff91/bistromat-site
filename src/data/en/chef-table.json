@@ -1,0 +1,49 @@
+{
+  "intro": "A multi-course tasting menu for a handful of guests, right by the open kitchen. The chef cooks and serves every dish, tells the story behind it, and each course comes with a carefully chosen wine. [Short description of the concept]",
+  "facts": [
+    { "label": "Courses", "value": "[N] courses" },
+    { "label": "Seats", "value": "up to [N] guests" },
+    { "label": "Price", "value": "[PRICE] / person" },
+    { "label": "With the menu", "value": "Wine pairing" }
+  ],
+  "dates": [
+    { "theme": "[Theme of the evening]", "guest": "", "price": "[PRICE] / person" },
+    { "theme": "[Theme of the evening]", "guest": "× [Winery]", "price": "[PRICE] / person" },
+    { "theme": "[Theme of the evening]", "guest": "with [guest chef]", "price": "[PRICE] / person" }
+  ],
+  "timeline": [
+    { "title": "Welcome", "text": "Sparkling wine and a first bite from the kitchen." },
+    { "title": "Starters", "text": "The chef introduces the menu and the first courses." },
+    { "title": "Main courses", "text": "Warm courses, each with its own wine." },
+    { "title": "Cheese and dessert", "text": "French cheeses, dessert and a digestif." }
+  ],
+  "chef": {
+    "role": "Owner and head chef",
+    "bio": "[Short chef bio: where he trained and worked, what inspires him in French cuisine, what guests can expect at his table.]",
+    "quote": "[A quote from the chef about cooking or Chef's Table evenings.]"
+  },
+  "sampleMenu": {
+    "title": "[Name of the evening / date]",
+    "courses": [
+      { "dish": "[Dish]", "wine": "[Wine]" },
+      { "dish": "[Dish]", "wine": "[Wine]" },
+      { "dish": "[Dish]", "wine": "[Wine]" },
+      { "dish": "[Dish]", "wine": "[Wine]" },
+      { "dish": "[Cheese selection]", "wine": "[Wine]" },
+      { "dish": "[Dessert]", "wine": "[Dessert wine]" }
+    ]
+  },
+  "past": [
+    { "caption": "[Guest chef] · [date]" },
+    { "title": "Chef's Table × [Winery]", "caption": "[date]" },
+    { "title": "[Name of the evening]", "caption": "[date]" },
+    { "title": "[Name of the evening]", "caption": "[date]" }
+  ],
+  "faq": [
+    { "q": "Can I come on my own?", "a": "Of course. Seats are booked individually, and at the chef's table you often sit with other lovers of good food." },
+    { "q": "What if I have an allergy or don't eat meat?", "a": "Let us know in your booking at least [N] days before the evening and the chef will adapt the courses." },
+    { "q": "Is the wine pairing included in the price?", "a": "[Yes / No, it is [PRICE] extra.] A non-alcoholic pairing is available on request." },
+    { "q": "How do I pay, and what if I cancel?", "a": "[Your seat is confirmed with a deposit. Cancellation terms.]" },
+    { "q": "Can I give a seat at the chef's table as a gift?", "a": "Yes, with a Chef's Table gift voucher." }
+  ]
+}

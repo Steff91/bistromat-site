@@ -1,0 +1,17 @@
+{
+  "season": "Autumn 2026",
+  "updated": "21 Sep 2026",
+  "intro": "Lunch and dinner from the open kitchen: French classics such as tartare, snails, onion soup and Coq au Vin, alongside seasonal dishes and house-made brioche. With the menu comes a wine list of Serbian, regional and international wines, and cocktails from our bar.",
+  "cards": [
+    { "label": "Menu" },
+    { "label": "Wine list" },
+    { "label": "Drinks & cocktails" }
+  ],
+  "highlights": [
+    { "name": "Escargot Bourguignon", "description": "Burgundy-style snails, garlic and parsley butter, brioche" },
+    { "name": "French onion soup", "description": "French onion soup with Gruyère and house-made brioche" },
+    { "name": "Coq au Vin", "description": "Rooster leg braised in Prokupac, Joël Robuchon-style mash, bacon, root vegetables, mushrooms, wine sauce" },
+    { "name": "Lime tart", "description": "Classic French lime tart" }
+  ],
+  "allergens": "For allergen information and special requests (vegetarian, gluten-free), please ask our staff. We are happy to adapt a dish."
+}

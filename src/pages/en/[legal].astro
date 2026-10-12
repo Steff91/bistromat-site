@@ -1,0 +1,14 @@
+---
+import { getCollection } from 'astro:content';
+import Legal from '../../views/Legal.astro';
+import { LEGAL_ROUTE, ROUTES } from '../../i18n';
+
+export async function getStaticPaths() {
+  return (await getCollection('legalEn')).map((p) => ({
+    params: { legal: p.id },
+    props: { page: p, alternates: ROUTES[LEGAL_ROUTE[p.data.ref]] },
+  }));
+}
+---
+
+<Legal page={Astro.props.page} alternates={Astro.props.alternates} />

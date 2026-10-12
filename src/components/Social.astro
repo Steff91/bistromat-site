@@ -1,6 +1,7 @@
 ---
 import Icon from './Icon.astro';
-import info from '../data/info.json';
+import { getInfo, getLang } from '../i18n';
+const info = getInfo(getLang(Astro.url));
 ---
 
 <div class="flex gap-5">

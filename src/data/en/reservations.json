@@ -1,0 +1,11 @@
+{
+  "intro": "Book a table online or give us a call. We confirm every booking by message or phone; for groups larger than [N] people, please contact us directly.",
+  "notes": [
+    { "title": "Confirmation", "text": "A booking made through the form is valid once we confirm it by message or phone, usually within [N] hours." },
+    { "title": "Running late", "text": "We hold the table for [15] minutes after the booked time. If you are running late, let us know." },
+    { "title": "Larger groups", "text": "For more than [N] people or booking the whole restaurant, see private parties." },
+    { "title": "Allergies", "text": "Note any allergies or special requests in the comments and the kitchen will be prepared." },
+    { "title": "Cancellation", "text": "If you can't make it, please let us know at least [N] hours in advance." },
+    { "title": "[Children and pets]", "text": "[House rules for children and pets.]" }
+  ]
+}

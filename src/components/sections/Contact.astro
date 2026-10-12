@@ -2,35 +2,37 @@
 import Social from '../Social.astro';
 import ConsentEmbed from '../ConsentEmbed.astro';
 import { mapIframe } from '../../lib/embeds';
-import info from '../../data/info.json';
+import { getInfo, getLang, tr } from '../../i18n';
 
 // Plain Google Maps iframe embed (no API key). Paste the embed src into info.json → mapsEmbed.
+const lang = getLang(Astro.url);
+const info = getInfo(lang);
 ---
 
-<section id="kontakt" class="border-t border-line">
+<section id={tr(lang, 'kontakt', 'contact')} class="border-t border-line">
   <div class="container-site flex flex-wrap gap-14 py-24">
     <div class="flex min-w-0 flex-[1_1_320px] flex-col gap-6">
       <div data-reveal>
-        <p class="eyebrow mb-1.5">Adresa</p>
+        <p class="eyebrow mb-1.5">{tr(lang, 'Adresa', 'Address')}</p>
         <p class="m-0 text-xl">{info.address}, {info.city}</p>
         <p class="m-0 mt-1 font-sans text-[15px] text-dim">{info.landmark}</p>
       </div>
       <div data-reveal style="--i:1">
-        <p class="eyebrow mb-1.5">Radno vreme</p>
+        <p class="eyebrow mb-1.5">{tr(lang, 'Radno vreme', 'Opening hours')}</p>
         <p class="m-0 font-sans text-muted">
           {info.hours.map((h) => (<>{h.day}: {h.time}<br /></>))}
         </p>
         {info.notice && <p class="mt-2 font-sans text-gold">{info.notice}</p>}
       </div>
       <div data-reveal style="--i:2">
-        <p class="eyebrow mb-1.5">Kontakt</p>
+        <p class="eyebrow mb-1.5">{tr(lang, 'Kontakt', 'Contact')}</p>
         <p class="m-0"><a href={`tel:${info.phoneHref}`}>{info.phone}</a></p>
         <div class="mt-1.5"><Social /></div>
       </div>
     </div>
     <div class="min-w-0 flex-[2_1_480px]" data-reveal style="--i:1">
       {info.mapsEmbed ? (
-        <ConsentEmbed html={mapIframe(360)} label="mapu" provider="Google Maps" class="h-[360px]" />
+        <ConsentEmbed html={mapIframe(360, lang)} label={tr(lang, 'mapu', 'map')} provider="Google Maps" class="h-[360px]" />
       ) : (
         <div class="placeholder h-[360px]">[Google Maps embed]</div>
       )}

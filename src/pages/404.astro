@@ -1,25 +1,5 @@
 ---
-import Base from '../layouts/Base.astro';
-import BrandIcon from '../components/BrandIcon.astro';
-import Icon from '../components/Icon.astro';
+import View from '../views/NotFound.astro';
 ---
 
-<Base title="Stranica nije pronađena — Bistromat" description="Stranica koju tražite ne postoji.">
-  <section class="container-site flex min-h-[70vh] flex-col items-center justify-center py-24 text-center">
-    <div class="flex items-end gap-6 text-[#3A3A3A]" aria-hidden="true">
-      <BrandIcon name="fork" size={90} />
-      <BrandIcon name="plate" size={90} class="text-gold" />
-      <BrandIcon name="knife" size={90} />
-    </div>
-    <p class="eyebrow mt-12">404</p>
-    <h1 class="m-0 font-medium leading-[1.1] tracking-[-0.02em] [font-size:clamp(30px,4vw,48px)]">
-      Ovo jelo nije<br /><em class="font-normal">na meniju.</em>
-    </h1>
-    <p class="mt-5 max-w-[440px] font-sans text-muted">Stranica koju tražite ne postoji ili je premeštena. Možda vas zanima nešto od ovoga:</p>
-    <div class="mt-9 flex flex-wrap justify-center gap-3.5">
-      <a href="/" class="btn btn-primary">Početna</a>
-      <a href="/meni/" class="btn btn-outline">Meni</a>
-      <a href="/rezervacije/" class="btn btn-outline">Rezervacije <Icon name="chevron-right" size={10} /></a>
-    </div>
-  </section>
-</Base>
+<View />

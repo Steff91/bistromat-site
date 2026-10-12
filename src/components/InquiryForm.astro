@@ -1,5 +1,5 @@
 ---
-import info from '../data/info.json';
+import { getInfo, getLang, route, tr } from '../i18n';
 
 type Variant = 'event' | 'catering' | 'workshop' | 'voucher' | 'seats' | 'contact';
 
@@ -13,16 +13,64 @@ interface Props {
 }
 const { service, variant = 'event', options = [], dates = [] } = Astro.props;
 
-const copy: Record<Variant, { title: string; lead: string; submit: string }> = {
-  event: { title: 'Proverite slobodan termin', lead: 'Ili pozovite direktno:', submit: 'Pošalji upit' },
-  catering: { title: 'Zatražite ponudu', lead: 'Ili pozovite direktno:', submit: 'Pošalji upit' },
-  workshop: { title: 'Prijavite se', lead: 'Za privatne termine ili pitanja pozovite:', submit: 'Pošalji prijavu' },
-  voucher: { title: 'Naručite vaučer', lead: 'Ili pozovite direktno:', submit: 'Naruči vaučer' },
-  seats: { title: 'Rezervišite mesto', lead: 'Ili pozovite direktno:', submit: 'Rezerviši mesto' },
-  contact: { title: 'Pišite nam', lead: 'Za rezervacije stola najbrže je telefonom:', submit: 'Pošalji poruku' },
-};
+const lang = getLang(Astro.url);
+const info = getInfo(lang);
+const en = lang === 'en';
+
+const copy: Record<Variant, { title: string; lead: string; submit: string }> = en
+  ? {
+      event: { title: 'Check availability', lead: 'Or call us directly:', submit: 'Send inquiry' },
+      catering: { title: 'Request a quote', lead: 'Or call us directly:', submit: 'Send inquiry' },
+      workshop: { title: 'Sign up', lead: 'For private sessions or questions, call:', submit: 'Sign up' },
+      voucher: { title: 'Order a voucher', lead: 'Or call us directly:', submit: 'Order voucher' },
+      seats: { title: 'Book a seat', lead: 'Or call us directly:', submit: 'Book a seat' },
+      contact: { title: 'Write to us', lead: 'For table bookings, calling is quickest:', submit: 'Send message' },
+    }
+  : {
+      event: { title: 'Proverite slobodan termin', lead: 'Ili pozovite direktno:', submit: 'Pošalji upit' },
+      catering: { title: 'Zatražite ponudu', lead: 'Ili pozovite direktno:', submit: 'Pošalji upit' },
+      workshop: { title: 'Prijavite se', lead: 'Za privatne termine ili pitanja pozovite:', submit: 'Pošalji prijavu' },
+      voucher: { title: 'Naručite vaučer', lead: 'Ili pozovite direktno:', submit: 'Naruči vaučer' },
+      seats: { title: 'Rezervišite mesto', lead: 'Ili pozovite direktno:', submit: 'Rezerviši mesto' },
+      contact: { title: 'Pišite nam', lead: 'Za rezervacije stola najbrže je telefonom:', submit: 'Pošalji poruku' },
+    };
 const c = copy[variant];
-const thanks = new URL(`/hvala/?tip=${variant === 'contact' ? 'poruka' : 'upit'}`, Astro.site).toString();
+const thanks = new URL(`${route('thanks', lang)}?tip=${variant === 'contact' ? 'poruka' : 'upit'}`, Astro.site).toString();
+
+// Field labels and select options
+const L = {
+  date: tr(lang, 'Datum', 'Date'),
+  duration: tr(lang, 'Trajanje', 'Duration'),
+  durations: en ? ['4 hours', '6 hours', 'Full day'] : ['4 sata', '6 sati', 'Ceo dan'],
+  guests: tr(lang, 'Broj gostiju', 'Number of guests'),
+  eg: tr(lang, 'npr.', 'e.g.'),
+  kind: tr(lang, 'Vrsta događaja', 'Type of event'),
+  eventKinds: en
+    ? ['Birthday', 'Anniversary', 'Engagement', 'Wedding', 'Christening / family celebration', 'Business event', 'Other']
+    : ['Rođendan', 'Godišnjica', 'Veridba', 'Svadba', 'Krštenje / slava', 'Poslovni događaj', 'Drugo'],
+  cateringKinds: en
+    ? ['Home party', 'Business event', 'Cocktail reception', 'Other']
+    : ['Kućna proslava', 'Poslovni događaj', 'Koktel prijem', 'Drugo'],
+  package: tr(lang, 'Paket', 'Package'),
+  address: tr(lang, 'Adresa događaja', 'Event address'),
+  workshop: tr(lang, 'Radionica', 'Workshop'),
+  participants: tr(lang, 'Broj učesnika', 'Number of participants'),
+  private: tr(lang, 'Želim privatni termin za svoju grupu', 'I would like a private session for my group'),
+  slot: tr(lang, 'Termin', 'Date'),
+  people: tr(lang, 'Broj osoba', 'Number of people'),
+  topic: tr(lang, 'Tema', 'Topic'),
+  topics: en
+    ? ['Table booking', 'Private event', 'Catering', 'Gift voucher', 'Collaboration', 'Working at Bistromat', 'Other']
+    : ['Rezervacija stola', 'Privatni događaj', 'Ketering', 'Poklon vaučer', 'Saradnja', 'Posao u Bistromatu', 'Ostalo'],
+  voucherKind: tr(lang, 'Vrsta vaučera', 'Voucher type'),
+  voucherCount: tr(lang, 'Broj vaučera', 'Number of vouchers'),
+  recipient: tr(lang, 'Ime primaoca', "Recipient's name"),
+  dedication: tr(lang, 'Posveta na vaučeru (opciono)', 'Dedication on the voucher (optional)'),
+  name: tr(lang, 'Ime i prezime', 'Full name'),
+  phone: tr(lang, 'Telefon', 'Phone'),
+  message: variant === 'contact' ? tr(lang, 'Poruka', 'Message') : tr(lang, 'Poruka (alergije, posebne želje)', 'Message (allergies, special requests)'),
+  inquiry: tr(lang, 'Upit', 'Inquiry'),
+};
 
 // Static site: the form posts to an external handler (e.g. Formspree) set in info.json → formAction.
 const field = 'flex flex-col gap-2 text-[14px] uppercase tracking-[0.06em] text-muted';
@@ -31,7 +79,7 @@ const input = 'rounded-md border border-[#3A3A3A] bg-[#161616] p-3.5 font-sans t
 
 <section id="upit" class="container-site flex flex-wrap gap-14 py-24">
   <div class="min-w-0 flex-[1_1_320px]">
-    <p class="eyebrow" data-reveal>{variant === 'contact' ? service : `Upit · ${service}`}</p>
+    <p class="eyebrow" data-reveal>{variant === 'contact' ? service : `${L.inquiry} · ${service}`}</p>
     <h2 class="h-section m-0" data-reveal style="--i:1">{c.title}</h2>
     <p class="mt-5 font-sans text-muted" data-reveal style="--i:2">{c.lead}</p>
     <a href={`tel:${info.phoneHref}`} class="mt-2 inline-block text-[28px] font-medium text-paper no-underline hover:text-gold" data-reveal style="--i:3">{info.phone}</a>
@@ -47,28 +95,28 @@ const input = 'rounded-md border border-[#3A3A3A] bg-[#161616] p-3.5 font-sans t
   >
     <input type="hidden" name="usluga" value={service} />
     <input type="hidden" name="redirect" value={thanks} />
+    <input type="hidden" name="jezik" value={lang} />
 
     {variant === 'event' && (
       <>
-        <label class={field}>Datum
+        <label class={field}>{L.date}
           <input type="date" name="datum" required class={input} />
         </label>
-        <label class={field}>Trajanje
+        <label class={field}>{L.duration}
           <select name="trajanje" class={input}>
-            <option>4 sata</option><option>6 sati</option><option>Ceo dan</option>
+            {L.durations.map((o) => <option>{o}</option>)}
           </select>
         </label>
-        <label class={field}>Broj gostiju
-          <input type="number" name="gosti" min="1" placeholder="npr. 30" required class={input} />
+        <label class={field}>{L.guests}
+          <input type="number" name="gosti" min="1" placeholder={`${L.eg} 30`} required class={input} />
         </label>
-        <label class={field}>Vrsta događaja
+        <label class={field}>{L.kind}
           <select name="vrsta" class={input}>
-            <option>Rođendan</option><option>Godišnjica</option><option>Veridba</option><option>Svadba</option>
-            <option>Krštenje / slava</option><option>Poslovni događaj</option><option>Drugo</option>
+            {L.eventKinds.map((o) => <option>{o}</option>)}
           </select>
         </label>
         {options.length > 0 && (
-          <label class={field}>Paket
+          <label class={field}>{L.package}
             <select name="paket" class={input}>{options.map((o) => <option>{o}</option>)}</select>
           </label>
         )}
@@ -77,18 +125,18 @@ const input = 'rounded-md border border-[#3A3A3A] bg-[#161616] p-3.5 font-sans t
 
     {variant === 'catering' && (
       <>
-        <label class={field}>Datum
+        <label class={field}>{L.date}
           <input type="date" name="datum" required class={input} />
         </label>
-        <label class={field}>Broj gostiju
-          <input type="number" name="gosti" min="1" placeholder="npr. 50" required class={input} />
+        <label class={field}>{L.guests}
+          <input type="number" name="gosti" min="1" placeholder={`${L.eg} 50`} required class={input} />
         </label>
-        <label class={field}>Vrsta događaja
+        <label class={field}>{L.kind}
           <select name="vrsta" class={input}>
-            <option>Kućna proslava</option><option>Poslovni događaj</option><option>Koktel prijem</option><option>Drugo</option>
+            {L.cateringKinds.map((o) => <option>{o}</option>)}
           </select>
         </label>
-        <label class={field}>Adresa događaja
+        <label class={field}>{L.address}
           <input type="text" name="adresa" autocomplete="street-address" required class={input} />
         </label>
       </>
@@ -97,38 +145,37 @@ const input = 'rounded-md border border-[#3A3A3A] bg-[#161616] p-3.5 font-sans t
     {variant === 'workshop' && (
       <>
         {options.length > 0 && (
-          <label class={field}>Radionica
+          <label class={field}>{L.workshop}
             <select name="radionica" class={input}>{options.map((o) => <option>{o}</option>)}</select>
           </label>
         )}
-        <label class={field}>Broj učesnika
-          <input type="number" name="ucesnici" min="1" placeholder="npr. 2" required class={input} />
+        <label class={field}>{L.participants}
+          <input type="number" name="ucesnici" min="1" placeholder={`${L.eg} 2`} required class={input} />
         </label>
         <label class="col-span-full flex items-center gap-3 font-sans text-[16px] text-muted">
           <input type="checkbox" name="privatni_termin" class="h-4 w-4 accent-[#D4AF6A]" />
-          Želim privatni termin za svoju grupu
+          {L.private}
         </label>
       </>
     )}
 
     {variant === 'seats' && (
       <>
-        <label class={field}>Termin
+        <label class={field}>{L.slot}
           <select name="termin" id="seats-date" required class={input}>
             {dates.map((d) => <option value={d.value}>{d.label}</option>)}
           </select>
         </label>
-        <label class={field}>Broj osoba
+        <label class={field}>{L.people}
           <input type="number" name="osobe" min="1" max="12" value="2" required class={input} />
         </label>
       </>
     )}
 
     {variant === 'contact' && (
-      <label class:list={[field, 'col-span-full']}>Tema
+      <label class:list={[field, 'col-span-full']}>{L.topic}
         <select name="tema" class={input}>
-          <option>Rezervacija stola</option><option>Privatni događaj</option><option>Ketering</option>
-          <option>Poklon vaučer</option><option>Saradnja</option><option>Posao u Bistromatu</option><option>Ostalo</option>
+          {L.topics.map((o) => <option>{o}</option>)}
         </select>
       </label>
     )}
@@ -136,39 +183,41 @@ const input = 'rounded-md border border-[#3A3A3A] bg-[#161616] p-3.5 font-sans t
     {variant === 'voucher' && (
       <>
         {options.length > 0 && (
-          <label class={field}>Vrsta vaučera
+          <label class={field}>{L.voucherKind}
             <select name="vaucer" class={input}>{options.map((o) => <option>{o}</option>)}</select>
           </label>
         )}
-        <label class={field}>Broj vaučera
+        <label class={field}>{L.voucherCount}
           <input type="number" name="kolicina" min="1" value="1" required class={input} />
         </label>
-        <label class={field}>Ime primaoca
+        <label class={field}>{L.recipient}
           <input type="text" name="primalac" class={input} />
         </label>
-        <label class:list={[field, 'col-span-full']}>Posveta na vaučeru (opciono)
+        <label class:list={[field, 'col-span-full']}>{L.dedication}
           <input type="text" name="posveta" maxlength="120" class={input} />
         </label>
       </>
     )}
 
-    <label class={field}>Ime i prezime
+    <label class={field}>{L.name}
       <input type="text" name="ime" autocomplete="name" required class={input} />
     </label>
     <label class={field}>Email
       <input type="email" name="email" autocomplete="email" required class={input} />
     </label>
-    <label class={field}>Telefon
+    <label class={field}>{L.phone}
       <input type="tel" name="telefon" autocomplete="tel" class={input} />
     </label>
     {variant !== 'voucher' && (
-      <label class:list={[field, 'col-span-full']}>{variant === 'contact' ? 'Poruka' : 'Poruka (alergije, posebne želje)'}
+      <label class:list={[field, 'col-span-full']}>{L.message}
         <textarea name="poruka" rows="4" class:list={[input, 'resize-y']}></textarea>
       </label>
     )}
     <div class="col-span-full">
       <button type="submit" class="btn btn-primary cursor-pointer border-0">{c.submit}</button>
-      <p class="m-0 mt-3 font-sans text-[14px] text-dim">Slanjem forme prihvatate obradu podataka u skladu sa <a href="/privatnost/">Politikom privatnosti</a>.</p>
+      <p class="m-0 mt-3 font-sans text-[14px] text-dim">
+        {en ? <>By sending this form you agree to the processing of your data as described in our <a href={route('privacy', lang)}>Privacy policy</a>.</> : <>Slanjem forme prihvatate obradu podataka u skladu sa <a href={route('privacy', lang)}>Politikom privatnosti</a>.</>}
+      </p>
     </div>
   </form>
 </section>

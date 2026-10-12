@@ -1,0 +1,28 @@
+---
+// SR / EN switch. Links to the same page in the other language.
+import { getLang, type Lang } from '../i18n';
+
+interface Props {
+  alternates: Record<Lang, string>;
+  class?: string;
+}
+const { alternates, class: className } = Astro.props;
+const lang = getLang(Astro.url);
+const items: { code: Lang; label: string; name: string }[] = [
+  { code: 'sr', label: 'SR', name: 'Srpski' },
+  { code: 'en', label: 'EN', name: 'English' },
+];
+---
+
+<div class:list={['lang-switch flex items-center gap-1.5 font-mono uppercase tracking-[0.08em]', className]}>
+  {items.map((l, i) => (
+    <>
+      {i > 0 && <span class="text-[#4A4A4A]" aria-hidden="true">/</span>}
+      {l.code === lang ? (
+        <span class="px-1 text-gold" aria-current="true" title={l.name}>{l.label}</span>
+      ) : (
+        <a href={alternates[l.code]} hreflang={l.code} lang={l.code} class="px-1 text-muted no-underline hover:text-paper" title={l.name} aria-label={l.name}>{l.label}</a>
+      )}
+    </>
+  ))}
+</div>

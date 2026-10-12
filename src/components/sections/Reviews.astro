@@ -1,39 +1,41 @@
 ---
 import { getCollection } from 'astro:content';
 import Icon from '../Icon.astro';
-import info from '../../data/info.json';
+import { getInfo, getLang, tr } from '../../i18n';
 
 // Curated Google reviews, edited in the CMS (src/content/reviews.json).
 // Keep the order from the JSON file (the CMS list order), not alphabetical by id.
 import reviewsOrder from '../../content/reviews.json';
 const order = reviewsOrder.map((r) => r.id);
+const lang = getLang(Astro.url);
+const info = getInfo(lang);
 const reviews = (await getCollection('reviews')).sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
 ---
 
-<section id="utisci" class="bg-paper text-ink">
+<section id={tr(lang, 'utisci', 'reviews')} class="bg-paper text-ink">
   <div class="container-site py-24">
     <div class="mb-11 flex flex-wrap items-end justify-between gap-6">
       <div class="min-w-0 flex-[1_1_480px]">
-        <p class="eyebrow !text-gold-dark" data-reveal>Utisci gostiju</p>
-        <h2 class="h-section m-0" data-reveal style="--i:1">Šta kažu naši gosti</h2>
+        <p class="eyebrow !text-gold-dark" data-reveal>{tr(lang, 'Utisci gostiju', 'Guest reviews')}</p>
+        <h2 class="h-section m-0" data-reveal style="--i:1">{tr(lang, 'Šta kažu naši gosti', 'What our guests say')}</h2>
       </div>
       <div class="flex items-center gap-3.5" data-reveal style="--i:2">
         <span class="text-[40px] font-medium">{info.googleRating}</span>
         <div>
-          <div class="flex gap-[3px] text-star" aria-label="Ocena 5 od 5">
+          <div class="flex gap-[3px] text-star" aria-label={tr(lang, 'Ocena 5 od 5', 'Rated 5 out of 5')}>
             {[1, 2, 3, 4, 5].map(() => <Icon name="star" size={14} />)}
           </div>
-          <p class="m-0 mt-1 text-[14px] text-[#5A554E]">{info.googleReviewCount} recenzija na Google-u</p>
+          <p class="m-0 mt-1 text-[14px] text-[#5A554E]">{info.googleReviewCount} {tr(lang, 'recenzija na Google-u', 'reviews on Google')}</p>
         </div>
       </div>
     </div>
 
     <div class="reviews-slider" data-reviews data-reveal>
-      <ul class="reviews-track m-0 flex list-none gap-7 p-0" data-track aria-label="Recenzije gostiju">
+      <ul class="reviews-track m-0 flex list-none gap-7 p-0" data-track aria-label={tr(lang, 'Recenzije gostiju', 'Guest reviews')}>
         {reviews.map((r) => (
           <li class="reviews-slide flex">
             <figure class="m-0 flex w-full flex-col gap-4 rounded-md border border-paper-dark bg-white p-8 shadow-[0_12px_30px_-20px_rgba(0,0,0,0.3)]">
-              <div class="flex gap-[3px] text-star" aria-label={`Ocena ${r.data.rating} od 5`}>
+              <div class="flex gap-[3px] text-star" aria-label={tr(lang, `Ocena ${r.data.rating} od 5`, `Rated ${r.data.rating} out of 5`)}>
                 {Array.from({ length: r.data.rating }).map(() => <Icon name="star" size={12} />)}
               </div>
               <blockquote class="m-0 font-sans text-base text-[#2A2723]">{r.data.text}</blockquote>
@@ -44,12 +46,12 @@ const reviews = (await getCollection('reviews')).sort((a, b) => order.indexOf(a.
       </ul>
 
       <div class="mt-7 flex items-center justify-between gap-6" data-controls>
-        <div class="flex gap-2" data-dots role="tablist" aria-label="Izaberi recenziju"></div>
+        <div class="flex gap-2" data-dots role="tablist" aria-label={tr(lang, 'Izaberi recenziju', 'Choose a review')} data-dot-label={tr(lang, 'Recenzija', 'Review')}></div>
         <div class="flex gap-2.5">
-          <button type="button" class="reviews-arrow" data-prev aria-label="Prethodna recenzija">
+          <button type="button" class="reviews-arrow" data-prev aria-label={tr(lang, 'Prethodna recenzija', 'Previous review')}>
             <Icon name="chevron-right" size={12} class="rotate-180" />
           </button>
-          <button type="button" class="reviews-arrow" data-next aria-label="Sledeća recenzija">
+          <button type="button" class="reviews-arrow" data-next aria-label={tr(lang, 'Sledeća recenzija', 'Next review')}>
             <Icon name="chevron-right" size={12} />
           </button>
         </div>
@@ -58,11 +60,11 @@ const reviews = (await getCollection('reviews')).sort((a, b) => order.indexOf(a.
 
     <div class="mt-9 flex flex-wrap items-center gap-3.5" data-reveal>
       <a href={info.googleProfile} class="btn btn-outline-dark" target="_blank" rel="noopener">
-        Sve recenzije na Google-u <Icon name="chevron-right" size={11} />
+        {tr(lang, 'Sve recenzije na Google-u', 'All reviews on Google')} <Icon name="chevron-right" size={11} />
       </a>
       {info.googleReviewLink && (
         <a href={info.googleReviewLink} class="btn btn-dark" target="_blank" rel="noopener">
-          <Icon name="star" size={12} /> Ostavite recenziju
+          <Icon name="star" size={12} /> {tr(lang, 'Ostavite recenziju', 'Leave a review')}
         </a>
       )}
     </div>
@@ -144,7 +146,7 @@ const reviews = (await getCollection('reviews')).sort((a, b) => order.indexOf(a.
         const b = document.createElement('button');
         b.type = 'button';
         b.className = 'reviews-dot';
-        b.setAttribute('aria-label', `Recenzija ${i + 1}`);
+        b.setAttribute('aria-label', `${dotsEl.dataset.dotLabel ?? ''} ${i + 1}`);
         b.addEventListener('click', () => { stop(); go(i); });
         dotsEl.appendChild(b);
         return b;

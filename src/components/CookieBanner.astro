@@ -1,6 +1,8 @@
 ---
 // Cookie consent. Categories: necessary (always on) and external content (maps, reservation widget).
 // Add an "analytics" category here before adding any analytics script.
+import { getLang, route, tr } from '../i18n';
+const lang = getLang(Astro.url);
 ---
 
 <div
@@ -12,28 +14,28 @@
   class="fixed inset-x-4 bottom-4 z-[60] max-w-[460px] rounded-md border border-line bg-ink p-6 shadow-[0_24px_60px_-20px_rgba(0,0,0,0.9)] sm:left-6 sm:right-auto sm:bottom-6"
   hidden
 >
-  <p id="cookie-title" class="m-0 text-[16px] font-semibold uppercase tracking-[0.04em]">Kolačići</p>
+  <p id="cookie-title" class="m-0 text-[16px] font-semibold uppercase tracking-[0.04em]">{tr(lang, 'Kolačići', 'Cookies')}</p>
   <p id="cookie-text" class="mt-2 mb-0 font-sans text-[15px] leading-relaxed text-muted">
-    Sajt ne koristi kolačiće za praćenje. Mape i forma za rezervacije dolaze od drugih servisa, koji mogu postaviti svoje kolačiće.{' '}
-    <a href="/kolacici/">Saznajte više</a>.
+    {tr(lang, 'Sajt ne koristi kolačiće za praćenje. Mape i forma za rezervacije dolaze od drugih servisa, koji mogu postaviti svoje kolačiće.', 'This site uses no tracking cookies. Maps and the booking form come from other services, which may set their own cookies.')}{' '}
+    <a href={route('cookies', lang)}>{tr(lang, 'Saznajte više', 'Learn more')}</a>.
   </p>
 
   <form class="mt-4 flex flex-col gap-3 border-t border-line pt-4" data-cookie-prefs hidden>
     <label class="flex items-start gap-3 font-sans text-[15px] text-muted">
       <input type="checkbox" checked disabled class="mt-1 h-4 w-4 accent-[#D4AF6A]" />
-      <span><span class="font-mono text-[14px] font-medium uppercase tracking-[0.04em] text-paper">Neophodni</span><br />Pamćenje vašeg izbora. Uvek uključeno.</span>
+      <span><span class="font-mono text-[14px] font-medium uppercase tracking-[0.04em] text-paper">{tr(lang, 'Neophodni', 'Necessary')}</span><br />{tr(lang, 'Pamćenje vašeg izbora. Uvek uključeno.', 'Remembers your choice. Always on.')}</span>
     </label>
     <label class="flex items-start gap-3 font-sans text-[15px] text-muted">
       <input type="checkbox" name="external" class="mt-1 h-4 w-4 accent-[#D4AF6A]" />
-      <span><span class="font-mono text-[14px] font-medium uppercase tracking-[0.04em] text-paper">Spoljni sadržaj</span><br />Google mape i sistem za rezervacije.</span>
+      <span><span class="font-mono text-[14px] font-medium uppercase tracking-[0.04em] text-paper">{tr(lang, 'Spoljni sadržaj', 'External content')}</span><br />{tr(lang, 'Google mape i sistem za rezervacije.', 'Google Maps and the booking system.')}</span>
     </label>
   </form>
 
   <div class="mt-5 flex flex-wrap gap-2.5">
-    <button type="button" class="btn btn-primary cursor-pointer border-0 !px-5 !py-3" data-cookie-accept>Prihvati sve</button>
-    <button type="button" class="btn btn-outline cursor-pointer bg-transparent !px-5 !py-3" data-cookie-necessary>Samo neophodni</button>
-    <button type="button" class="cursor-pointer border-0 bg-transparent px-1 font-mono text-[14px] text-gold underline-offset-4 hover:underline" data-cookie-settings>Podešavanja</button>
-    <button type="button" class="btn btn-outline cursor-pointer bg-transparent !px-5 !py-3" data-cookie-save hidden>Sačuvaj izbor</button>
+    <button type="button" class="btn btn-primary cursor-pointer border-0 !px-5 !py-3" data-cookie-accept>{tr(lang, 'Prihvati sve', 'Accept all')}</button>
+    <button type="button" class="btn btn-outline cursor-pointer bg-transparent !px-5 !py-3" data-cookie-necessary>{tr(lang, 'Samo neophodni', 'Necessary only')}</button>
+    <button type="button" class="cursor-pointer border-0 bg-transparent px-1 font-mono text-[14px] text-gold underline-offset-4 hover:underline" data-cookie-settings>{tr(lang, 'Podešavanja', 'Settings')}</button>
+    <button type="button" class="btn btn-outline cursor-pointer bg-transparent !px-5 !py-3" data-cookie-save hidden>{tr(lang, 'Sačuvaj izbor', 'Save choice')}</button>
   </div>
 </div>
 

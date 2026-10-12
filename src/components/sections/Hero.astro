@@ -1,23 +1,28 @@
 ---
 import Placeholder from '../Placeholder.astro';
-import info from '../../data/info.json';
+import { getInfo, getLang, route, tr } from '../../i18n';
+
+const lang = getLang(Astro.url);
+const info = getInfo(lang);
 ---
 
 <section class="container-site flex flex-wrap items-center gap-14 pt-[72px] pb-24">
   <div class="min-w-0 flex-[1_1_460px]">
     <p class="eyebrow mb-5" data-reveal>Open Kitchen Concept · {info.landmark}</p>
     <h1 class="m-0 font-medium leading-[1.1] tracking-[-0.02em] [font-size:clamp(34px,4.6vw,60px)]" data-reveal style="--i:1">
-      Francuska kuhinja,<br /><em class="font-normal">pred vašim očima.</em>
+      {lang === 'en'
+        ? <>French cuisine,<br /><em class="font-normal">right before your eyes.</em></>
+        : <>Francuska kuhinja,<br /><em class="font-normal">pred vašim očima.</em></>}
     </h1>
     <p class="mt-7 max-w-[480px] font-sans text-base text-muted" data-reveal style="--i:2">
       {info.aboutShort}
     </p>
     <div class="mt-10 flex flex-wrap gap-3.5" data-reveal style="--i:3">
-      <a href="/rezervacije/" class="btn btn-primary">Rezerviši sto</a>
-      <a href="#usluge" class="btn btn-outline">Proslave i događaji</a>
+      <a href={route('reservations', lang)} class="btn btn-primary">{tr(lang, 'Rezerviši sto', 'Book a table')}</a>
+      <a href={`#${tr(lang, 'usluge', 'services')}`} class="btn btn-outline">{tr(lang, 'Proslave i događaji', 'Parties & events')}</a>
     </div>
   </div>
   <div class="min-w-0 flex-[1_1_420px]" data-reveal style="--i:2">
-    <Placeholder label="Foto: otvorena kuhinja" class="h-[540px]" />
+    <Placeholder label={tr(lang, 'Foto: otvorena kuhinja', 'Photo: open kitchen')} class="h-[540px]" />
   </div>
 </section>

@@ -1,19 +1,28 @@
 ---
-import info from '../../data/info.json';
+import { getInfo, getLang, tr } from '../../i18n';
 
-const pillars = [
-  { title: 'Otvorena kuhinja', text: 'Gledate kako nastaje svako jelo, od pripreme do tanjira.' },
-  { title: 'Francuski klasici', text: 'Tehnike po Escoffier-u, pažljivo birane lokalne namirnice i klasici poput puževa, supe od luka i Coq au Vin.' },
-  { title: 'Vino, kokteli, muzika', text: 'Vinske večeri, Vinyl & Dine, koktel večeri i gostujući šefovi.' },
-];
+const lang = getLang(Astro.url);
+const info = getInfo(lang);
+
+const pillars = lang === 'en'
+  ? [
+      { title: 'Open kitchen', text: 'Watch every dish come together, from prep to plate.' },
+      { title: 'French classics', text: 'Escoffier technique, carefully sourced local ingredients and classics such as snails, onion soup and Coq au Vin.' },
+      { title: 'Wine, cocktails, music', text: 'Wine evenings, Vinyl & Dine, cocktail nights and guest chefs.' },
+    ]
+  : [
+      { title: 'Otvorena kuhinja', text: 'Gledate kako nastaje svako jelo, od pripreme do tanjira.' },
+      { title: 'Francuski klasici', text: 'Tehnike po Escoffier-u, pažljivo birane lokalne namirnice i klasici poput puževa, supe od luka i Coq au Vin.' },
+      { title: 'Vino, kokteli, muzika', text: 'Vinske večeri, Vinyl & Dine, koktel večeri i gostujući šefovi.' },
+    ];
 ---
 
 <section aria-labelledby="o-nama" class="border-b border-line">
   <div class="border-b border-line">
   <div class="container-site grid grid-cols-1 gap-x-14 gap-y-6 py-20 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
     <div>
-      <p class="eyebrow" data-reveal>O nama</p>
-      <h2 id="o-nama" class="h-section m-0" data-reveal style="--i:1">Daleko od gradske buke.</h2>
+      <p class="eyebrow" data-reveal>{tr(lang, 'O nama', 'About us')}</p>
+      <h2 id="o-nama" class="h-section m-0" data-reveal style="--i:1">{tr(lang, 'Daleko od gradske buke.', 'Far from the city noise.')}</h2>
     </div>
     <p class="m-0 max-w-[760px] self-end font-sans text-[18px] leading-[1.75] text-muted lg:text-[19px]" data-reveal style="--i:2">{info.about}</p>
   </div>

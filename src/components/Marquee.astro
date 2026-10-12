@@ -31,7 +31,7 @@ const items = [
 </div>
 
 <style>
-  .marquee-track { animation: marquee 60s linear infinite; }
+  .marquee-track { animation: marquee 60s linear infinite; will-change: transform; }
   .marquee:hover .marquee-track { animation-play-state: paused; }
   @keyframes marquee { to { transform: translateX(-50%); } }
   @media (prefers-reduced-motion: reduce) {

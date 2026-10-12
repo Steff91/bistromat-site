@@ -9,7 +9,7 @@ Ova politika objašnjava koje podatke o ličnosti prikupljamo preko sajta i u ve
 ## Rukovalac podacima
 
 Nikola Kovačević PR Restoran Bistromat, Mutapova 9, Vračar, Beograd, matični broj 66551245, PIB 113066654.
-Kontakt za pitanja o podacima o ličnosti: [bistromat.zemun@gmail.com](mailto:bistromat.zemun@gmail.com).
+Kontakt za pitanja o podacima o ličnosti: [office@bistromat.rs](mailto:office@bistromat.rs).
 
 ## Koje podatke prikupljamo
 
@@ -67,7 +67,7 @@ U svakom trenutku imate pravo da:
 - zatražite prenos podataka drugom rukovaocu,
 - povučete pristanak (npr. za informacije o alergijama), bez uticaja na zakonitost obrade pre povlačenja.
 
-Zahtev pošaljite na [bistromat.zemun@gmail.com](mailto:bistromat.zemun@gmail.com). Odgovorićemo najkasnije u roku od 30 dana.
+Zahtev pošaljite na [office@bistromat.rs](mailto:office@bistromat.rs). Odgovorićemo najkasnije u roku od 30 dana.
 
 Ako smatrate da obrada vaših podataka nije u skladu sa zakonom, imate pravo da podnesete pritužbu **Povereniku za informacije od javnog značaja i zaštitu podataka o ličnosti** (www.poverenik.rs).
 

@@ -23,7 +23,7 @@ updated: "[DATUM]"
 | | |
 |---|---|
 | Telefon | [063 417 063](tel:+38163417063) |
-| Email | [bistromat.zemun@gmail.com](mailto:bistromat.zemun@gmail.com) |
+| Email | [office@bistromat.rs](mailto:office@bistromat.rs) |
 
 ## Cene i ponuda
 

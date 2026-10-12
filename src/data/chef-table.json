@@ -18,8 +18,8 @@
     { "time": "21:30", "title": "Sir i desert", "text": "Francuski sirevi, desert i digestiv." }
   ],
   "chef": {
-    "name": "[Ime šefa]",
-    "role": "Šef kuhinje",
+    "name": "Nikola Kovačević",
+    "role": "Vlasnik i šef kuhinje",
     "bio": "[Kratka biografija šefa: gde je učio i radio, šta ga inspiriše u francuskoj kuhinji, šta gosti mogu da očekuju za njegovim stolom.]",
     "quote": "[Citat šefa o kuhinji ili Chef's Table večerima.]",
     "image": ""

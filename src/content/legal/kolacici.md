@@ -34,4 +34,4 @@ Svoj izbor možete promeniti u svakom trenutku preko linka **Podešavanja kolač
 
 Ako počnemo da koristimo analitiku ili druge kolačiće, ažuriraćemo ovu stranicu i, gde je potrebno, tražiti vaš pristanak pre postavljanja kolačića.
 
-Pitanja u vezi sa kolačićima pošaljite na [EMAIL]. Više o obradi podataka pročitajte u [Politici privatnosti](/privatnost/).
+Pitanja u vezi sa kolačićima pošaljite na [bistromat.zemun@gmail.com](mailto:bistromat.zemun@gmail.com). Više o obradi podataka pročitajte u [Politici privatnosti](/privatnost/).

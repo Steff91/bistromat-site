@@ -8,22 +8,22 @@ updated: "[DATUM]"
 
 | | |
 |---|---|
-| Poslovno ime | [Puno poslovno ime pravnog lica / preduzetnika] |
+| Poslovno ime | Nikola Kovačević PR Restoran Bistromat |
 | Naziv restorana | Bistromat |
-| Sedište | [Adresa sedišta] |
+| Sedište | Mutapova 9, Vračar, Beograd |
 | Adresa restorana | Mutapova 9, Beograd |
-| Matični broj | [MB] |
-| PIB | [PIB] |
+| Matični broj | 66551245 |
+| PIB | 113066654 |
 | Registar | Agencija za privredne registre (APR) |
 | Šifra delatnosti | [5610 — Delatnosti restorana i pokretnih ugostiteljskih objekata] |
-| Odgovorno lice | [Ime i prezime, funkcija] |
+| Odgovorno lice | Nikola Kovačević, preduzetnik |
 
 ## Kontakt
 
 | | |
 |---|---|
-| Telefon | 063 417 063 |
-| Email | [EMAIL] |
+| Telefon | [061 604 4653](tel:+381616044653) |
+| Email | [bistromat.zemun@gmail.com](mailto:bistromat.zemun@gmail.com) |
 
 ## Cene i ponuda
 
@@ -31,7 +31,7 @@ Cene na sajtu i u PDF menijima izražene su u dinarima, sa uračunatim PDV-om, i
 
 ## Autorska prava
 
-Tekstovi, fotografije, logo i grafički elementi na ovom sajtu vlasništvo su [poslovno ime] ili su korišćeni uz dozvolu autora. Nije dozvoljeno njihovo kopiranje i korišćenje bez prethodne pisane saglasnosti.
+Tekstovi, fotografije, logo i grafički elementi na ovom sajtu vlasništvo su preduzetnika Nikola Kovačević PR Restoran Bistromat ili su korišćeni uz dozvolu autora. Nije dozvoljeno njihovo kopiranje i korišćenje bez prethodne pisane saglasnosti.
 
 ## Izrada sajta
 

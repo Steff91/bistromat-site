@@ -1,4 +1,5 @@
 ---
+import FaqList from '../../components/FaqList.astro';
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Placeholder from '../../components/Placeholder.astro';
@@ -180,16 +181,8 @@ const galleryLayout = (i: number) =>
           <p class="eyebrow" data-reveal>Česta pitanja</p>
           <h2 id="pitanja" class="h-section m-0" data-reveal style="--i:1">Pre nego što pitate</h2>
         </div>
-        <div class="min-w-0 flex-[2_1_520px] border-t border-line">
-          {d.faq.map((f, i) => (
-            <details class="faq group border-b border-line" data-reveal style={`--i:${i % 4}`}>
-              <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-5 font-medium">
-                {f.q}
-                <span class="faq-icon inline-flex shrink-0 text-gold"><Icon name="chevron-right" size={11} /></span>
-              </summary>
-              <p class="mt-0 mb-6 max-w-[620px] font-sans text-muted">{f.a}</p>
-            </details>
-          ))}
+        <div class="min-w-0 flex-[2_1_520px]">
+          <FaqList items={d.faq} />
         </div>
       </div>
     </section>
@@ -223,10 +216,3 @@ const galleryLayout = (i: number) =>
   </section>
 </Base>
 
-<style>
-  .faq summary::-webkit-details-marker { display: none; }
-  .faq-icon { transform: rotate(90deg); transition: transform .25s ease; }
-  .faq[open] .faq-icon { transform: rotate(-90deg); }
-  .faq summary:hover { color: var(--color-gold); }
-  @media (prefers-reduced-motion: reduce) { .faq-icon { transition: none; } }
-</style>

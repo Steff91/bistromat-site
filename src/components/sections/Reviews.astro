@@ -25,16 +25,32 @@ const reviews = await getCollection('reviews');
       </div>
     </div>
 
-    <div class="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-7">
-      {reviews.map((r, i) => (
-        <figure class="m-0 flex flex-col gap-4 rounded-md border border-paper-dark bg-white p-8 shadow-[0_12px_30px_-20px_rgba(0,0,0,0.3)]" data-reveal style={`--i:${i}`}>
-          <div class="flex gap-[3px] text-star" aria-label={`Ocena ${r.data.rating} od 5`}>
-            {Array.from({ length: r.data.rating }).map(() => <Icon name="star" size={12} />)}
-          </div>
-          <blockquote class="m-0 font-sans text-base text-[#2A2723]">{r.data.text}</blockquote>
-          <figcaption class="mt-auto text-[14px] text-[#5A554E]">— {r.data.name} · Google</figcaption>
-        </figure>
-      ))}
+    <div class="reviews-slider" data-reviews data-reveal>
+      <ul class="reviews-track m-0 flex list-none gap-7 p-0" data-track aria-label="Recenzije gostiju">
+        {reviews.map((r) => (
+          <li class="reviews-slide flex">
+            <figure class="m-0 flex w-full flex-col gap-4 rounded-md border border-paper-dark bg-white p-8 shadow-[0_12px_30px_-20px_rgba(0,0,0,0.3)]">
+              <div class="flex gap-[3px] text-star" aria-label={`Ocena ${r.data.rating} od 5`}>
+                {Array.from({ length: r.data.rating }).map(() => <Icon name="star" size={12} />)}
+              </div>
+              <blockquote class="m-0 font-sans text-base text-[#2A2723]">{r.data.text}</blockquote>
+              <figcaption class="mt-auto text-[14px] text-[#5A554E]">— {r.data.name} · Google</figcaption>
+            </figure>
+          </li>
+        ))}
+      </ul>
+
+      <div class="mt-7 flex items-center justify-between gap-6" data-controls>
+        <div class="flex gap-2" data-dots role="tablist" aria-label="Izaberi recenziju"></div>
+        <div class="flex gap-2.5">
+          <button type="button" class="reviews-arrow" data-prev aria-label="Prethodna recenzija">
+            <Icon name="chevron-right" size={12} class="rotate-180" />
+          </button>
+          <button type="button" class="reviews-arrow" data-next aria-label="Sledeća recenzija">
+            <Icon name="chevron-right" size={12} />
+          </button>
+        </div>
+      </div>
     </div>
 
     <div class="mt-9 flex flex-wrap items-center gap-3.5" data-reveal>
@@ -49,3 +65,125 @@ const reviews = await getCollection('reviews');
     </div>
   </div>
 </section>
+
+<style>
+  .reviews-track {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    /* room for the card shadow */
+    padding-bottom: 24px;
+    margin-bottom: -24px;
+  }
+  .reviews-track::-webkit-scrollbar { display: none; }
+  .reviews-slide {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+  }
+  @media (min-width: 48rem) { .reviews-slide { flex-basis: calc((100% - 1.75rem) / 2); } }
+  @media (min-width: 64rem) { .reviews-slide { flex-basis: calc((100% - 3.5rem) / 3); } }
+
+  .reviews-arrow {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 46px; height: 46px;
+    border: 1px solid var(--color-ink); border-radius: 6px;
+    background: transparent; color: var(--color-ink); cursor: pointer;
+    transition: background-color .25s ease, color .25s ease, opacity .25s ease;
+  }
+  .reviews-arrow:hover:not(:disabled) { background: var(--color-ink); color: var(--color-paper); }
+  .reviews-arrow:disabled { opacity: .3; cursor: default; }
+
+  .reviews-slider :global(.reviews-dot) {
+    width: 8px; height: 8px; padding: 0; border: 0; border-radius: 999px;
+    background: #BDB7AD; cursor: pointer;
+    transition: width .3s ease, background-color .3s ease;
+  }
+  .reviews-slider :global(.reviews-dot[aria-current='true']) { width: 26px; background: var(--color-gold-dark); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reviews-track { scroll-behavior: auto; }
+  }
+</style>
+
+<script>
+  // Scroll-snap slider: arrows, dots, swipe (native), gentle autoplay that pauses on interaction.
+  document.querySelectorAll<HTMLElement>('[data-reviews]').forEach((root) => {
+    const track = root.querySelector<HTMLElement>('[data-track]')!;
+    const slides = Array.from(track.children) as HTMLElement[];
+    const prev = root.querySelector<HTMLButtonElement>('[data-prev]')!;
+    const next = root.querySelector<HTMLButtonElement>('[data-next]')!;
+    const dotsEl = root.querySelector<HTMLElement>('[data-dots]')!;
+    const controls = root.querySelector<HTMLElement>('[data-controls]')!;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const perView = () => Math.max(1, Math.round(track.clientWidth / slides[0].offsetWidth));
+    const pages = () => Math.max(1, slides.length - perView() + 1);
+    const current = () => {
+      const x = track.scrollLeft;
+      let best = 0;
+      slides.forEach((s, i) => { if (Math.abs(s.offsetLeft - slides[0].offsetLeft - x) < Math.abs(slides[best].offsetLeft - slides[0].offsetLeft - x)) best = i; });
+      return best;
+    };
+    const go = (i: number) => {
+      const n = pages();
+      const idx = ((i % n) + n) % n;
+      track.scrollTo({ left: slides[idx].offsetLeft - slides[0].offsetLeft });
+    };
+
+    let dots: HTMLButtonElement[] = [];
+    const buildDots = () => {
+      const n = pages();
+      controls.hidden = n <= 1;
+      if (dots.length === n) return;
+      dotsEl.innerHTML = '';
+      dots = Array.from({ length: n }, (_, i) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'reviews-dot';
+        b.setAttribute('aria-label', `Recenzija ${i + 1}`);
+        b.addEventListener('click', () => { stop(); go(i); });
+        dotsEl.appendChild(b);
+        return b;
+      });
+    };
+    const update = () => {
+      const i = Math.min(current(), pages() - 1);
+      dots.forEach((d, k) => d.setAttribute('aria-current', String(k === i)));
+      const end = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+      prev.disabled = track.scrollLeft <= 4;
+      next.disabled = end;
+    };
+
+    prev.addEventListener('click', () => { stop(); go(current() - 1); });
+    next.addEventListener('click', () => { stop(); go(current() + 1); });
+
+    let raf = 0;
+    track.addEventListener('scroll', () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(update); }, { passive: true });
+    window.addEventListener('resize', () => { buildDots(); update(); });
+
+    // Autoplay every 6s; stops for good once the visitor takes control.
+    let timer = 0;
+    let stopped = reduce;
+    const stop = () => { stopped = true; clearInterval(timer); };
+    const start = () => {
+      if (stopped) return;
+      clearInterval(timer);
+      timer = window.setInterval(() => {
+        const i = current();
+        go(i + 1 >= pages() ? 0 : i + 1);
+      }, 6000);
+    };
+    root.addEventListener('mouseenter', () => clearInterval(timer));
+    root.addEventListener('mouseleave', start);
+    root.addEventListener('focusin', () => clearInterval(timer));
+    track.addEventListener('pointerdown', stop);
+    track.addEventListener('touchstart', stop, { passive: true });
+
+    // Only run while visible
+    new IntersectionObserver(([e]) => (e.isIntersecting ? start() : clearInterval(timer)), { threshold: 0.3 }).observe(root);
+
+    buildDots();
+    update();
+  });
+</script>

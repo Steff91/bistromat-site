@@ -2,15 +2,15 @@
 import LogoMark from './LogoMark.astro';
 
 interface Props {
-  /** "responsive": icon on phones, wordmark from sm up. "wordmark": always the full logo. */
+  /** "responsive": decagon mark on phones, mark + wordmark from sm up. "wordmark": wordmark only. */
   mode?: 'responsive' | 'wordmark';
   class?: string;
 }
 const { mode = 'responsive', class: className } = Astro.props;
 ---
 
-<a href="/" class:list={['flex items-center text-paper no-underline hover:text-paper', className]} aria-label="Bistromat — početna">
-  {mode === 'responsive' && <LogoMark variant="icon" class="logo-icon block h-11 w-11 sm:hidden" />}
+<a href="/" class:list={['flex items-center gap-3.5 text-paper no-underline hover:text-paper', className]} aria-label="Bistromat — početna">
+  {mode === 'responsive' && <LogoMark variant="icon" class="logo-icon block h-11 w-11 shrink-0" />}
   <LogoMark
     variant="wordmark"
     class:list={['logo-wordmark h-8 w-auto', mode === 'responsive' ? 'hidden sm:block' : 'block']}

@@ -4,7 +4,10 @@ import Icon from '../Icon.astro';
 import info from '../../data/info.json';
 
 // Curated Google reviews, edited in the CMS (src/content/reviews.json).
-const reviews = await getCollection('reviews');
+// Keep the order from the JSON file (the CMS list order), not alphabetical by id.
+import reviewsOrder from '../../content/reviews.json';
+const order = reviewsOrder.map((r) => r.id);
+const reviews = (await getCollection('reviews')).sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
 ---
 
 <section id="utisci" class="bg-paper text-ink">

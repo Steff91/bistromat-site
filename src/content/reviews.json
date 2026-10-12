@@ -6,15 +6,33 @@
     "rating": 5
   },
   {
+    "id": "sarah-b",
+    "name": "Sarah B.",
+    "text": "We had such a great experience at Bistromat! The food was so good, many people (including the chef) served us and gave us information on our food and wine, and everyone was so friendly. Really happy this place has opened up. We will be back!",
+    "rating": 5
+  },
+  {
     "id": "milena-m",
     "name": "Milena M.",
     "text": "Amazing food! The calm atmosphere and a great service really provide a full experience. We enjoyed it and will be back soon!",
     "rating": 5
   },
   {
+    "id": "darko-t",
+    "name": "Darko T.",
+    "text": "Open kitchen concept, you get to talk to the main chef and he can give you any kind of advice or direct explanation regarding the food… and the food is beyond perfection. French onion soup was one of the best I tried. Lava cake with home made vanilla ice-cream and lemon tart are also recommended.",
+    "rating": 5
+  },
+  {
     "id": "alex-b",
     "name": "Alex B.",
     "text": "The French Syrah Grenache is super smooth. The reduction and mashed potatoes was delicious. The John Dori fish was good. The chocolate mousse was delicious. Service impeccable.",
+    "rating": 5
+  },
+  {
+    "id": "noga-b",
+    "name": "Noga B.",
+    "text": "Amazing food. Don't hesitate to come to Belgrade. You will not regret!",
     "rating": 5
   }
 ]

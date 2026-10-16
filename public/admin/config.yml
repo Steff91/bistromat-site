@@ -66,7 +66,7 @@ collections:
           - { name: reservationEmbed, label: Embed kod za rezervacije, widget: text, required: false }
           - { name: eventlinName, label: Eventlin naziv (name), widget: string, required: false }
           - { name: eventlinMerchantId, label: Eventlin merchant ID (prazno = bez online rezervacija), widget: string, required: false }
-          - { name: formAction, label: Adresa za slanje forme (npr. Formspree), widget: string, required: false }
+          - { name: formAction, label: Adresa za slanje forme (/send.php), widget: string, required: false }
 
       - name: reservations
         label: Rezervacije

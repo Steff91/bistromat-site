@@ -4,6 +4,10 @@
 ErrorDocument 404 /404.html
 Options -Indexes
 
+<Files "form-config.php">
+  Require all denied
+</Files>
+
 # ── COMING SOON (password gate) ─────────────────────────────────────────────
 # Currently OFF. To turn it ON, remove the "#" at the start of the 7 lines below.
 # Password and logout: see gate.php (PASSWORD_SHA256, ACCESS_TOKEN — the token must match the cookie line).

@@ -77,7 +77,7 @@ const L = {
   inquiry: tr(lang, 'Upit', 'Inquiry'),
 };
 
-// Static site: the form posts to an external handler (e.g. Formspree) set in info.json → formAction.
+// Forms post to public/send.php (info.json → formAction); recipient is set in form-config.php on the server.
 const field = 'flex flex-col gap-2 text-[14px] uppercase tracking-[0.06em] text-muted';
 const input = 'rounded-md border border-[#3A3A3A] bg-[#161616] p-3.5 font-sans text-[16px] normal-case tracking-normal text-paper focus:border-gold focus:outline-none';
 ---
@@ -101,6 +101,7 @@ const input = 'rounded-md border border-[#3A3A3A] bg-[#161616] p-3.5 font-sans t
     <input type="hidden" name="usluga" value={service} />
     <input type="hidden" name="redirect" value={thanks} />
     <input type="hidden" name="jezik" value={lang} />
+    <div class="hidden" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
 
     {variant === 'event' && (
       <>

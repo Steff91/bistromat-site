@@ -68,6 +68,7 @@ const groupHref = FEATURES.services ? `${partiesHref}#upit` : route('contact', l
             data-form
           >
             <input type="hidden" name="usluga" value={tr(lang, 'Rezervacija stola', 'Table booking')} />
+            <div class="hidden" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
             <input type="hidden" name="redirect" value={new URL(`${route('thanks', lang)}?tip=rezervacija`, Astro.site).toString()} />
             <input type="hidden" name="jezik" value={lang} />
             <label class={field}>{tr(lang, 'Datum', 'Date')}

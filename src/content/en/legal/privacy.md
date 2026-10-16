@@ -42,7 +42,6 @@ We do not use your data to send marketing messages without your separate consent
 
 We share data only with service providers who help us run the business and process it on our behalf:
 
-- a form processing service (Web3Forms) — receiving messages sent through the website forms,
 - Eventlin — the online table booking system,
 - Behold — showing our latest Instagram posts on the home page (images load from their server, which therefore sees your IP address; it sets no cookies),
 - a hosting provider — hosting the website,

@@ -41,7 +41,6 @@ Podatke ne koristimo za slanje reklamnih poruka bez vašeg posebnog pristanka i 
 
 Podatke delimo samo sa pružaocima usluga koji nam pomažu u radu i koji ih obrađuju po našem nalogu:
 
-- servis za obradu formi (Web3Forms) — prijem poruka poslatih preko formi na sajtu,
 - Eventlin — sistem za online rezervacije stola,
 - Behold — prikaz naših najnovijih Instagram objava na početnoj strani (slike se učitavaju sa njihovog servera, pa on vidi vašu IP adresu; kolačiće ne postavlja),
 - pružalac hosting usluga — smeštaj sajta,

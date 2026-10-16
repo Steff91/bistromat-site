@@ -1,6 +1,8 @@
 ---
 // "Book a table" button that opens the Eventlin booking widget.
 // Eventlin's script is loaded only on the first click (nothing is sent to Eventlin before that).
+// Their stylesheet is NOT loaded: it restyles every .eventlin-btn (navy, large font). The popup is
+// styled here instead, in the site's look, with a branded header, Esc to close and scroll lock.
 // Without a merchant ID in info.json, or without JavaScript, it is a plain link to the reservations page.
 import { getInfo, getLang, route, tr } from '../i18n';
 
@@ -22,35 +24,101 @@ const enabled = Boolean(info.eventlinMerchantId);
     lang={lang === 'en' ? 'en' : undefined}
     data-book
     data-fail={tr(lang, `Online rezervacija trenutno nije dostupna. Pozovite nas: ${info.phone}`, `Online booking is unavailable right now. Please call us: ${info.phone}`)}
+    data-title={tr(lang, 'Rezervacija stola', 'Book a table')}
+    data-loading={tr(lang, 'Učitavanje forme…', 'Loading the form…')}
+    data-close={tr(lang, 'Zatvori', 'Close')}
+    data-phone={info.phone}
+    data-phone-href={info.phoneHref}
+    data-phone-label={tr(lang, 'Ili pozovite', 'Or call')}
   ><slot /></a>
 ) : (
   <a href={route('reservations', lang)} class={className}><slot /></a>
 )}
 
 <script>
-  // Load Eventlin on first click, then open the widget for the clicked button.
   const SCRIPT = 'https://w.eventlin.com/widget/widget30.min.js';
-  const STYLE = 'https://w.eventlin.com/widget/widget30.min.css';
   let state: 'idle' | 'loading' | 'ready' | 'failed' = 'idle';
   let loading: Promise<void> | null = null;
+  let labels: DOMStringMap = {};
+
+  const closePopup = (overlay: HTMLElement) => {
+    overlay.style.display = 'none';
+  };
+
+  // Wrap Eventlin's popup in our own frame: header with title, phone and close button.
+  function enhance(overlay: HTMLElement) {
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+
+    const decorate = () => {
+      const content = overlay.querySelector<HTMLElement>('.eventlin-content');
+      if (!content || content.querySelector('.bm-book-head')) return;
+      overlay.setAttribute('aria-label', labels.title ?? '');
+      const head = document.createElement('div');
+      head.className = 'bm-book-head';
+      head.innerHTML = `
+        <div class="bm-book-title">
+          <span class="bm-book-eyebrow">Bistromat</span>
+          <span class="bm-book-name"></span>
+        </div>
+        <a class="bm-book-phone"></a>
+        <button type="button" class="bm-book-close">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
+        </button>`;
+      head.querySelector('.bm-book-name')!.textContent = labels.title ?? '';
+      const phone = head.querySelector<HTMLAnchorElement>('.bm-book-phone')!;
+      phone.href = `tel:${labels.phoneHref ?? ''}`;
+      phone.textContent = `${labels.phoneLabel ?? ''}: ${labels.phone ?? ''}`;
+      const close = head.querySelector<HTMLButtonElement>('.bm-book-close')!;
+      close.setAttribute('aria-label', labels.close ?? 'Close');
+      close.addEventListener('click', () => closePopup(overlay));
+      content.prepend(head);
+
+      const frame = content.querySelector('iframe');
+      if (frame) {
+        frame.title = labels.title ?? '';
+        const wrap = document.createElement('div');
+        wrap.className = 'bm-book-frame';
+        wrap.dataset.loading = labels.loading ?? '';
+        frame.replaceWith(wrap);
+        wrap.appendChild(frame);
+        frame.addEventListener('load', () => wrap.classList.add('is-loaded'), { once: true });
+      }
+      requestAnimationFrame(() => close.focus({ preventScroll: true }));
+    };
+
+    let lastFocus: HTMLElement | null = null;
+    const sync = () => {
+      const open = overlay.style.display !== 'none' && overlay.style.display !== '';
+      document.documentElement.classList.toggle('bm-book-open', open);
+      if (open) decorate();
+      else if (lastFocus) { lastFocus.focus({ preventScroll: true }); lastFocus = null; }
+    };
+    new MutationObserver(sync).observe(overlay, { attributes: true, attributeFilter: ['style'], childList: true });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && document.documentElement.classList.contains('bm-book-open')) closePopup(overlay);
+    });
+    document.addEventListener('click', (e) => {
+      const btn = (e.target as Element).closest?.('a[data-book]');
+      if (btn) lastFocus = btn as HTMLElement;
+    }, true);
+  }
 
   const load = () =>
     (loading ??= new Promise<void>((resolve, reject) => {
       state = 'loading';
-      const css = document.createElement('link');
-      css.rel = 'stylesheet';
-      css.href = STYLE;
-      document.head.appendChild(css);
       const js = document.createElement('script');
       js.src = SCRIPT;
       js.onload = () => {
         // The widget binds its buttons on window "load", which has already fired: init once by hand.
         const init = (window as unknown as { loadEventlin?: () => void }).loadEventlin;
-        if (typeof init === 'function') {
-          init();
-          state = 'ready';
-          resolve();
-        } else reject(new Error('Eventlin init not found'));
+        if (typeof init !== 'function') return reject(new Error('Eventlin init not found'));
+        init();
+        const overlay = document.querySelector<HTMLElement>('.eventlin-overlay');
+        if (overlay) enhance(overlay);
+        state = 'ready';
+        resolve();
       };
       js.onerror = () => reject(new Error('Eventlin script failed to load'));
       document.head.appendChild(js);
@@ -60,6 +128,7 @@ const enabled = Boolean(info.eventlinMerchantId);
     btn.addEventListener('click', (e) => {
       if (state === 'failed') return; // fall back to the reservations page
       e.preventDefault();
+      labels = btn.dataset;
       if (state === 'ready') return; // the widget's own handler opens the form
       btn.setAttribute('aria-busy', 'true');
       load()
@@ -78,6 +147,80 @@ const enabled = Boolean(info.eventlinMerchantId);
 
 <style is:global>
   a[data-book][aria-busy='true'] { cursor: progress; opacity: .75; }
-  /* Keep Eventlin's overlay above the sticky header and cookie banner */
-  .eventlin-overlay { z-index: 1000 !important; }
+
+  html.bm-book-open { overflow: hidden; }
+
+  .eventlin-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgb(10 10 10 / 0.78);
+    backdrop-filter: blur(6px);
+    animation: bm-fade .25s ease;
+  }
+  .eventlin-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: min(760px, 100%);
+    height: min(820px, calc(100dvh - 48px));
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    border-radius: 10px;
+    background: var(--color-ink);
+    box-shadow: 0 40px 80px -30px rgb(0 0 0 / 0.9);
+    animation: bm-rise .35s cubic-bezier(.2, .7, .2, 1);
+  }
+  /* Eventlin's own close icon is replaced by ours in the header */
+  .eventlin-content > .close-btn { display: none; }
+
+  .bm-book-head {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 14px 14px 22px;
+    border-bottom: 1px solid var(--color-line);
+    background: var(--color-ink);
+    color: var(--color-paper);
+    font-family: var(--font-mono);
+  }
+  .bm-book-title { display: flex; min-width: 0; flex-direction: column; margin-right: auto; line-height: 1.3; }
+  .bm-book-eyebrow { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--color-gold); }
+  .bm-book-name { font-size: 18px; font-weight: 500; }
+  .bm-book-phone { font-size: 14px; color: var(--color-muted); text-decoration: none; white-space: nowrap; }
+  .bm-book-phone:hover { color: var(--color-gold); }
+  .bm-book-close {
+    display: inline-flex; flex-shrink: 0; align-items: center; justify-content: center;
+    width: 40px; height: 40px; padding: 0;
+    border: 1px solid var(--color-line); border-radius: 6px;
+    background: transparent; color: var(--color-paper); cursor: pointer;
+    transition: border-color .2s ease, color .2s ease;
+  }
+  .bm-book-close:hover, .bm-book-close:focus-visible { border-color: var(--color-gold); color: var(--color-gold); outline: none; }
+
+  .bm-book-frame { position: relative; flex: 1; background: #fff; }
+  .bm-book-frame::before {
+    content: attr(data-loading);
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font: 400 14px var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: #8a857d;
+  }
+  .bm-book-frame.is-loaded::before { content: none; }
+  .bm-book-frame iframe { position: relative; display: block; width: 100%; height: 100%; border: 0; }
+
+  @media (max-width: 640px) {
+    .eventlin-overlay { padding: 0; }
+    .eventlin-content { width: 100%; height: 100dvh; border: 0; border-radius: 0; }
+    .bm-book-phone { display: none; }
+  }
+
+  @keyframes bm-fade { from { opacity: 0; } }
+  @keyframes bm-rise { from { opacity: 0; transform: translateY(16px) scale(.985); } }
+  @media (prefers-reduced-motion: reduce) {
+    .eventlin-overlay, .eventlin-content { animation: none; }
+  }
 </style>

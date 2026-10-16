@@ -2,7 +2,7 @@
 ref: privatnost
 title: Privacy policy
 description: How Bistromat collects, uses and protects the personal data of website visitors and restaurant guests.
-updated: "[DATE]"
+updated: "16 October 2026"
 ---
 
 This policy explains which personal data we collect through the website and in connection with bookings, why we collect it, how long we keep it and what your rights are. We process data in accordance with the Personal Data Protection Act of the Republic of Serbia (Official Gazette of RS, No. 87/2018). This English version is provided for convenience; in case of any discrepancy, the [Serbian version](/privatnost/) prevails.
@@ -42,18 +42,17 @@ We do not use your data to send marketing messages without your separate consent
 
 We share data only with service providers who help us run the business and process it on our behalf:
 
-- [Form processing service, e.g. Formspree] — receiving messages sent through the website forms,
-- [Hosting provider] — hosting the website,
-- [Booking system, if used] — managing bookings,
-- [Email provider] — sending and receiving messages.
+- a form processing service (Web3Forms) — receiving messages sent through the website forms,
+- a hosting provider — hosting the website,
+- an email provider — sending and receiving messages.
 
 Some service providers may process data outside Serbia. In that case, the transfer takes place only with appropriate safeguards required by law.
 
 ## How long we keep data
 
-- data from bookings and inquiries: up to [12 months] from the booking date or the last communication,
+- data from bookings and inquiries: up to 12 months from the booking date or the last communication,
 - data needed for invoices and accounting: as long as the law requires,
-- server logs: up to [30 days].
+- server logs: up to 30 days.
 
 After that, we delete the data or anonymise it permanently.
 

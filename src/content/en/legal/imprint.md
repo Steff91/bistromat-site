@@ -2,7 +2,7 @@
 ref: impresum
 title: Imprint
 description: Details of the owner and publisher of the Bistromat restaurant website.
-updated: "[DATE]"
+updated: "16 October 2026"
 ---
 
 ## Service provider
@@ -16,7 +16,7 @@ updated: "[DATE]"
 | Registration number | 66551245 |
 | Tax ID (PIB) | 113066654 |
 | Register | Serbian Business Registers Agency (APR) |
-| Activity code | [5610 — Restaurants and mobile food service activities] |
+| Activity code | 5610 — Restaurants and mobile food service activities |
 | Responsible person | Nikola Kovačević, sole proprietor |
 
 ## Contact

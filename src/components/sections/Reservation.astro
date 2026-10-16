@@ -1,6 +1,7 @@
 ---
 import BrandIcon from '../BrandIcon.astro';
 import ConsentEmbed from '../ConsentEmbed.astro';
+import Placeholder from '../Placeholder.astro';
 import { getInfo, getLang, route, tr } from '../../i18n';
 
 const lang = getLang(Astro.url);
@@ -22,7 +23,7 @@ const info = getInfo(lang);
       {info.reservationEmbed ? (
         <ConsentEmbed html={info.reservationEmbed} label={tr(lang, 'rezervacije', 'booking')} provider={tr(lang, 'sistem za rezervacije', 'the booking system')} />
       ) : (
-        <div class="placeholder min-h-[300px] border-dashed border-[#4A4A4A] bg-transparent p-6">[{tr(lang, 'Embed skripte za rezervacije', 'Booking widget embed')}]</div>
+        <Placeholder label="Foto" src="/images/terasa-sto.webp" alt={tr(lang, 'Postavljen sto u bašti Bistromata', 'A set table in the Bistromat garden')} class="h-[380px]" />
       )}
     </div>
   </div>

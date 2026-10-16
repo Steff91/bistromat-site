@@ -1,7 +1,7 @@
 ---
 title: Politika kolačića
 description: Koje kolačiće i slične tehnologije koristi sajt restorana Bistromat.
-updated: "[DATUM]"
+updated: "16. 10. 2026."
 ---
 
 Kolačići (cookies) su male tekstualne datoteke koje sajt čuva u vašem pregledaču. Ova stranica objašnjava koje kolačiće i slične tehnologije koristi sajt Bistromata.
@@ -19,10 +19,9 @@ Pojedini delovi sajta prikazuju sadržaj drugih servisa, koji mogu postaviti svo
 | Servis | Gde se koristi | Svrha |
 |---|---|---|
 | Google Maps | Početna i stranica Kontakt | Prikaz mape sa lokacijom restorana |
-| [Sistem za rezervacije] | Stranica Rezervacije | Online rezervacija stola |
 | Instagram, Facebook | Linkovi u podnožju | Samo linkovi; kolačići se postavljaju tek kada posetite te mreže |
 
-**Mapa i forma za rezervacije učitavaju se tek kada to dozvolite**, preko obaveštenja o kolačićima ili dugmeta „Prikaži“ na samom sadržaju. Do tada se ne šalju nikakvi podaci tim servisima.
+**Mapa se učitava tek kada to dozvolite**, preko obaveštenja o kolačićima ili dugmeta „Prikaži“ na samom sadržaju. Do tada se Google-u ne šalju nikakvi podaci.
 
 Za kolačiće trećih strana odgovorni su ti servisi. Više informacija nalazi se u njihovim politikama privatnosti, npr. [Google](https://policies.google.com/privacy).
 

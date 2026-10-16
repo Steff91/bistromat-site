@@ -2,7 +2,7 @@
 ref: kolacici
 title: Cookie policy
 description: Which cookies and similar technologies the Bistromat website uses.
-updated: "[DATE]"
+updated: "16 October 2026"
 ---
 
 Cookies are small text files that a website stores in your browser. This page explains which cookies and similar technologies the Bistromat website uses.
@@ -20,10 +20,9 @@ Some parts of the website show content from other services, which may set their 
 | Service | Where it is used | Purpose |
 |---|---|---|
 | Google Maps | Home and Contact pages | Showing a map with the restaurant's location |
-| [Booking system] | Reservations page | Online table booking |
 | Instagram, Facebook | Links in the footer | Links only; cookies are set only when you visit those networks |
 
-**The map and the booking form load only once you allow it**, through the cookie notice or the "Show" button on the content itself. Until then, no data is sent to those services.
+**The map loads only once you allow it**, through the cookie notice or the "Show" button on the content itself. Until then, no data is sent to Google.
 
 Those services are responsible for their own cookies. You can find more in their privacy policies, e.g. [Google](https://policies.google.com/privacy).
 

@@ -1,7 +1,7 @@
 ---
 title: Impresum
 description: Podaci o vlasniku i izdavaču sajta restorana Bistromat.
-updated: "[DATUM]"
+updated: "16. 10. 2026."
 ---
 
 ## Podaci o pružaocu usluga
@@ -15,7 +15,7 @@ updated: "[DATUM]"
 | Matični broj | 66551245 |
 | PIB | 113066654 |
 | Registar | Agencija za privredne registre (APR) |
-| Šifra delatnosti | [5610 — Delatnosti restorana i pokretnih ugostiteljskih objekata] |
+| Šifra delatnosti | 5610 — Delatnosti restorana i pokretnih ugostiteljskih objekata |
 | Odgovorno lice | Nikola Kovačević, preduzetnik |
 
 ## Kontakt

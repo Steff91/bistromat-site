@@ -22,7 +22,7 @@ const lang = getLang(Astro.url);
   <Marquee />
   <Concept />
   <MenuTeaser />
-  <IconRule />
+  <IconRule class:list={[!FEATURES.services && 'pb-24']} />
   <Services />
   {FEATURES.chefsTable && <ChefTable />}
   {FEATURES.events && <Events />}

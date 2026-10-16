@@ -4,13 +4,28 @@
   "landmark": "Vračar, by the Temple of Saint Sava",
   "city": "Belgrade",
   "hours": [
-    { "day": "Mon–Sat", "time": "12–23h" },
-    { "day": "Sun", "time": "12–18h" }
+    {
+      "day": "Mon–Sat",
+      "time": "12–23h"
+    },
+    {
+      "day": "Sun",
+      "time": "12–18h"
+    }
   ],
   "notice": "",
   "directions": [
-    { "title": "Parking", "text": "[Where to park nearby: zone, garage, street.]" },
-    { "title": "Public transport", "text": "[Nearest stops and bus/trolleybus lines.]" },
-    { "title": "Entrance", "text": "[How to find the entrance, wheelchair access.]" }
+    {
+      "title": "Parking",
+      "text": "The nearest public garage is Baba Višnjina (Baba Višnjina 38), open 24/7: 100 RSD per started hour from 7am to 10pm and 50 RSD at night. Street parking is in a paid zone. A new 356-space garage is being built under the square in front of the Temple and the National Library."
+    },
+    {
+      "title": "Public transport",
+      "text": "The nearest stops are by the Temple of Saint Sava on Bulevar oslobođenja, and at Slavija, where most city lines stop. From either, we are a 5 to 10 minute walk."
+    },
+    {
+      "title": "Entrance",
+      "text": "The entrance is directly from Mutapova Street, under the black Bistromat sign. If you need help getting in, call us and we will meet you at the door."
+    }
   ]
 }

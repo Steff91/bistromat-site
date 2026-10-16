@@ -1,7 +1,7 @@
 ---
 title: Politika privatnosti
 description: Kako Bistromat prikuplja, koristi i štiti podatke o ličnosti posetilaca sajta i gostiju restorana.
-updated: "[DATUM]"
+updated: "16. 10. 2026."
 ---
 
 Ova politika objašnjava koje podatke o ličnosti prikupljamo preko sajta i u vezi sa rezervacijama, zašto ih prikupljamo, koliko ih čuvamo i koja su vaša prava. Podatke obrađujemo u skladu sa Zakonom o zaštiti podataka o ličnosti Republike Srbije („Službeni glasnik RS“, br. 87/2018).
@@ -41,18 +41,17 @@ Podatke ne koristimo za slanje reklamnih poruka bez vašeg posebnog pristanka i 
 
 Podatke delimo samo sa pružaocima usluga koji nam pomažu u radu i koji ih obrađuju po našem nalogu:
 
-- [Servis za obradu formi, npr. Formspree] — prijem poruka poslatih preko formi na sajtu,
-- [Hosting provajder] — smeštaj sajta,
-- [Sistem za rezervacije, ako se koristi] — upravljanje rezervacijama,
-- [Email provajder] — prijem i slanje poruka.
+- servis za obradu formi (Web3Forms) — prijem poruka poslatih preko formi na sajtu,
+- pružalac hosting usluga — smeštaj sajta,
+- pružalac email usluga — prijem i slanje poruka.
 
 Pojedini pružaoci usluga mogu obrađivati podatke van Srbije. U tom slučaju prenos se vrši samo uz odgovarajuće mere zaštite predviđene zakonom.
 
 ## Koliko dugo čuvamo podatke
 
-- podatke iz rezervacija i upita: do [12 meseci] od datuma rezervacije ili poslednje komunikacije,
+- podatke iz rezervacija i upita: do 12 meseci od datuma rezervacije ili poslednje komunikacije,
 - podatke potrebne za račune i knjigovodstvo: onoliko koliko propisuje zakon,
-- tehničke zapise servera: do [30 dana].
+- tehničke zapise servera: do 30 dana.
 
 Nakon isteka roka podatke brišemo ili ih trajno činimo anonimnim.
 

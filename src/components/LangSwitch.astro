@@ -21,7 +21,7 @@ const items: { code: Lang; label: string; name: string }[] = [
       {l.code === lang ? (
         <span class="px-1 text-gold" aria-current="true" title={l.name}>{l.label}</span>
       ) : (
-        <a href={alternates[l.code]} hreflang={l.code} lang={l.code} class="px-1 text-muted no-underline hover:text-paper" title={l.name} aria-label={l.name}>{l.label}</a>
+        <a href={alternates[l.code]} hreflang={l.code} lang={l.code} class="px-1 text-muted no-underline hover:text-paper" title={l.name}>{l.label}</a>
       )}
     </>
   ))}

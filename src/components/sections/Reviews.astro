@@ -22,7 +22,7 @@ const reviews = (await getCollection('reviews')).sort((a, b) => order.indexOf(a.
       <div class="flex items-center gap-3.5" data-reveal style="--i:2">
         <span class="text-[40px] font-medium">{info.googleRating}</span>
         <div>
-          <div class="flex gap-[3px] text-star" aria-label={tr(lang, 'Ocena 5 od 5', 'Rated 5 out of 5')}>
+          <div class="flex gap-[3px] text-star" role="img" aria-label={tr(lang, 'Ocena 5 od 5', 'Rated 5 out of 5')}>
             {[1, 2, 3, 4, 5].map(() => <Icon name="star" size={14} />)}
           </div>
           <p class="m-0 mt-1 text-[14px] text-[#5A554E]">{info.googleReviewCount} {tr(lang, 'recenzija na Google-u', 'reviews on Google')}</p>
@@ -35,7 +35,7 @@ const reviews = (await getCollection('reviews')).sort((a, b) => order.indexOf(a.
         {reviews.map((r) => (
           <li class="reviews-slide flex">
             <figure class="m-0 flex w-full flex-col gap-4 rounded-md border border-paper-dark bg-white p-8 shadow-[0_12px_30px_-20px_rgba(0,0,0,0.3)]">
-              <div class="flex gap-[3px] text-star" aria-label={tr(lang, `Ocena ${r.data.rating} od 5`, `Rated ${r.data.rating} out of 5`)}>
+              <div class="flex gap-[3px] text-star" role="img" aria-label={tr(lang, `Ocena ${r.data.rating} od 5`, `Rated ${r.data.rating} out of 5`)}>
                 {Array.from({ length: r.data.rating }).map(() => <Icon name="star" size={12} />)}
               </div>
               <blockquote class="m-0 font-sans text-base text-[#2A2723]">{r.data.text}</blockquote>
@@ -46,7 +46,7 @@ const reviews = (await getCollection('reviews')).sort((a, b) => order.indexOf(a.
       </ul>
 
       <div class="mt-7 flex items-center justify-between gap-6" data-controls>
-        <div class="flex gap-2" data-dots role="tablist" aria-label={tr(lang, 'Izaberi recenziju', 'Choose a review')} data-dot-label={tr(lang, 'Recenzija', 'Review')}></div>
+        <div class="flex gap-2" data-dots role="group" aria-label={tr(lang, 'Izaberi recenziju', 'Choose a review')} data-dot-label={tr(lang, 'Recenzija', 'Review')}></div>
         <div class="flex gap-2.5">
           <button type="button" class="reviews-arrow" data-prev aria-label={tr(lang, 'Prethodna recenzija', 'Previous review')}>
             <Icon name="chevron-right" size={12} class="rotate-180" />

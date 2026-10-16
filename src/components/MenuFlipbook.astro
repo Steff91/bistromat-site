@@ -3,6 +3,7 @@
 // Libraries load only when the viewer scrolls into view.
 import Icon from './Icon.astro';
 import { getLang, getMenu, tr } from '../i18n';
+import BrandIcon from './BrandIcon.astro';
 
 const lang = getLang(Astro.url);
 const menu = getMenu(lang);
@@ -13,7 +14,7 @@ const msg = {
 };
 ---
 
-<div class="flipbook" data-flipbook data-msg-loading={msg.loading} data-msg-error={msg.error}>
+<div class="flipbook" id={tr(lang, 'prelistaj', 'browse')} data-flipbook data-msg-loading={msg.loading} data-msg-error={msg.error}>
   {cards.length > 1 && (
     <div role="tablist" aria-label={tr(lang, 'Karte', 'Menus')} class="mb-8 flex flex-wrap justify-center gap-2">
       {cards.map((c, i) => (
@@ -29,13 +30,23 @@ const msg = {
   )}
 
   <div class="relative mx-auto max-w-[1000px]">
+    <!-- Start screen: PDF.js loads only when the visitor asks for the flipbook -->
+    <div class="fb-start mx-auto flex max-w-[560px] flex-col items-center gap-6 rounded-md border border-line px-8 py-14 text-center">
+      <BrandIcon name="plate" size={44} class="text-gold" />
+      <p class="m-0 max-w-[400px] font-sans text-muted">
+        {tr(lang, 'Prelistajte originalne karte: meni, vinsku kartu i pića, kao da ih držite u rukama.', 'Leaf through the original menus — food, wine list and drinks — as if you were holding them.')}
+      </p>
+      <button type="button" class="btn btn-primary cursor-pointer border-0" data-fb-start>
+        <Icon name="book-open" size={14} /> {tr(lang, 'Prelistaj meni', 'Browse the menu')}
+      </button>
+    </div>
     <div class="fb-stage mx-auto" data-pdf={cards[0]?.pdf}></div>
     <div class="fb-status absolute inset-0 flex items-center justify-center text-[14px] uppercase tracking-[0.08em] text-dim">
       {msg.loading}
     </div>
   </div>
 
-  <div class="mt-8 flex items-center justify-center gap-6">
+  <div class="fb-controls mt-8 flex items-center justify-center gap-6">
     <button type="button" class="fb-prev inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-md border border-line bg-transparent text-paper hover:border-gold hover:text-gold" aria-label={tr(lang, 'Prethodna strana', 'Previous page')}>
       <Icon name="chevron-right" size={12} class="rotate-180" />
     </button>
@@ -44,7 +55,7 @@ const msg = {
       <Icon name="chevron-right" size={12} />
     </button>
   </div>
-  <p class="mt-4 mb-0 text-center font-sans text-[14px] text-dim">
+  <p class="fb-help mt-4 mb-0 text-center font-sans text-[14px] text-dim">
     {tr(lang, 'Prevucite ugao stranice ili koristite strelice. Ne prikazuje se?', "Drag a page corner or use the arrows. Not showing?")}{' '}
     <a class="fb-open" href={cards[0]?.pdf} target="_blank" rel="noopener">{tr(lang, 'Otvorite PDF', 'Open the PDF')}</a>.
   </p>
@@ -54,6 +65,11 @@ const msg = {
   .fb-tab[aria-selected='true'] { border-color: var(--color-gold); color: var(--color-gold); }
   .fb-tab:hover { color: var(--color-paper); }
   .fb-stage { min-height: 420px; }
+  /* Before start: only the start card (and tabs) are shown */
+  .flipbook:not([data-started]) .fb-stage,
+  .flipbook:not([data-started]) .fb-status,
+  .flipbook:not([data-started]) .fb-controls { display: none; }
+  .flipbook[data-started] .fb-start { display: none; }
   .fb-stage :global(.stf__parent) { margin: 0 auto; }
   .fb-stage :global(.stf__item) { box-shadow: 0 20px 40px -24px rgba(0, 0, 0, 0.8); }
   .flipbook[data-ready] .fb-status { display: none; }
@@ -179,16 +195,25 @@ const msg = {
     open(stage.dataset.pdf!);
   }
 
+  // Start on demand (button, a tab, or #prelistaj in the URL) — keeps PDF.js off the initial load.
   if (root) {
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
-          io.disconnect();
-          init(root);
-        }
-      },
-      { rootMargin: '300px 0px' },
+    const start = () => {
+      if (root.hasAttribute('data-started')) return;
+      root.setAttribute('data-started', '');
+      init(root);
+    };
+    root.querySelector('[data-fb-start]')?.addEventListener('click', start);
+    root.querySelectorAll<HTMLButtonElement>('.fb-tab').forEach((tab) =>
+      tab.addEventListener('click', () => {
+        if (root.hasAttribute('data-started')) return;
+        root.querySelectorAll('.fb-tab').forEach((t) => t.setAttribute('aria-selected', String(t === tab)));
+        root.querySelector<HTMLElement>('.fb-stage')!.dataset.pdf = tab.dataset.pdf;
+        start();
+      }),
     );
-    io.observe(root);
+    if (location.hash === '#prelistaj' || location.hash === '#browse') {
+      start();
+      root.scrollIntoView({ block: 'start' });
+    }
   }
 </script>

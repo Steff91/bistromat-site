@@ -17,7 +17,7 @@ const lang = getLang(Astro.url);
   <p id="cookie-title" class="m-0 text-[16px] font-semibold uppercase tracking-[0.04em]">{tr(lang, 'Kolačići', 'Cookies')}</p>
   <p id="cookie-text" class="mt-2 mb-0 font-sans text-[15px] leading-relaxed text-muted">
     {tr(lang, 'Sajt ne koristi kolačiće za praćenje. Mapu prikazuje Google, a formu za rezervaciju Eventlin; oni mogu postaviti svoje kolačiće.', 'This site uses no tracking cookies. The map is provided by Google and the booking form by Eventlin; they may set their own cookies.')}{' '}
-    <a href={route('cookies', lang)}>{tr(lang, 'Saznajte više', 'Learn more')}</a>.
+    <a href={route('cookies', lang)}>{tr(lang, 'Više o kolačićima', 'More about cookies')}</a>.
   </p>
 
   <form class="mt-4 flex flex-col gap-3 border-t border-line pt-4" data-cookie-prefs hidden>
@@ -112,5 +112,9 @@ const lang = getLang(Astro.url);
 
   const current = read();
   if (current) apply(current);
-  else open();
+  else {
+    // Show once fonts are in, so the banner doesn't change size after appearing (layout shift).
+    const fontsReady = document.fonts?.ready ?? Promise.resolve();
+    Promise.race([fontsReady, new Promise((r) => setTimeout(r, 1500))]).then(() => open());
+  }
 </script>

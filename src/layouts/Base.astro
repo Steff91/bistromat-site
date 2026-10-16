@@ -6,6 +6,10 @@ import Footer from '../components/Footer.astro';
 import CookieBanner from '../components/CookieBanner.astro';
 import BackToTop from '../components/BackToTop.astro';
 import { getInfo, getLang, staticAlternates, route, type Lang } from '../i18n';
+// Preload the fonts used above the fold (latin subset)
+import monoRegular from '@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2?url';
+import monoMedium from '@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff2?url';
+import sansRegular from '@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-normal.woff2?url';
 
 interface Props {
   title: string;
@@ -77,6 +81,7 @@ const schema = {
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {[monoRegular, monoMedium, sansRegular].map((href) => <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />)}
     <link rel="alternate" hreflang="sr" href={new URL(alternates.sr, Astro.site)} />
     <link rel="alternate" hreflang="en" href={new URL(alternates.en, Astro.site)} />
     <link rel="alternate" hreflang="x-default" href={new URL(alternates.sr, Astro.site)} />

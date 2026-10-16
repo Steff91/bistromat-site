@@ -28,7 +28,7 @@ const mainPdf = menu.cards[0]?.pdf;
       ))}
     </ul>
     <div class="mt-8 flex flex-wrap gap-3.5" data-reveal style="--i:5">
-      <a href={route('menu', lang)} class="btn btn-primary">
+      <a href={`${route('menu', lang)}#${tr(lang, 'prelistaj', 'browse')}`} class="btn btn-primary">
         <Icon name="book-open" size={14} /> {tr(lang, 'Prelistaj meni', 'Browse the menu')}
       </a>
       {mainPdf && (

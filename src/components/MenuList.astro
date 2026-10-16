@@ -1,0 +1,72 @@
+---
+// Full food menu as HTML (indexable), grouped in collapsible sections.
+// Data: src/data/menu-items.json (Serbian + English per item).
+import Icon from './Icon.astro';
+import data from '../data/menu-items.json';
+import { getLang } from '../i18n';
+
+const lang = getLang(Astro.url);
+const price = (p: string, unit?: string) => `${p} ${data.currency}${unit ? ` / ${unit}` : ''}`;
+---
+
+<div class="menu-list border-t border-line">
+  {data.sections.map((s, i) => (
+    <details class="menu-sec border-b border-line" open={i === 0}>
+      <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-6">
+        <h3 class="menu-sec-title m-0 text-[20px] font-medium tracking-[-0.01em]">
+          {s[lang]}
+          <span class="ml-3 align-middle text-[13px] font-normal text-dim">{s.items.length}</span>
+        </h3>
+        <span class="menu-sec-icon inline-flex shrink-0 text-gold"><Icon name="chevron-right" size={11} /></span>
+      </summary>
+      <div class="menu-sec-body">
+        <ul class="m-0 flex list-none flex-col gap-5 p-0 pb-8">
+          {s.items.map((it) => (
+            <li>
+              <div class="flex items-baseline gap-3">
+                <span class="font-medium">{it[lang].name}</span>
+                <span class="leader" aria-hidden="true"></span>
+                <span class="shrink-0 font-sans text-muted">{price(it.price, it.unit)}</span>
+              </div>
+              {it[lang].desc && <p class="m-0 mt-1 max-w-[640px] font-sans text-[15px] text-dim">{it[lang].desc}</p>}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </details>
+  ))}
+</div>
+
+<style>
+  .menu-sec summary::-webkit-details-marker { display: none; }
+  .menu-sec-title { transition: color .3s ease; }
+  .menu-sec summary:hover .menu-sec-title,
+  .menu-sec summary:focus-visible .menu-sec-title { color: var(--color-gold); }
+  .menu-sec-icon { rotate: 90deg; transition: rotate .35s ease; }
+  .menu-sec[open] .menu-sec-icon { rotate: -90deg; }
+  .menu-sec-body { overflow: hidden; }
+  @media (prefers-reduced-motion: reduce) { .menu-sec-title, .menu-sec-icon { transition: none; } }
+</style>
+
+<script>
+  // Smooth open/close (same feel as the FAQ). Native toggle when motion is reduced.
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  document.querySelectorAll<HTMLDetailsElement>('.menu-sec').forEach((details) => {
+    const summary = details.querySelector('summary')!;
+    const body = details.querySelector<HTMLElement>('.menu-sec-body')!;
+    let anim: Animation | null = null;
+    summary.addEventListener('click', (e) => {
+      if (reduce.matches || !body.animate) return;
+      e.preventDefault();
+      anim?.cancel();
+      const ease = 'cubic-bezier(.2, .7, .2, 1)';
+      if (!details.open) {
+        details.open = true;
+        anim = body.animate([{ height: '0px', opacity: 0 }, { height: `${body.scrollHeight}px`, opacity: 1 }], { duration: 420, easing: ease });
+      } else {
+        anim = body.animate([{ height: `${body.offsetHeight}px`, opacity: 1 }, { height: '0px', opacity: 0 }], { duration: 320, easing: ease });
+        anim.onfinish = () => { details.open = false; };
+      }
+    });
+  });
+</script>

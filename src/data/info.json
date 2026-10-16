@@ -5,6 +5,11 @@
   "aboutShort": "Intimni restoran sa konceptom otvorene kuhinje u srcu Vračara, kod Hrama. Francuske tehnike po Escoffier-u i pažljivo birane lokalne namirnice.",
   "address": "Mutapova 9",
   "city": "Beograd",
+  "postalCode": "11104",
+  "geo": {
+    "lat": 44.7984083,
+    "lng": 20.4705485
+  },
   "landmark": "Vračar, kod Hrama Svetog Save",
   "mapsLink": "https://www.google.com/maps/search/?api=1&query=Bistromat&query_place_id=ChIJxcjh-DJlWkcRbVbJ5CiXT2w",
   "phone": "063 417 063",
@@ -20,6 +25,28 @@
       "time": "12–18h"
     }
   ],
+  "openingHours": [
+    {
+      "days": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ],
+      "opens": "12:00",
+      "closes": "23:00"
+    },
+    {
+      "days": [
+        "Sunday"
+      ],
+      "opens": "12:00",
+      "closes": "18:00"
+    }
+  ],
+  "priceRange": "$$$",
   "notice": "",
   "directions": [
     {

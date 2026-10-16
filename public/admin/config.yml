@@ -22,6 +22,13 @@ collections:
           - { name: aboutShort, label: Kratak opis (hero, Google opis), widget: text }
           - { name: address, label: Adresa, widget: string }
           - { name: city, label: Grad, widget: string }
+          - { name: postalCode, label: Poštanski broj, widget: string }
+          - name: geo
+            label: GPS koordinate (za Google)
+            widget: object
+            fields:
+              - { name: lat, label: Geografska širina, widget: number, value_type: float }
+              - { name: lng, label: Geografska dužina, widget: number, value_type: float }
           - { name: landmark, label: Lokacija (kraj, orijentir), widget: string }
           - { name: mapsLink, label: Link ka Google mapama, widget: string }
           - { name: phone, label: Telefon (prikaz), widget: string }
@@ -33,6 +40,14 @@ collections:
             fields:
               - { name: day, label: Dani, widget: string }
               - { name: time, label: Vreme, widget: string }
+          - name: openingHours
+            label: Radno vreme za Google (dani na engleskom, vreme HH:MM)
+            widget: list
+            fields:
+              - { name: days, label: Dani (npr. Monday), widget: list }
+              - { name: opens, label: Otvara, widget: string }
+              - { name: closes, label: Zatvara, widget: string }
+          - { name: priceRange, label: Cenovni rang ($–$$$$), widget: string }
           - { name: notice, label: Obaveštenje (praznici, zatvoreno…), widget: string, required: false }
           - name: directions
             label: Kako do nas
@@ -87,6 +102,38 @@ collections:
               - { name: description, label: Opis, widget: string }
               - { name: price, label: Cena, widget: string }
           - { name: allergens, label: Napomena o alergenima, widget: text }
+
+      - name: menuItems
+        label: Meni — jela (tekst na stranici Meni)
+        file: src/data/menu-items.json
+        fields:
+          - { name: currency, label: Valuta, widget: hidden, default: RSD }
+          - name: sections
+            label: Kategorije
+            widget: list
+            summary: "{{fields.sr}}"
+            fields:
+              - { name: sr, label: Naziv (srpski), widget: string }
+              - { name: en, label: Naziv (engleski), widget: string }
+              - name: items
+                label: Jela
+                widget: list
+                summary: "{{fields.sr.name}} · {{fields.price}}"
+                fields:
+                  - name: sr
+                    label: Srpski
+                    widget: object
+                    fields:
+                      - { name: name, label: Naziv, widget: string }
+                      - { name: desc, label: Opis, widget: string, required: false }
+                  - name: en
+                    label: Engleski
+                    widget: object
+                    fields:
+                      - { name: name, label: Naziv, widget: string }
+                      - { name: desc, label: Opis, widget: string, required: false }
+                  - { name: price, label: Cena (npr. 2.480), widget: string }
+                  - { name: unit, label: Jedinica (npr. kg), widget: string, required: false }
 
       - name: chefTable
         label: Chef's Table

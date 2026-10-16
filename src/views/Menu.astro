@@ -3,6 +3,8 @@ import BookButton from '../components/BookButton.astro';
 import BrandIcon from '../components/BrandIcon.astro';
 import Base from '../layouts/Base.astro';
 import MenuFlipbook from '../components/MenuFlipbook.astro';
+import MenuList from '../components/MenuList.astro';
+import menuItems from '../data/menu-items.json';
 import Icon from '../components/Icon.astro';
 import { getInfo, getLang, getMenu, route, tr } from '../i18n';
 import { serviceHref } from '../i18n/content';
@@ -14,11 +16,30 @@ const menu = getMenu(lang);
 const mainPdf = menu.cards[0]?.pdf;
 const partiesHref = await serviceHref('privatne-proslave', lang);
 const en = lang === 'en';
+
+// schema.org Menu: every dish with its price, so search engines can read the menu.
+const menuSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Menu',
+  name: tr(lang, 'Meni — Bistromat', 'Menu — Bistromat'),
+  inLanguage: en ? 'en' : 'sr',
+  url: new URL(Astro.url.pathname, Astro.site).toString(),
+  hasMenuSection: menuItems.sections.map((s) => ({
+    '@type': 'MenuSection',
+    name: s[lang],
+    hasMenuItem: s.items.map((it) => ({
+      '@type': 'MenuItem',
+      name: it[lang].name,
+      ...('desc' in it[lang] && it[lang].desc ? { description: it[lang].desc } : {}),
+      offers: { '@type': 'Offer', price: it.price.replace('.', ''), priceCurrency: menuItems.currency },
+    })),
+  })),
+};
 ---
 
 <Base
-  title={tr(lang, 'Meni — Bistromat, francuska kuhinja · Beograd', 'Menu — Bistromat, French cuisine · Belgrade')}
-  description={tr(lang, 'Sezonski meni restorana Bistromat: klasici francuske kuhinje iz otvorene kuhinje, vinska karta i kokteli. Mutapova 9, Beograd.', "Bistromat's seasonal menu: French classics from the open kitchen, a wine list and cocktails. Mutapova 9, Belgrade.")}
+  title={tr(lang, 'Meni — Bistromat, francuski restoran · Vračar, Beograd', 'Menu — Bistromat, French restaurant · Vračar, Belgrade')}
+  description={tr(lang, 'Meni francuskog restorana Bistromat: steak tartare, puževi, supa od luka, Coq au Vin, crème brûlée. Cene, vinska karta i kokteli. Vračar, Beograd.', "Menu of Bistromat, a French restaurant in Belgrade: steak tartare, escargots, onion soup, Coq au Vin, crème brûlée. Prices, wine list and cocktails.")}
 >
   <!-- Intro -->
   <section class="container-site pt-16 pb-20">
@@ -47,10 +68,24 @@ const en = lang === 'en';
     </div>
   </section>
 
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(menuSchema)} />
+
   <!-- Flipbook -->
   <section aria-label={tr(lang, 'Pregled menija', 'Menu viewer')} class="border-y border-line bg-ink-deep py-20">
     <div class="container-site">
       <MenuFlipbook />
+    </div>
+  </section>
+
+  <!-- Full menu as text (indexable) -->
+  <section aria-labelledby="ceo-meni" class="container-site py-24">
+    <div class="mx-auto max-w-[860px]">
+      <p class="eyebrow" data-reveal>{tr(lang, 'Ručak i večera', 'Lunch and dinner')}</p>
+      <h2 id="ceo-meni" class="h-section m-0" data-reveal style="--i:1">{tr(lang, 'Ceo meni', 'The full menu')}</h2>
+      <p class="mt-4 mb-10 max-w-[560px] font-sans text-muted" data-reveal style="--i:2">
+        {tr(lang, 'Sva jela sa trenutne karte. Vinsku kartu i koktele prelistajte iznad.', 'Every dish on the current menu. Browse the wine list and cocktails above.')}
+      </p>
+      <div data-reveal style="--i:3"><MenuList /></div>
     </div>
   </section>
 

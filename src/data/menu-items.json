@@ -1,0 +1,89 @@
+{
+  "currency": "RSD",
+  "sections": [
+    {
+      "sr": "Hladna predjela",
+      "en": "Cold starters",
+      "items": [
+        { "sr": { "name": "Steak Tartare", "desc": "Od junećeg bifteka sa 10 finih začina, domaći brioš, puter" }, "en": { "name": "Steak Tartare", "desc": "Beef fillet with 10 fine herbs, homemade brioche, butter" }, "price": "2.480" },
+        { "sr": { "name": "Foie Gras", "desc": "Domaći brioš, slatko od dunje" }, "en": { "name": "Foie Gras", "desc": "Pâté with Grand Marnier, homemade brioche, quince jam" }, "price": "2.660" },
+        { "sr": { "name": "Tartar od cvekle", "desc": "Mus od kozijeg sira sa planine Goč, prah i čips od cvekle, zeleno ulje" }, "en": { "name": "Beetroot tartare", "desc": "Goat cheese mousse from Mount Goč, beetroot powder and crisps, green oil" }, "price": "1.300" },
+        { "sr": { "name": "Tuna tartar", "desc": "Dresing, crni susam, ulje od limete" }, "en": { "name": "Tuna tartare", "desc": "Dressing, black sesame seeds, lime oil" }, "price": "2.650" }
+      ]
+    },
+    {
+      "sr": "Topla predjela",
+      "en": "Hot starters",
+      "items": [
+        { "sr": { "name": "Escargot Bourguignon", "desc": "Puževi na burgundski način, aromatični puter sa belim lukom i peršunom, brioš" }, "en": { "name": "Escargot Bourguignon", "desc": "Burgundy-style snails, garlic and parsley butter, brioche" }, "price": "1.570" },
+        { "sr": { "name": "Rižoto sa crnom trubom", "desc": "Karamelizovana koštana srž, pecorino, ulje od vlašca" }, "en": { "name": "Black trumpet risotto", "desc": "Black trumpet mushrooms, caramelised bone marrow, pecorino, chive oil" }, "price": "1.860" },
+        { "sr": { "name": "Tortica od tikvice i kozijeg sira „Radovan“", "desc": "Aioli sa Granny Smith jabukom" }, "en": { "name": "Courgette and goat cheese tart “Radovan”", "desc": "Granny Smith apple aioli" }, "price": "1.480" },
+        { "sr": { "name": "Sezonska pečurka", "desc": "Sotirana na puteru sa finim začinima" }, "en": { "name": "Seasonal mushrooms", "desc": "Sautéed in butter with fine herbs" }, "price": "1.210" },
+        { "sr": { "name": "Gibanica za dvoje", "desc": "Sa sjeničkim sirom i kajmakom" }, "en": { "name": "Gibanica for two", "desc": "Serbian cheese pie with Sjenica cheese and kajmak" }, "price": "980" }
+      ]
+    },
+    {
+      "sr": "Supe",
+      "en": "Soups",
+      "items": [
+        { "sr": { "name": "Supa od luka", "desc": "Sa Gruyère sirom i domaćim brioš hlebom" }, "en": { "name": "French onion soup", "desc": "With Gruyère cheese and homemade brioche" }, "price": "960" }
+      ]
+    },
+    {
+      "sr": "Glavna jela",
+      "en": "Main courses",
+      "items": [
+        { "sr": { "name": "Pariska šnicla", "desc": "Od telećeg šola, remulada od celera i jabuke" }, "en": { "name": "Veal escalope “Parisienne”", "desc": "Veal round, celery and apple remoulade" }, "price": "2.770" },
+        { "sr": { "name": "Juneći ramstek „Au Poivre“", "desc": "U biber sosu, prokelj na puteru, karamelizovani mladi krompir" }, "en": { "name": "Beef rump steak “Au Poivre”", "desc": "Pepper sauce, buttered Brussels sprouts, caramelised new potatoes" }, "price": "2.730" },
+        { "sr": { "name": "Francuska rolada od telećih rebara", "desc": "Krompir pire sa majčinom dušicom, sezonsko povrće na puteru, sos Demi-Glace" }, "en": { "name": "French veal rib roulade", "desc": "Potato purée with thyme, buttered seasonal vegetables, Demi-Glace" }, "price": "3.110" },
+        { "sr": { "name": "Pačiji file", "desc": "Pire od pečenog batata, parfe od pečene jabuke, bukovača na puteru, Demi-Glace sa Grand Marnier likerom" }, "en": { "name": "Duck breast", "desc": "Roasted sweet potato purée, roasted apple parfait, sautéed oyster mushrooms, Demi-Glace with Grand Marnier" }, "price": "3.260" },
+        { "sr": { "name": "Juneći biftek", "desc": "Karamelizovani mladi krompir, prokelj na puteru, sos Béarnaise" }, "en": { "name": "Beef fillet steak", "desc": "Caramelised new potatoes, buttered Brussels sprouts, Béarnaise sauce" }, "price": "3.860" },
+        { "sr": { "name": "Coq au Vin", "desc": "Petlov batak u prokupcu, pire „Joël Robuchon“, slanina, korenasto povrće, pečurke, vinski sos" }, "en": { "name": "Coq au Vin", "desc": "Rooster leg braised in Prokupac wine, “Joël Robuchon” potato purée, bacon, root vegetables, mushrooms, wine jus" }, "price": "2.230" },
+        { "sr": { "name": "Jagnjeća kolenica", "desc": "Dinstana u povrću i vinu, ratatouille, krompir na puteru, jagnjeći Demi-Glace" }, "en": { "name": "Lamb shank", "desc": "Braised in wine and vegetables, ratatouille, buttered new potatoes, lamb Demi-Glace" }, "price": "3.990" },
+        { "sr": { "name": "Steak od celera", "desc": "Pire od šargarepe, gremolata, ulje od vlašca" }, "en": { "name": "Celeriac steak", "desc": "Carrot purée, gremolata, chive oil" }, "price": "1.660" },
+        { "sr": { "name": "Riba list „Sole Meunière“", "desc": "Pire od šargarepe, gremolata" }, "en": { "name": "Sole “Meunière”", "desc": "Carrot purée, gremolata" }, "price": "7.800", "unit": "kg" },
+        { "sr": { "name": "Juneće rebro „Bourguignon“", "desc": "Sporo dinstano u povrću i vinu, krompir pire sa majčinom dušicom, jesenja garnitura" }, "en": { "name": "Beef short rib “Bourguignon”", "desc": "Slow-braised in wine and vegetables, potato purée with thyme, autumn garnish" }, "price": "2.660" }
+      ]
+    },
+    {
+      "sr": "Prilozi",
+      "en": "Sides",
+      "items": [
+        { "sr": { "name": "Ratatouille" }, "en": { "name": "Ratatouille" }, "price": "660" },
+        { "sr": { "name": "Karamelizovani krompir sa majčinom dušicom" }, "en": { "name": "Caramelised new potatoes with thyme" }, "price": "680" },
+        { "sr": { "name": "Pire krompir „Joël Robuchon“" }, "en": { "name": "“Joël Robuchon” potato purée" }, "price": "470" },
+        { "sr": { "name": "Sotirani prokelj" }, "en": { "name": "Sautéed Brussels sprouts" }, "price": "560" }
+      ]
+    },
+    {
+      "sr": "Salate",
+      "en": "Salads",
+      "items": [
+        { "sr": { "name": "Caesar salata", "desc": "Po originalnom receptu iz 1924, domaći dresing, romaine, marinirani pileći file na puteru, pecorino" }, "en": { "name": "Caesar salad", "desc": "The original 1924 recipe, homemade dressing, romaine, marinated chicken breast cooked in butter, pecorino" }, "price": "1.820" },
+        { "sr": { "name": "Niçoise", "desc": "Povrće na pari, prepeličije jaje, tuna, čeri paradajz, masline, miks salata, citrus dresing, kapar" }, "en": { "name": "Niçoise", "desc": "Steamed vegetables, quail egg, tuna, cherry tomatoes, olives, mixed leaves, citrus dressing, capers" }, "price": "1.670" },
+        { "sr": { "name": "Miks zelenih salata sa dresingom" }, "en": { "name": "Mixed green salad with dressing" }, "price": "690" },
+        { "sr": { "name": "Sezonska salata" }, "en": { "name": "Seasonal salad" }, "price": "680" }
+      ]
+    },
+    {
+      "sr": "Hleb",
+      "en": "Bread",
+      "items": [
+        { "sr": { "name": "Korpica hleba" }, "en": { "name": "Bread basket" }, "price": "260" },
+        { "sr": { "name": "Domaći brioš" }, "en": { "name": "Homemade brioche" }, "price": "340" },
+        { "sr": { "name": "Couvert" }, "en": { "name": "Couvert" }, "price": "260" }
+      ]
+    },
+    {
+      "sr": "Deserti",
+      "en": "Desserts",
+      "items": [
+        { "sr": { "name": "Crêpe Suzette", "desc": "Domaći sladoled od burbon vanile, segmenti pomorandže" }, "en": { "name": "Crêpe Suzette", "desc": "Homemade bourbon vanilla ice cream, orange segments" }, "price": "1.280" },
+        { "sr": { "name": "Čokoladni kolač" }, "en": { "name": "Chocolate cake" }, "price": "790" },
+        { "sr": { "name": "Klasični tiramisu" }, "en": { "name": "Classic tiramisu" }, "price": "880" },
+        { "sr": { "name": "Crème brûlée" }, "en": { "name": "Crème brûlée" }, "price": "790" },
+        { "sr": { "name": "Tart od limete" }, "en": { "name": "Lime tart" }, "price": "840" }
+      ]
+    }
+  ]
+}

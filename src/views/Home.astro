@@ -17,7 +17,10 @@ import { FEATURES } from '../config';
 const lang = getLang(Astro.url);
 ---
 
-<Base title={tr(lang, 'Bistromat — francuska kuhinja, Open Kitchen Concept · Beograd', 'Bistromat — French cuisine, Open Kitchen Concept · Belgrade')}>
+<Base
+  title={tr(lang, 'Bistromat — francuski restoran na Vračaru, Beograd', 'Bistromat — French restaurant in Vračar, Belgrade')}
+  description={tr(lang, 'Francuski restoran sa otvorenom kuhinjom na Vračaru, kod Hrama Svetog Save. Klasici po Escoffier-u i lokalne namirnice. Rezervišite sto online.', 'French restaurant with an open kitchen in Vračar, by the Temple of Saint Sava, Belgrade. Escoffier classics, local produce. Book a table online.')}
+>
   <Hero />
   <Marquee />
   <Concept />

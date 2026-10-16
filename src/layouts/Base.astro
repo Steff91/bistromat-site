@@ -29,23 +29,43 @@ const ogImageUrl = new URL(ogImage, Astro.site);
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
 
+const abs = (path: string) => new URL(path, Astro.site).toString();
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'Restaurant',
+  '@id': abs('/#restaurant'),
   name: info.name,
   description: info.about,
-  servesCuisine: 'French',
-  image: new URL('/og-image.jpg', Astro.site).toString(),
+  servesCuisine: ['French', 'European'],
+  priceRange: info.priceRange,
+  image: [abs('/og-image.jpg'), abs('/images/sala-otvorena-kuhinja.webp'), abs('/images/escargots.webp')],
+  logo: abs('/icon-512.png'),
   telephone: info.phoneHref,
-  url: Astro.site?.toString(),
+  email: info.email,
+  url: abs(route('home', lang)),
+  hasMenu: abs(route('menu', lang)),
   address: {
     '@type': 'PostalAddress',
     streetAddress: info.address,
     addressLocality: info.city,
+    postalCode: info.postalCode,
     addressCountry: 'RS',
   },
+  geo: { '@type': 'GeoCoordinates', latitude: info.geo.lat, longitude: info.geo.lng },
+  hasMap: info.mapsLink,
+  openingHoursSpecification: info.openingHours.map((h) => ({
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: h.days,
+    opens: h.opens,
+    closes: h.closes,
+  })),
   sameAs: [info.instagram, info.facebook].filter((u) => u.startsWith('http')),
-  acceptsReservations: true,
+  acceptsReservations: abs(route('reservations', lang)),
+  potentialAction: {
+    '@type': 'ReserveAction',
+    target: { '@type': 'EntryPoint', urlTemplate: abs(route('reservations', lang)), inLanguage: lang, actionPlatform: ['https://schema.org/DesktopWebPlatform', 'https://schema.org/MobileWebPlatform'] },
+    result: { '@type': 'FoodEstablishmentReservation', name: lang === 'en' ? 'Table booking' : 'Rezervacija stola' },
+  },
 };
 ---
 

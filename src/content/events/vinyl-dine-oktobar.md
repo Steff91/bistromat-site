@@ -4,6 +4,7 @@ type: vinyl
 date: "2026-10-17"
 time: "20:00"
 endTime: "01:00"
+image: /images/sala-boja.webp
 excerpt: Deep house set sa vinila uz večeru iz otvorene kuhinje. [Ime DJ-a, kratak opis]
 price: "[CENA] / osoba"
 seatsLeft: 14

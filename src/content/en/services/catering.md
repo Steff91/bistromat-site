@@ -26,10 +26,10 @@ included:
   - title: Drinks
     text: Wine, sparkling wine and cocktails from our list, by arrangement.
 gallery:
-  - { alt: Cocktail bites }
-  - { alt: Buffet set-up }
-  - { alt: Serving on location }
-  - { alt: Canapé detail }
+  - { alt: Escargots }
+  - { alt: Chocolate mousse }
+  - { alt: The chef in the kitchen }
+  - { alt: Crêpes }
 steps:
   - { title: Send an inquiry, text: "Date, location, number of guests and format: cocktail or dinner." }
   - { title: Get a quote, text: "Within [24h] we send a suggested menu and a quote with every item." }

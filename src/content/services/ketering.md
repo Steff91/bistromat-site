@@ -26,10 +26,10 @@ included:
   - title: Piće
     text: Vino, penušavo vino i kokteli iz naše karte, po dogovoru.
 gallery:
-  - { alt: Koktel zalogaji }
-  - { alt: Postavljen buffet }
-  - { alt: Serviranje na lokaciji }
-  - { alt: Detalj zalogaja }
+  - { src: /images/escargots-detalj.webp, alt: Escargots }
+  - { src: /images/mus-cokolada.webp, alt: Čokoladni mus }
+  - { src: /images/sef-osmeh.webp, alt: Šef u kuhinji }
+  - { src: /images/krep.webp, alt: Crêpes }
 steps:
   - { title: Pošaljete upit, text: "Datum, lokacija, broj gostiju i format: koktel ili večera." }
   - { title: Dobijete ponudu, text: "U roku od [24h] šaljemo predlog menija i ponudu sa svim stavkama." }

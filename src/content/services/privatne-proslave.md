@@ -33,11 +33,11 @@ included:
   - title: Posvećeno osoblje
     text: Tim koji je ceo termin samo za vas, od dočeka gostiju do poslednje čaše.
 gallery:
-  - { alt: Postavljen sto za proslavu }
-  - { alt: Detalj dekoracije }
-  - { alt: Šef u otvorenoj kuhinji }
-  - { alt: Gosti za stolom }
-  - { alt: Desert }
+  - { src: /images/terasa-sto.webp, alt: Postavljen sto za proslavu }
+  - { src: /images/slika-petao.webp, alt: Detalj dekoracije }
+  - { src: /images/kuhinja-servis.webp, alt: Šef u otvorenoj kuhinji }
+  - { src: /images/sala-boja.webp, alt: Sala sa muralom }
+  - { src: /images/kruska-desert.webp, alt: Desert }
 packagesTitle: Izaberite format
 packages:
   - label: "[A] · 4 sata"

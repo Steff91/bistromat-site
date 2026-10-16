@@ -27,10 +27,10 @@ included:
   - title: Recipes to take home
     text: Every participant gets the recipes to cook the dishes again at home.
 gallery:
-  - { alt: Participants at their stations }
+  - { alt: Working in the open kitchen }
   - { alt: The chef demonstrating a technique }
-  - { alt: Finished dishes }
-  - { alt: Tasting after the class }
+  - { alt: Snails }
+  - { alt: The kitchen during service }
 packagesTitle: Class themes
 packages:
   - label: "[DATE] · [N] hours"

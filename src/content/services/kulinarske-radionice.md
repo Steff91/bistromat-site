@@ -27,10 +27,10 @@ included:
   - title: Recepti za poneti
     text: Svaki učesnik dobija recepte da jela ponovi kod kuće.
 gallery:
-  - { alt: Učesnici za radnim stanicama }
-  - { alt: Šef pokazuje tehniku }
-  - { alt: Gotova jela }
-  - { alt: Degustacija posle radionice }
+  - { src: /images/kuhinja-rad-cb.webp, alt: Rad u otvorenoj kuhinji }
+  - { src: /images/kuhinja-gost-cb.webp, alt: Šef pokazuje tehniku }
+  - { src: /images/puzevi.webp, alt: Puževi }
+  - { src: /images/kuhinja-pass-cb.webp, alt: Kuhinja tokom servisa }
 packagesTitle: Teme radionica
 packages:
   - label: "[DATUM] · [N] sata"

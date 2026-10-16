@@ -32,10 +32,10 @@ included:
   - title: Račun na firmu
     text: Ponuda, predračun i račun na firmu, sa jasnim stavkama za vaše knjigovodstvo.
 gallery:
-  - { alt: Postavka za poslovnu večeru }
-  - { alt: Team building u kuhinji }
-  - { alt: Koktel format }
-  - { alt: Detalj stola }
+  - { src: /images/sala-mural-boja.webp, alt: Postavka za poslovnu večeru }
+  - { src: /images/sef-kuhinja-osmeh.webp, alt: Šef u otvorenoj kuhinji }
+  - { src: /images/bar-tim.webp, alt: Šef i barmen za barom }
+  - { src: /images/terasa.webp, alt: Bašta restorana }
 packagesTitle: Formati događaja
 packages:
   - label: "[A] · 3 sata"

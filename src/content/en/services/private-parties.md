@@ -36,7 +36,7 @@ gallery:
   - { alt: Table set for a celebration }
   - { alt: Decoration detail }
   - { alt: Chef in the open kitchen }
-  - { alt: Guests at the table }
+  - { alt: Dining room with the mural }
   - { alt: Dessert }
 packagesTitle: Choose your format
 packages:

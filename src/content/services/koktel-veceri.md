@@ -4,7 +4,7 @@ order: 7
 excerpt: Signature kokteli bar majstora [Ime], koktel radionice i privatne koktel zabave.
 heroTitle: Kokteli,
 heroTitleEm: po francuskom receptu.
-image: /images/bar.webp
+image: /images/koktel-majcina-dusica.webp
 intro: Signature kokteli našeg bar majstora [Ime], uz francuske zalogaje. Dođite na koktel večer, prijavite se na radionicu ili zakupite bar za svoju zabavu.
 facts:
   - { label: Bar majstor, value: "[Ime]" }
@@ -26,10 +26,10 @@ included:
   - title: Privatni bar
     text: Za zabave zatvaramo restoran i pravimo koktel kartu po vašoj želji.
 gallery:
-  - { alt: Bar majstor pravi koktel }
-  - { alt: Signature koktel }
-  - { alt: Bar }
-  - { alt: Koktel zalogaji }
+  - { src: /images/bar-dvojica.webp, alt: Ekipa za barom }
+  - { src: /images/koktel-narandza.webp, alt: Signature koktel }
+  - { src: /images/bar-cb.webp, alt: Bar }
+  - { src: /images/koktel-roze.webp, alt: Ružičasti koktel }
 faq:
   - q: Koliko često su koktel večeri?
     a: "[Svakog / jednom mesečno.] Datume objavljujemo u sekciji Događaji i na Instagramu."

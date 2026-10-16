@@ -3,6 +3,7 @@ title: Vinyl & Dine
 type: vinyl
 date: "2026-09-26"
 time: "20:00"
+image: /images/sala-mural-vece.webp
 excerpt: Deep house set sa vinila uz večeru. [Ime DJ-a]
 booking: none
 gallery:

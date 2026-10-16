@@ -3,6 +3,7 @@ title: Koktel večer
 type: cocktail
 date: "2026-11-14"
 time: "21:00"
+image: /images/koktel-narandza.webp
 excerpt: Signature kokteli bar majstora [Ime] i francuski zalogaji iz kuhinje.
 price: Bez kotizacije
 booking: phone

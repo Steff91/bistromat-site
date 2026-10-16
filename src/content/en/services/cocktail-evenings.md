@@ -26,10 +26,10 @@ included:
   - title: Private bar
     text: For parties we close the restaurant and create a cocktail list just for you.
 gallery:
-  - { alt: Bartender making a cocktail }
+  - { alt: The team at the bar }
   - { alt: Signature cocktail }
   - { alt: The bar }
-  - { alt: Cocktail bites }
+  - { alt: A pink cocktail }
 faq:
   - q: How often are the cocktail nights?
     a: "[Every / once a month.] We announce the dates in the Events section and on Instagram."

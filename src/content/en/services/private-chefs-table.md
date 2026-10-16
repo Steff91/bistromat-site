@@ -27,9 +27,9 @@ included:
     text: Allergies, a vegetarian menu or favourite ingredients, we work it all into the tasting.
 gallery:
   - { alt: The chef serving a course }
-  - { alt: Plate detail }
+  - { alt: A dish in the pan with thyme }
   - { alt: Table by the open kitchen }
-  - { alt: Wine pairing }
+  - { alt: The wine wall }
 faq:
   - q: How many people can sit at the chef's table?
     a: Up to [N] people. For larger groups we suggest booking the whole restaurant.

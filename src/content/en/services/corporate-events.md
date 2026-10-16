@@ -33,9 +33,9 @@ included:
     text: A quote, pro-forma and invoice to your company, with clear line items for your accounts.
 gallery:
   - { alt: Business dinner set-up }
-  - { alt: Team building in the kitchen }
-  - { alt: Cocktail format }
-  - { alt: Table detail }
+  - { alt: The chef in the open kitchen }
+  - { alt: The chef and bartender at the bar }
+  - { alt: The restaurant garden }
 packagesTitle: Event formats
 packages:
   - label: "[A] · 3 hours"

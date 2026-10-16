@@ -58,5 +58,209 @@
     "height": 1066,
     "srcset": "/images/postavljen-sto-640.webp 640w, /images/postavljen-sto-1024.webp 1024w, /images/postavljen-sto.webp 1600w",
     "position": "45% 55%"
+  },
+  "/images/sala-otvorena-kuhinja.webp": {
+    "width": 1600,
+    "height": 1066,
+    "srcset": "/images/sala-otvorena-kuhinja-640.webp 640w, /images/sala-otvorena-kuhinja-1024.webp 1024w, /images/sala-otvorena-kuhinja.webp 1600w",
+    "position": "50% 50%"
+  },
+  "/images/escargots.webp": {
+    "width": 1086,
+    "height": 1448,
+    "srcset": "/images/escargots-640.webp 640w, /images/escargots-1024.webp 1024w, /images/escargots.webp 1086w",
+    "position": "50% 50%"
+  },
+  "/images/escargots-detalj.webp": {
+    "width": 1086,
+    "height": 1448,
+    "srcset": "/images/escargots-detalj-640.webp 640w, /images/escargots-detalj-1024.webp 1024w, /images/escargots-detalj.webp 1086w",
+    "position": "50% 50%"
+  },
+  "/images/terasa-sto.webp": {
+    "width": 1600,
+    "height": 1067,
+    "srcset": "/images/terasa-sto-640.webp 640w, /images/terasa-sto-1024.webp 1024w, /images/terasa-sto.webp 1600w",
+    "position": "50% 50%"
+  },
+  "/images/terasa.webp": {
+    "width": 1600,
+    "height": 1067,
+    "srcset": "/images/terasa-640.webp 640w, /images/terasa-1024.webp 1024w, /images/terasa.webp 1600w",
+    "position": "50% 50%"
+  },
+  "/images/slika-petao.webp": {
+    "width": 1600,
+    "height": 1066,
+    "srcset": "/images/slika-petao-640.webp 640w, /images/slika-petao-1024.webp 1024w, /images/slika-petao.webp 1600w",
+    "position": "40% 50%"
+  },
+  "/images/kuhinja-servis.webp": {
+    "width": 1600,
+    "height": 1067,
+    "srcset": "/images/kuhinja-servis-640.webp 640w, /images/kuhinja-servis-1024.webp 1024w, /images/kuhinja-servis.webp 1600w",
+    "position": "50% 40%"
+  },
+  "/images/sala-boja.webp": {
+    "width": 1600,
+    "height": 1067,
+    "srcset": "/images/sala-boja-640.webp 640w, /images/sala-boja-1024.webp 1024w, /images/sala-boja.webp 1600w",
+    "position": "55% 50%"
+  },
+  "/images/kruska-desert.webp": {
+    "width": 1086,
+    "height": 1448,
+    "srcset": "/images/kruska-desert-640.webp 640w, /images/kruska-desert-1024.webp 1024w, /images/kruska-desert.webp 1086w",
+    "position": "40% 50%"
+  },
+  "/images/sala-mural-boja.webp": {
+    "width": 1600,
+    "height": 1067,
+    "srcset": "/images/sala-mural-boja-640.webp 640w, /images/sala-mural-boja-1024.webp 1024w, /images/sala-mural-boja.webp 1600w",
+    "position": "50% 50%"
+  },
+  "/images/sef-kuhinja-osmeh.webp": {
+    "width": 1600,
+    "height": 1067,
+    "srcset": "/images/sef-kuhinja-osmeh-640.webp 640w, /images/sef-kuhinja-osmeh-1024.webp 1024w, /images/sef-kuhinja-osmeh.webp 1600w",
+    "position": "55% 40%"
+  },
+  "/images/bar-tim.webp": {
+    "width": 1600,
+    "height": 1067,
+    "srcset": "/images/bar-tim-640.webp 640w, /images/bar-tim-1024.webp 1024w, /images/bar-tim.webp 1600w",
+    "position": "50% 45%"
+  },
+  "/images/sef-tanjir.webp": {
+    "width": 941,
+    "height": 1672,
+    "srcset": "/images/sef-tanjir-640.webp 640w, /images/sef-tanjir.webp 941w",
+    "position": "50% 40%"
+  },
+  "/images/tiganj.webp": {
+    "width": 1086,
+    "height": 1448,
+    "srcset": "/images/tiganj-640.webp 640w, /images/tiganj-1024.webp 1024w, /images/tiganj.webp 1086w",
+    "position": "50% 50%"
+  },
+  "/images/vinoteka-prazna.webp": {
+    "width": 1600,
+    "height": 1067,
+    "srcset": "/images/vinoteka-prazna-640.webp 640w, /images/vinoteka-prazna-1024.webp 1024w, /images/vinoteka-prazna.webp 1600w",
+    "position": "40% 50%"
+  },
+  "/images/mus-cokolada.webp": {
+    "width": 1600,
+    "height": 2400,
+    "srcset": "/images/mus-cokolada-640.webp 640w, /images/mus-cokolada-1024.webp 1024w, /images/mus-cokolada.webp 1600w",
+    "position": "50% 50%"
+  },
+  "/images/sef-osmeh.webp": {
+    "width": 1600,
+    "height": 1067,
+    "srcset": "/images/sef-osmeh-640.webp 640w, /images/sef-osmeh-1024.webp 1024w, /images/sef-osmeh.webp 1600w",
+    "position": "60% 40%"
+  },
+  "/images/krep.webp": {
+    "width": 1600,
+    "height": 1067,
+    "srcset": "/images/krep-640.webp 640w, /images/krep-1024.webp 1024w, /images/krep.webp 1600w",
+    "position": "50% 50%"
+  },
+  "/images/bar-dvojica.webp": {
+    "width": 1600,
+    "height": 1067,
+    "srcset": "/images/bar-dvojica-640.webp 640w, /images/bar-dvojica-1024.webp 1024w, /images/bar-dvojica.webp 1600w",
+    "position": "50% 40%"
+  },
+  "/images/koktel-narandza.webp": {
+    "width": 1013,
+    "height": 1800,
+    "srcset": "/images/koktel-narandza-640.webp 640w, /images/koktel-narandza.webp 1013w",
+    "position": "50% 50%"
+  },
+  "/images/bar-cb.webp": {
+    "width": 1600,
+    "height": 1067,
+    "srcset": "/images/bar-cb-640.webp 640w, /images/bar-cb-1024.webp 1024w, /images/bar-cb.webp 1600w",
+    "position": "50% 50%"
+  },
+  "/images/koktel-roze.webp": {
+    "width": 1013,
+    "height": 1800,
+    "srcset": "/images/koktel-roze-640.webp 640w, /images/koktel-roze.webp 1013w",
+    "position": "50% 70%"
+  },
+  "/images/koktel-majcina-dusica.webp": {
+    "width": 1198,
+    "height": 1800,
+    "srcset": "/images/koktel-majcina-dusica-640.webp 640w, /images/koktel-majcina-dusica-1024.webp 1024w, /images/koktel-majcina-dusica.webp 1198w",
+    "position": "50% 50%"
+  },
+  "/images/kuhinja-rad-cb.webp": {
+    "width": 1600,
+    "height": 1067,
+    "srcset": "/images/kuhinja-rad-cb-640.webp 640w, /images/kuhinja-rad-cb-1024.webp 1024w, /images/kuhinja-rad-cb.webp 1600w",
+    "position": "55% 50%"
+  },
+  "/images/kuhinja-gost-cb.webp": {
+    "width": 1600,
+    "height": 1067,
+    "srcset": "/images/kuhinja-gost-cb-640.webp 640w, /images/kuhinja-gost-cb-1024.webp 1024w, /images/kuhinja-gost-cb.webp 1600w",
+    "position": "50% 50%"
+  },
+  "/images/puzevi.webp": {
+    "width": 1600,
+    "height": 2843,
+    "srcset": "/images/puzevi-640.webp 640w, /images/puzevi-1024.webp 1024w, /images/puzevi.webp 1600w",
+    "position": "50% 50%"
+  },
+  "/images/kuhinja-pass-cb.webp": {
+    "width": 1600,
+    "height": 1067,
+    "srcset": "/images/kuhinja-pass-cb-640.webp 640w, /images/kuhinja-pass-cb-1024.webp 1024w, /images/kuhinja-pass-cb.webp 1600w",
+    "position": "50% 50%"
+  },
+  "/images/sef-portret-cb.webp": {
+    "width": 1600,
+    "height": 2400,
+    "srcset": "/images/sef-portret-cb-640.webp 640w, /images/sef-portret-cb-1024.webp 1024w, /images/sef-portret-cb.webp 1600w",
+    "position": "50% 30%"
+  },
+  "/images/sef-kuhinja.webp": {
+    "width": 1600,
+    "height": 1067,
+    "srcset": "/images/sef-kuhinja-640.webp 640w, /images/sef-kuhinja-1024.webp 1024w, /images/sef-kuhinja.webp 1600w",
+    "position": "30% 40%"
+  },
+  "/images/sala-mural-vece.webp": {
+    "width": 1600,
+    "height": 1067,
+    "srcset": "/images/sala-mural-vece-640.webp 640w, /images/sala-mural-vece-1024.webp 1024w, /images/sala-mural-vece.webp 1600w",
+    "position": "50% 50%"
+  },
+  "/images/dva-sefa-cb.webp": {
+    "width": 1600,
+    "height": 1067,
+    "srcset": "/images/dva-sefa-cb-640.webp 640w, /images/dva-sefa-cb-1024.webp 1024w, /images/dva-sefa-cb.webp 1600w",
+    "position": "50% 50%"
+  },
+  "/images/sef-za-stolom.webp": {
+    "width": 1600,
+    "height": 1066,
+    "srcset": "/images/sef-za-stolom-640.webp 640w, /images/sef-za-stolom-1024.webp 1024w, /images/sef-za-stolom.webp 1600w",
+    "position": "50% 45%"
+  },
+  "/images/mus-detalj.webp": {
+    "width": 1600,
+    "height": 2400,
+    "srcset": "/images/mus-detalj-640.webp 640w, /images/mus-detalj-1024.webp 1024w, /images/mus-detalj.webp 1600w",
+    "position": "50% 50%"
+  },
+  "/images/ulaz.webp": {
+    "width": 1600,
+    "height": 1067,
+    "srcset": "/images/ulaz-640.webp 640w, /images/ulaz-1024.webp 1024w, /images/ulaz.webp 1600w",
+    "position": "60% 50%"
   }
 }

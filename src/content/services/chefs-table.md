@@ -26,10 +26,10 @@ included:
   - title: Prilagođen meni
     text: Alergije, vegetarijanski meni ili omiljeni sastojci, sve uklapamo u degustaciju.
 gallery:
-  - { alt: Šef servira sled }
-  - { alt: Detalj tanjira }
-  - { alt: Sto uz otvorenu kuhinju }
-  - { alt: Vinsko uparivanje }
+  - { src: /images/sef-tanjir.webp, alt: Šef servira sled }
+  - { src: /images/tiganj.webp, alt: Jelo iz tiganja sa majčinom dušicom }
+  - { src: /images/sala-otvorena-kuhinja.webp, alt: Sto uz otvorenu kuhinju }
+  - { src: /images/vinoteka-prazna.webp, alt: Zid sa vinima }
 faq:
   - q: Koliko osoba može da sedne za šefov sto?
     a: Do [N] osoba. Za veće grupe predlažemo zakup celog restorana.

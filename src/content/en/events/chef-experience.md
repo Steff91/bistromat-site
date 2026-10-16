@@ -9,7 +9,7 @@ guest:
 gallery:
   - { alt: Two chefs in the kitchen }
   - { alt: Serving a course }
-  - { alt: Guests at the chef's table }
+  - { alt: The chef at the table }
   - { alt: Dessert }
 ---
 

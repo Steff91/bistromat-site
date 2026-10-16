@@ -4,6 +4,7 @@ order: 2
 excerpt: Poslovne večere, proslave timova, lansiranja i prezentacije.
 heroTitle: Poslovna večera,
 heroTitleEm: bez korporativnog utiska.
+image: /images/sala-mural.webp
 intro: Zatvoren restoran za vaš tim, klijente ili partnere. Meni, vino i satnicu prilagođavamo formatu događaja, a račun ispostavljamo na firmu.
 facts:
   - { label: Kapacitet, value: "do [N] gostiju" }

@@ -4,6 +4,7 @@ order: 4
 excerpt: Sosovi, crêpes, escargots i deserti, uz šefa u otvorenoj kuhinji.
 heroTitle: Kuvajte sa šefom,
 heroTitleEm: u otvorenoj kuhinji.
+image: /images/otvorena-kuhinja.webp
 intro: Radionice francuske kuhinje za manje grupe. Prijavite se na javni termin ili zakažite privatnu radionicu za društvo, devojačko veče ili tim.
 facts:
   - { label: Grupa, value: "do [N] učesnika" }

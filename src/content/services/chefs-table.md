@@ -4,6 +4,7 @@ order: 3
 excerpt: Šef kuva samo za vašu grupu, meni po dogovoru.
 heroTitle: Šefov sto,
 heroTitleEm: samo za vašu grupu.
+image: /images/sef-desert.webp
 intro: Degustacioni meni u više sledova za manju grupu, za stolom uz otvorenu kuhinju. Šef priprema i servira svako jelo i priča priču iza njega.
 facts:
   - { label: Kapacitet, value: "do [N] osoba" }

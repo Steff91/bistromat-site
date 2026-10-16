@@ -4,6 +4,7 @@ order: 7
 excerpt: Signature kokteli bar majstora [Ime], koktel radionice i privatne koktel zabave.
 heroTitle: Kokteli,
 heroTitleEm: po francuskom receptu.
+image: /images/bar.webp
 intro: Signature kokteli našeg bar majstora [Ime], uz francuske zalogaje. Dođite na koktel večer, prijavite se na radionicu ili zakupite bar za svoju zabavu.
 facts:
   - { label: Bar majstor, value: "[Ime]" }

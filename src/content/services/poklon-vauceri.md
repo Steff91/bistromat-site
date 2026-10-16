@@ -4,6 +4,7 @@ order: 6
 excerpt: Večera za dvoje, Chef's Table ili radionica na poklon.
 heroTitle: Poklonite
 heroTitleEm: veče u Bistromatu.
+image: /images/postavljen-sto.webp
 intro: Vaučer za večeru za dvoje, Chef's Table, kulinarsku radionicu ili vrednosni vaučer po izboru. Idealan za rođendane, godišnjice i praznike.
 facts:
   - { label: Važenje, value: "[N] meseci" }

@@ -1,18 +1,41 @@
 ---
 // Image slot. Pass `src` once real photos exist; until then renders a labelled placeholder.
+// Photos optimized with scripts/optimize-images.mjs get responsive WebP srcset and focal point
+// from src/data/images.json automatically.
+import images from '../data/images.json';
+
 interface Props {
   label: string;
   src?: string;
   alt?: string;
   class?: string;
   light?: boolean;
+  /** Rendered width hint for the browser, e.g. "(min-width: 64rem) 50vw, 100vw" */
+  sizes?: string;
+  /** Load immediately (hero / above the fold) */
+  eager?: boolean;
+  /** Override focal point, e.g. "50% 30%" */
+  position?: string;
 }
-const { label, src, alt = '', class: className = '', light = false } = Astro.props;
+const { label, src, alt = '', class: className = '', light = false, sizes = '(min-width: 64rem) 50vw, 100vw', eager = false, position } = Astro.props;
+const meta = src ? (images as Record<string, { width: number; height: number; srcset: string; position: string }>)[src] : undefined;
 ---
 
 {src ? (
   <div class:list={['overflow-hidden', className]}>
-    <img src={src} alt={alt} loading="lazy" class="h-full w-full object-cover transition-transform duration-700 ease-out hover:scale-[1.03]" />
+    <img
+      src={src}
+      srcset={meta?.srcset}
+      sizes={meta ? sizes : undefined}
+      width={meta?.width}
+      height={meta?.height}
+      alt={alt}
+      loading={eager ? 'eager' : 'lazy'}
+      fetchpriority={eager ? 'high' : undefined}
+      decoding="async"
+      style={`object-position:${position ?? meta?.position ?? '50% 50%'}`}
+      class="h-full w-full object-cover transition-transform duration-700 ease-out hover:scale-[1.03]"
+    />
   </div>
 ) : (
   <div class:list={['placeholder', light && 'border-0 bg-paper-dark text-[#5A554E]', className]}>[{label}]</div>

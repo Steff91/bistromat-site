@@ -4,6 +4,7 @@ type: wine
 date: "2026-10-31"
 time: "19:30"
 endTime: "23:00"
+image: /images/vinoteka.webp
 excerpt: Pet vina [Vinarije] uparenih sa pet sledova, uz vinara koji priča o svakom vinu.
 price: "[CENA] / osoba"
 seatsLeft: 0

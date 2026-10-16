@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import InquiryForm from '../components/InquiryForm.astro';
 import Social from '../components/Social.astro';
 import Icon from '../components/Icon.astro';
+import Placeholder from '../components/Placeholder.astro';
 import ConsentEmbed from '../components/ConsentEmbed.astro';
 import { mapIframe } from '../lib/embeds';
 import { getInfo, getLang, route, tr } from '../i18n';
@@ -28,6 +29,8 @@ const shortcuts = [
     <p class="mb-7 text-[14px] text-dim">
       <a href={route('home', lang)} class="text-dim hover:text-paper">{tr(lang, 'Početna', 'Home')}</a> / {tr(lang, 'Kontakt', 'Contact')}
     </p>
+    <div class="flex flex-wrap items-center gap-14">
+    <div class="min-w-0 flex-[1_1_460px]">
     <p class="eyebrow mb-[18px]" data-reveal>{tr(lang, 'Kontakt', 'Contact')}</p>
     <h1 class="m-0 font-medium leading-[1.1] tracking-[-0.02em] [font-size:clamp(32px,4.4vw,56px)]" data-reveal style="--i:1">
       {en ? <>See you<br /><em class="font-normal">at Mutapova 9.</em></> : <>Vidimo se<br /><em class="font-normal">u Mutapovoj 9.</em></>}
@@ -35,6 +38,11 @@ const shortcuts = [
     <p class="mt-6 max-w-[540px] font-sans text-base text-muted" data-reveal style="--i:2">
       {tr(lang, 'Za rezervaciju stola najbrže je da nas pozovete. Za proslave, ketering, vaučere i sve ostalo pišite nam preko forme ispod.', 'To book a table, calling us is quickest. For parties, catering, vouchers and anything else, write to us using the form below.')}
     </p>
+    </div>
+    <div class="min-w-0 flex-[1_1_380px]" data-reveal style="--i:2">
+      <Placeholder label="Foto" src="/images/hram-svetog-save.webp" alt={tr(lang, 'Šef Bistromata na ulici ispred Hrama Svetog Save', 'A Bistromat chef on the street by the Temple of Saint Sava')} eager class="h-[460px]" />
+    </div>
+    </div>
   </section>
 
   <!-- Contact info -->

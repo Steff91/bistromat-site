@@ -1,51 +1,155 @@
 {
   "intro": "Degustacioni meni u više sledova, za malim brojem stolova uz otvorenu kuhinju. Šef sprema i servira svako jelo, priča priču iza njega, a uz svaki sled ide pažljivo izabrano vino. [Kratak opis koncepta]",
   "facts": [
-    { "label": "Sledovi", "value": "[N] sledova" },
-    { "label": "Mesta", "value": "do [N] gostiju" },
-    { "label": "Cena", "value": "[CENA] / osoba" },
-    { "label": "Uz meni", "value": "Vinsko uparivanje" }
+    {
+      "label": "Sledovi",
+      "value": "[N] sledova"
+    },
+    {
+      "label": "Mesta",
+      "value": "do [N] gostiju"
+    },
+    {
+      "label": "Cena",
+      "value": "[CENA] / osoba"
+    },
+    {
+      "label": "Uz meni",
+      "value": "Vinsko uparivanje"
+    }
   ],
   "dates": [
-    { "date": "2026-10-24", "time": "19:00", "theme": "[Tema večeri]", "guest": "", "price": "[CENA] / osoba", "seatsLeft": 6 },
-    { "date": "2026-11-07", "time": "19:00", "theme": "[Tema večeri]", "guest": "× [Vinarija]", "price": "[CENA] / osoba", "seatsLeft": 0 },
-    { "date": "2026-11-21", "time": "19:00", "theme": "[Tema večeri]", "guest": "sa [gostujući šef]", "price": "[CENA] / osoba", "seatsLeft": 12 }
+    {
+      "date": "2026-10-24",
+      "time": "19:00",
+      "theme": "[Tema večeri]",
+      "guest": "",
+      "price": "[CENA] / osoba",
+      "seatsLeft": 6
+    },
+    {
+      "date": "2026-11-07",
+      "time": "19:00",
+      "theme": "[Tema večeri]",
+      "guest": "× [Vinarija]",
+      "price": "[CENA] / osoba",
+      "seatsLeft": 0
+    },
+    {
+      "date": "2026-11-21",
+      "time": "19:00",
+      "theme": "[Tema večeri]",
+      "guest": "sa [gostujući šef]",
+      "price": "[CENA] / osoba",
+      "seatsLeft": 12
+    }
   ],
   "timeline": [
-    { "time": "19:00", "title": "Dobrodošlica", "text": "Penušavo vino i prvi zalogaj iz kuhinje." },
-    { "time": "19:30", "title": "Predjela", "text": "Šef predstavlja meni i prve sledove." },
-    { "time": "20:15", "title": "Glavna jela", "text": "Topli sledovi, svaki sa svojim vinom." },
-    { "time": "21:30", "title": "Sir i desert", "text": "Francuski sirevi, desert i digestiv." }
+    {
+      "time": "19:00",
+      "title": "Dobrodošlica",
+      "text": "Penušavo vino i prvi zalogaj iz kuhinje."
+    },
+    {
+      "time": "19:30",
+      "title": "Predjela",
+      "text": "Šef predstavlja meni i prve sledove."
+    },
+    {
+      "time": "20:15",
+      "title": "Glavna jela",
+      "text": "Topli sledovi, svaki sa svojim vinom."
+    },
+    {
+      "time": "21:30",
+      "title": "Sir i desert",
+      "text": "Francuski sirevi, desert i digestiv."
+    }
   ],
   "chef": {
     "name": "Nikola Kovačević",
     "role": "Vlasnik i šef kuhinje",
     "bio": "[Kratka biografija šefa: gde je učio i radio, šta ga inspiriše u francuskoj kuhinji, šta gosti mogu da očekuju za njegovim stolom.]",
     "quote": "[Citat šefa o kuhinji ili Chef's Table večerima.]",
-    "image": ""
+    "image": "/images/bar.webp"
   },
   "sampleMenu": {
     "title": "[Naziv večeri / datum]",
     "courses": [
-      { "course": "Amuse-bouche", "dish": "[Jelo]", "wine": "[Vino]" },
-      { "course": "Entrée", "dish": "[Jelo]", "wine": "[Vino]" },
-      { "course": "Poisson", "dish": "[Jelo]", "wine": "[Vino]" },
-      { "course": "Viande", "dish": "[Jelo]", "wine": "[Vino]" },
-      { "course": "Fromage", "dish": "[Izbor sireva]", "wine": "[Vino]" },
-      { "course": "Dessert", "dish": "[Desert]", "wine": "[Desertno vino]" }
+      {
+        "course": "Amuse-bouche",
+        "dish": "[Jelo]",
+        "wine": "[Vino]"
+      },
+      {
+        "course": "Entrée",
+        "dish": "[Jelo]",
+        "wine": "[Vino]"
+      },
+      {
+        "course": "Poisson",
+        "dish": "[Jelo]",
+        "wine": "[Vino]"
+      },
+      {
+        "course": "Viande",
+        "dish": "[Jelo]",
+        "wine": "[Vino]"
+      },
+      {
+        "course": "Fromage",
+        "dish": "[Izbor sireva]",
+        "wine": "[Vino]"
+      },
+      {
+        "course": "Dessert",
+        "dish": "[Desert]",
+        "wine": "[Desertno vino]"
+      }
     ]
   },
   "past": [
-    { "title": "Chef Experience", "caption": "[Gostujući šef] · [datum]", "image": "" },
-    { "title": "Chef's Table × [Vinarija]", "caption": "[datum]", "image": "" },
-    { "title": "[Naziv večeri]", "caption": "[datum]", "image": "" },
-    { "title": "[Naziv večeri]", "caption": "[datum]", "image": "" }
+    {
+      "title": "Chef Experience",
+      "caption": "[Gostujući šef] · [datum]",
+      "image": ""
+    },
+    {
+      "title": "Chef's Table × [Vinarija]",
+      "caption": "[datum]",
+      "image": ""
+    },
+    {
+      "title": "[Naziv večeri]",
+      "caption": "[datum]",
+      "image": ""
+    },
+    {
+      "title": "[Naziv večeri]",
+      "caption": "[datum]",
+      "image": ""
+    }
   ],
   "faq": [
-    { "q": "Mogu li da dođem sam/a?", "a": "Naravno. Mesta se rezervišu pojedinačno, a za šefovim stolom često sedite sa drugim ljubiteljima dobre hrane." },
-    { "q": "Šta ako imam alergiju ili ne jedem meso?", "a": "Navedite to u rezervaciji najkasnije [N] dana pre večeri, pa će šef prilagoditi sledove." },
-    { "q": "Da li je vinsko uparivanje uključeno u cenu?", "a": "[Da / Ne, doplata je [CENA].] Na zahtev nudimo i bezalkoholno uparivanje." },
-    { "q": "Kako se plaća i šta ako otkažem?", "a": "[Mesto se potvrđuje uplatom avansa. Uslovi otkazivanja.]" },
-    { "q": "Mogu li da poklonim mesto za šefovim stolom?", "a": "Možete, kroz poklon vaučer za Chef's Table." }
+    {
+      "q": "Mogu li da dođem sam/a?",
+      "a": "Naravno. Mesta se rezervišu pojedinačno, a za šefovim stolom često sedite sa drugim ljubiteljima dobre hrane."
+    },
+    {
+      "q": "Šta ako imam alergiju ili ne jedem meso?",
+      "a": "Navedite to u rezervaciji najkasnije [N] dana pre večeri, pa će šef prilagoditi sledove."
+    },
+    {
+      "q": "Da li je vinsko uparivanje uključeno u cenu?",
+      "a": "[Da / Ne, doplata je [CENA].] Na zahtev nudimo i bezalkoholno uparivanje."
+    },
+    {
+      "q": "Kako se plaća i šta ako otkažem?",
+      "a": "[Mesto se potvrđuje uplatom avansa. Uslovi otkazivanja.]"
+    },
+    {
+      "q": "Mogu li da poklonim mesto za šefovim stolom?",
+      "a": "Možete, kroz poklon vaučer za Chef's Table."
+    }
   ]
 }

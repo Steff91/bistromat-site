@@ -4,6 +4,7 @@ order: 1
 excerpt: Rođendani, godišnjice, veridbe, intimne svadbe, krštenja i slave.
 heroTitle: Ceo Bistromat,
 heroTitleEm: samo za vaše goste.
+image: /images/sala-slike.webp
 intro: Zatvaramo restoran za vašu proslavu na 4 do 6 sati. Šef priprema meni po vašoj meri u otvorenoj kuhinji, a mi brinemo o vinu, muzici i usluzi.
 facts:
   - { label: Kapacitet, value: "do [N] gostiju" }

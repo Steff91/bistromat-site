@@ -4,6 +4,7 @@ order: 5
 excerpt: Francuski meni na vašoj lokaciji, za kućne proslave i firme.
 heroTitle: Bistromat,
 heroTitleEm: na vašoj lokaciji.
+image: /images/sef-coq-au-vin.webp
 intro: Pripremamo francuski meni za vaš događaj van restorana, od koktel zalogaja do večere za stolom. Dostavljamo, serviramo i odnosimo za sobom.
 facts:
   - { label: Minimum, value: "od [N] osoba" }

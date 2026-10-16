@@ -1,0 +1,62 @@
+{
+  "/images/otvorena-kuhinja.webp": {
+    "width": 1600,
+    "height": 1066,
+    "srcset": "/images/otvorena-kuhinja-640.webp 640w, /images/otvorena-kuhinja-1024.webp 1024w, /images/otvorena-kuhinja.webp 1600w",
+    "position": "50% 40%"
+  },
+  "/images/sef-desert.webp": {
+    "width": 1449,
+    "height": 2576,
+    "srcset": "/images/sef-desert-640.webp 640w, /images/sef-desert-1024.webp 1024w, /images/sef-desert.webp 1449w",
+    "position": "50% 55%"
+  },
+  "/images/sef-coq-au-vin.webp": {
+    "width": 941,
+    "height": 1672,
+    "srcset": "/images/sef-coq-au-vin-640.webp 640w, /images/sef-coq-au-vin.webp 941w",
+    "position": "45% 45%"
+  },
+  "/images/sala-mural.webp": {
+    "width": 1600,
+    "height": 1066,
+    "srcset": "/images/sala-mural-640.webp 640w, /images/sala-mural-1024.webp 1024w, /images/sala-mural.webp 1600w",
+    "position": "50% 40%"
+  },
+  "/images/sala-slike.webp": {
+    "width": 1600,
+    "height": 1066,
+    "srcset": "/images/sala-slike-640.webp 640w, /images/sala-slike-1024.webp 1024w, /images/sala-slike.webp 1600w",
+    "position": "50% 50%"
+  },
+  "/images/bar.webp": {
+    "width": 1600,
+    "height": 1066,
+    "srcset": "/images/bar-640.webp 640w, /images/bar-1024.webp 1024w, /images/bar.webp 1600w",
+    "position": "45% 50%"
+  },
+  "/images/vinoteka.webp": {
+    "width": 1600,
+    "height": 900,
+    "srcset": "/images/vinoteka-640.webp 640w, /images/vinoteka-1024.webp 1024w, /images/vinoteka.webp 1600w",
+    "position": "40% 50%"
+  },
+  "/images/vinoteka-hodnik.webp": {
+    "width": 1449,
+    "height": 2576,
+    "srcset": "/images/vinoteka-hodnik-640.webp 640w, /images/vinoteka-hodnik-1024.webp 1024w, /images/vinoteka-hodnik.webp 1449w",
+    "position": "40% 45%"
+  },
+  "/images/hram-svetog-save.webp": {
+    "width": 1600,
+    "height": 2400,
+    "srcset": "/images/hram-svetog-save-640.webp 640w, /images/hram-svetog-save-1024.webp 1024w, /images/hram-svetog-save.webp 1600w",
+    "position": "50% 40%"
+  },
+  "/images/postavljen-sto.webp": {
+    "width": 1600,
+    "height": 1066,
+    "srcset": "/images/postavljen-sto-640.webp 640w, /images/postavljen-sto-1024.webp 1024w, /images/postavljen-sto.webp 1600w",
+    "position": "45% 55%"
+  }
+}

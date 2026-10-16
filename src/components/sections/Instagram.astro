@@ -1,0 +1,109 @@
+---
+// Latest Instagram posts via a Behold.so JSON feed (info.json → instagramFeed).
+// Loaded in the browser when the section nears the viewport, so the feed is always current
+// without rebuilding the site. If the feed is empty or fails, the whole section stays hidden.
+import Icon from '../Icon.astro';
+import { getInfo, getLang, tr } from '../../i18n';
+
+const lang = getLang(Astro.url);
+const info = getInfo(lang);
+const feed = (info as { instagramFeed?: string }).instagramFeed ?? '';
+const handle = '@' + info.instagram.replace(/\/+$/, '').split('/').pop();
+---
+
+{feed && (
+  <section id="instagram" class="ig border-t border-line" data-feed={feed} data-alt={tr(lang, 'Instagram objava', 'Instagram post')} hidden>
+    <div class="container-site py-24">
+      <div class="mb-11 flex flex-wrap items-end justify-between gap-6">
+        <div class="min-w-0 flex-[1_1_420px]">
+          <p class="eyebrow inline-flex items-center gap-2.5"><Icon name="instagram" size={14} />Instagram</p>
+          <h2 class="h-section m-0">{tr(lang, 'Iz naše kuhinje', 'From our kitchen')}</h2>
+        </div>
+        <a href={info.instagram} class="btn btn-outline" target="_blank" rel="noopener">
+          {tr(lang, 'Pratite', 'Follow')} {handle}
+        </a>
+      </div>
+      <ul class="ig-grid m-0 grid list-none gap-2 p-0 sm:gap-3"></ul>
+    </div>
+  </section>
+)}
+
+<style>
+  .ig-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @media (min-width: 640px) { .ig-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (min-width: 1024px) { .ig-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+  .ig-grid :global(a) { position: relative; display: block; aspect-ratio: 1; overflow: hidden; border-radius: 4px; background: #1a1a1a; }
+  .ig-grid :global(img) { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease, opacity .3s ease; }
+  .ig-grid :global(a:hover img), .ig-grid :global(a:focus-visible img) { transform: scale(1.04); opacity: .85; }
+  .ig-grid :global(.ig-badge) { position: absolute; top: 8px; right: 8px; width: 18px; height: 18px; color: #fff; filter: drop-shadow(0 1px 2px rgba(0,0,0,.6)); }
+  @media (prefers-reduced-motion: reduce) { .ig-grid :global(img) { transition: none; } }
+</style>
+
+<script>
+  type Size = { mediaUrl: string; width?: number; height?: number };
+  type Post = {
+    id: string;
+    permalink: string;
+    mediaType?: string;
+    isReel?: boolean;
+    mediaUrl?: string;
+    thumbnailUrl?: string;
+    caption?: string;
+    prunedCaption?: string;
+    sizes?: Partial<Record<'small' | 'medium' | 'large' | 'full', Size>>;
+  };
+
+  const section = document.querySelector<HTMLElement>('section.ig');
+  if (section) {
+    const grid = section.querySelector('ul')!;
+    const altBase = section.dataset.alt || 'Instagram';
+    const playIcon = '<svg class="ig-badge" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+    const albumIcon = '<svg class="ig-badge" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 8h12v12H4z" opacity=".9"/><path d="M8 4h12v12h-2V6H8z"/></svg>';
+
+    const render = (posts: Post[]) => {
+      for (const p of posts.slice(0, 6)) {
+        const src = p.sizes?.medium?.mediaUrl || p.sizes?.small?.mediaUrl || p.thumbnailUrl || p.mediaUrl;
+        if (!src || !p.permalink) continue;
+        const caption = (p.prunedCaption || p.caption || '').replace(/\s+/g, ' ').trim();
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = p.permalink;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = caption ? caption.slice(0, 120) : altBase;
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        img.width = 400;
+        img.height = 400;
+        a.append(img);
+        if (p.mediaType === 'VIDEO' || p.isReel) a.insertAdjacentHTML('beforeend', playIcon);
+        else if (p.mediaType === 'CAROUSEL_ALBUM') a.insertAdjacentHTML('beforeend', albumIcon);
+        li.append(a);
+        grid.append(li);
+      }
+      if (grid.children.length) section.hidden = false;
+    };
+
+    const load = () =>
+      fetch(section.dataset.feed!)
+        .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+        .then((d) => render(Array.isArray(d) ? d : d.posts ?? []))
+        .catch(() => {});
+
+    // The section is hidden until filled, so watch the element just before it.
+    // (skip <script>/<style> tags, which have no box)
+    let anchor = section.previousElementSibling;
+    while (anchor && ['SCRIPT', 'STYLE', 'TEMPLATE'].includes(anchor.tagName)) anchor = anchor.previousElementSibling;
+    anchor ??= section.parentElement!;
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        if (entries.some((e) => e.isIntersecting)) { io.disconnect(); load(); }
+      }, { rootMargin: '600px 0px' });
+      io.observe(anchor);
+    } else {
+      load();
+    }
+  }
+</script>

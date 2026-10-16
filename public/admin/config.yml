@@ -56,6 +56,7 @@ collections:
               - { name: title, label: Naslov, widget: string }
               - { name: text, label: Tekst, widget: text }
           - { name: instagram, label: Instagram URL, widget: string }
+          - { name: instagramFeed, label: Instagram feed (Behold JSON URL), widget: string, required: false, hint: "Prazno = sekcija sa Instagram objavama se ne prikazuje" }
           - { name: facebook, label: Facebook URL, widget: string }
           - { name: googleProfile, label: Google profil URL, widget: string }
           - { name: googleReviewLink, label: Link za ostavljanje recenzije, widget: string, required: false }

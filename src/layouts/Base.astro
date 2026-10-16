@@ -57,6 +57,7 @@ const schema = {
   },
   geo: { '@type': 'GeoCoordinates', latitude: info.geo.lat, longitude: info.geo.lng },
   hasMap: info.mapsLink,
+  amenityFeature: [{ '@type': 'LocationFeatureSpecification', name: 'Wheelchair accessible', value: true }],
   openingHoursSpecification: info.openingHours.map((h) => ({
     '@type': 'OpeningHoursSpecification',
     dayOfWeek: h.days,

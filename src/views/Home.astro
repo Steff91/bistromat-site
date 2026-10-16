@@ -9,6 +9,7 @@ import Events from '../components/sections/Events.astro';
 import Reviews from '../components/sections/Reviews.astro';
 import Reservation from '../components/sections/Reservation.astro';
 import Contact from '../components/sections/Contact.astro';
+import Instagram from '../components/sections/Instagram.astro';
 import Marquee from '../components/Marquee.astro';
 import IconRule from '../components/IconRule.astro';
 import { getLang, tr } from '../i18n';
@@ -30,6 +31,7 @@ const lang = getLang(Astro.url);
   {FEATURES.chefsTable && <ChefTable />}
   {FEATURES.events && <Events />}
   <Reviews />
+  <Instagram />
   <Reservation />
   <Contact />
 </Base>

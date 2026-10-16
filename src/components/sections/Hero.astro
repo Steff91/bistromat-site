@@ -1,4 +1,5 @@
 ---
+import BookButton from '../BookButton.astro';
 import Placeholder from '../Placeholder.astro';
 import { getInfo, getLang, route, tr } from '../../i18n';
 import { FEATURES } from '../../config';
@@ -19,7 +20,7 @@ const info = getInfo(lang);
       {info.aboutShort}
     </p>
     <div class="mt-10 flex flex-wrap gap-3.5" data-reveal style="--i:3">
-      <a href={route('reservations', lang)} class="btn btn-primary">{tr(lang, 'Rezerviši sto', 'Book a table')}</a>
+      <BookButton class="btn btn-primary">{tr(lang, 'Rezerviši sto', 'Book a table')}</BookButton>
       {FEATURES.services
         ? <a href={`#${tr(lang, 'usluge', 'services')}`} class="btn btn-outline">{tr(lang, 'Proslave i događaji', 'Parties & events')}</a>
         : <a href={route('menu', lang)} class="btn btn-outline">{tr(lang, 'Pogledaj meni', 'See the menu')}</a>}

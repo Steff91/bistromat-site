@@ -43,6 +43,7 @@ We do not use your data to send marketing messages without your separate consent
 We share data only with service providers who help us run the business and process it on our behalf:
 
 - a form processing service (Web3Forms) — receiving messages sent through the website forms,
+- Eventlin — the online table booking system,
 - a hosting provider — hosting the website,
 - an email provider — sending and receiving messages.
 

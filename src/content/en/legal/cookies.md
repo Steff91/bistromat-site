@@ -20,9 +20,10 @@ Some parts of the website show content from other services, which may set their 
 | Service | Where it is used | Purpose |
 |---|---|---|
 | Google Maps | Home and Contact pages | Showing a map with the restaurant's location |
+| Eventlin | "Book" buttons | Online table booking; loads only when you click the button |
 | Instagram, Facebook | Links in the footer | Links only; cookies are set only when you visit those networks |
 
-**The map loads only once you allow it**, through the cookie notice or the "Show" button on the content itself. Until then, no data is sent to Google.
+**The map loads only once you allow it**, through the cookie notice or the "Show" button on the content itself. **The booking form (Eventlin) loads only when you click a booking button.** Until then, no data is sent to those services.
 
 Those services are responsible for their own cookies. You can find more in their privacy policies, e.g. [Google](https://policies.google.com/privacy).
 

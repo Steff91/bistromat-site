@@ -1,0 +1,83 @@
+---
+// "Book a table" button that opens the Eventlin booking widget.
+// Eventlin's script is loaded only on the first click (nothing is sent to Eventlin before that).
+// Without a merchant ID in info.json, or without JavaScript, it is a plain link to the reservations page.
+import { getInfo, getLang, route, tr } from '../i18n';
+
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+const lang = getLang(Astro.url);
+const info = getInfo(lang);
+const enabled = Boolean(info.eventlinMerchantId);
+---
+
+{enabled ? (
+  <a
+    href={route('reservations', lang)}
+    class:list={['eventlin-btn', className]}
+    name={info.eventlinName}
+    merchantId={info.eventlinMerchantId}
+    lang={lang === 'en' ? 'en' : undefined}
+    data-book
+    data-fail={tr(lang, `Online rezervacija trenutno nije dostupna. Pozovite nas: ${info.phone}`, `Online booking is unavailable right now. Please call us: ${info.phone}`)}
+  ><slot /></a>
+) : (
+  <a href={route('reservations', lang)} class={className}><slot /></a>
+)}
+
+<script>
+  // Load Eventlin on first click, then open the widget for the clicked button.
+  const SCRIPT = 'https://w.eventlin.com/widget/widget30.min.js';
+  const STYLE = 'https://w.eventlin.com/widget/widget30.min.css';
+  let state: 'idle' | 'loading' | 'ready' | 'failed' = 'idle';
+  let loading: Promise<void> | null = null;
+
+  const load = () =>
+    (loading ??= new Promise<void>((resolve, reject) => {
+      state = 'loading';
+      const css = document.createElement('link');
+      css.rel = 'stylesheet';
+      css.href = STYLE;
+      document.head.appendChild(css);
+      const js = document.createElement('script');
+      js.src = SCRIPT;
+      js.onload = () => {
+        // The widget binds its buttons on window "load", which has already fired: init once by hand.
+        const init = (window as unknown as { loadEventlin?: () => void }).loadEventlin;
+        if (typeof init === 'function') {
+          init();
+          state = 'ready';
+          resolve();
+        } else reject(new Error('Eventlin init not found'));
+      };
+      js.onerror = () => reject(new Error('Eventlin script failed to load'));
+      document.head.appendChild(js);
+    }));
+
+  document.querySelectorAll<HTMLAnchorElement>('a[data-book]').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      if (state === 'failed') return; // fall back to the reservations page
+      e.preventDefault();
+      if (state === 'ready') return; // the widget's own handler opens the form
+      btn.setAttribute('aria-busy', 'true');
+      load()
+        .then(() => btn.click())
+        .catch((err) => {
+          console.error('[booking]', err);
+          state = 'failed';
+          // Already on the reservations page: tell the visitor to call; elsewhere go there.
+          if (new URL(btn.href).pathname === location.pathname) alert(btn.dataset.fail);
+          else location.href = btn.href;
+        })
+        .finally(() => btn.removeAttribute('aria-busy'));
+    });
+  });
+</script>
+
+<style is:global>
+  a[data-book][aria-busy='true'] { cursor: progress; opacity: .75; }
+  /* Keep Eventlin's overlay above the sticky header and cookie banner */
+  .eventlin-overlay { z-index: 1000 !important; }
+</style>

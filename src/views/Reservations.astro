@@ -1,4 +1,6 @@
 ---
+import BookButton from '../components/BookButton.astro';
+import Placeholder from '../components/Placeholder.astro';
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import ConsentEmbed from '../components/ConsentEmbed.astro';
@@ -46,7 +48,17 @@ const groupHref = FEATURES.services ? `${partiesHref}#upit` : route('contact', l
     <div class="container-site flex flex-wrap gap-14 py-20">
       <!-- Form or provider embed -->
       <div class="min-w-0 flex-[2_1_560px]" data-reveal>
-        {info.reservationEmbed ? (
+        {info.eventlinMerchantId ? (
+          <div class="flex h-full flex-col overflow-hidden border border-line">
+            <Placeholder label="Foto" src="/images/sala-boja.webp" alt={tr(lang, 'Sala Bistromata sa muralom', 'The Bistromat dining room with the mural')} class="h-[300px]" />
+            <div class="flex flex-1 flex-col items-start gap-4 p-8">
+              <p class="eyebrow m-0">{tr(lang, 'Online rezervacija', 'Book online')}</p>
+              <h2 class="m-0 text-[26px] font-medium leading-tight">{tr(lang, 'Izaberite datum, vreme i broj osoba.', 'Choose your date, time and party size.')}</h2>
+              <p class="m-0 max-w-[520px] font-sans text-muted">{tr(lang, 'Forma za rezervaciju otvara se ovde, na sajtu. Slobodne termine vidite odmah, a rezervacija stiže direktno kod nas.', 'The booking form opens right here on the site. You see free times instantly, and your booking comes straight to us.')}</p>
+              <BookButton class="btn btn-primary mt-2">{tr(lang, 'Nova rezervacija', 'New booking')}</BookButton>
+            </div>
+          </div>
+        ) : info.reservationEmbed ? (
           <ConsentEmbed html={info.reservationEmbed} label={tr(lang, 'online rezervacije', 'online booking')} provider={tr(lang, 'sistem za rezervacije', 'the booking system')} />
         ) : (
           <form

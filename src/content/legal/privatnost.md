@@ -42,6 +42,7 @@ Podatke ne koristimo za slanje reklamnih poruka bez vašeg posebnog pristanka i 
 Podatke delimo samo sa pružaocima usluga koji nam pomažu u radu i koji ih obrađuju po našem nalogu:
 
 - servis za obradu formi (Web3Forms) — prijem poruka poslatih preko formi na sajtu,
+- Eventlin — sistem za online rezervacije stola,
 - pružalac hosting usluga — smeštaj sajta,
 - pružalac email usluga — prijem i slanje poruka.
 

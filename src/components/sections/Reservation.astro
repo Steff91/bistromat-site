@@ -1,4 +1,5 @@
 ---
+import BookButton from '../BookButton.astro';
 import BrandIcon from '../BrandIcon.astro';
 import ConsentEmbed from '../ConsentEmbed.astro';
 import Placeholder from '../Placeholder.astro';
@@ -16,7 +17,7 @@ const info = getInfo(lang);
       <p class="mt-5 font-sans text-muted" data-reveal style="--i:2">{tr(lang, 'Pozovite nas ili rezervišite online.', 'Call us or book online.')}</p>
       <a href={`tel:${info.phoneHref}`} class="mt-4 inline-block text-[32px] font-medium text-paper no-underline hover:text-gold" data-reveal style="--i:3">{info.phone}</a>
       <div class="mt-6" data-reveal style="--i:4">
-        <a href={route('reservations', lang)} class="btn btn-primary">{tr(lang, 'Rezerviši online', 'Book online')}</a>
+        <BookButton class="btn btn-primary">{tr(lang, 'Rezerviši online', 'Book online')}</BookButton>
       </div>
     </div>
     <div class="min-w-0 flex-[1_1_460px]" data-reveal style="--i:2">

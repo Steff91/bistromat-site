@@ -19,9 +19,10 @@ Pojedini delovi sajta prikazuju sadržaj drugih servisa, koji mogu postaviti svo
 | Servis | Gde se koristi | Svrha |
 |---|---|---|
 | Google Maps | Početna i stranica Kontakt | Prikaz mape sa lokacijom restorana |
+| Eventlin | Dugmad „Rezerviši“ | Online rezervacija stola; učitava se tek kada kliknete na dugme |
 | Instagram, Facebook | Linkovi u podnožju | Samo linkovi; kolačići se postavljaju tek kada posetite te mreže |
 
-**Mapa se učitava tek kada to dozvolite**, preko obaveštenja o kolačićima ili dugmeta „Prikaži“ na samom sadržaju. Do tada se Google-u ne šalju nikakvi podaci.
+**Mapa se učitava tek kada to dozvolite**, preko obaveštenja o kolačićima ili dugmeta „Prikaži“ na samom sadržaju. **Forma za rezervaciju (Eventlin) učitava se tek kada kliknete na dugme za rezervaciju.** Do tada se tim servisima ne šalju nikakvi podaci.
 
 Za kolačiće trećih strana odgovorni su ti servisi. Više informacija nalazi se u njihovim politikama privatnosti, npr. [Google](https://policies.google.com/privacy).
 

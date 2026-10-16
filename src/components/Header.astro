@@ -1,4 +1,5 @@
 ---
+import BookButton from './BookButton.astro';
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
 import LangSwitch from './LangSwitch.astro';
@@ -68,7 +69,7 @@ const mobileLink = 'border-b border-line py-3.5 font-medium no-underline text-pa
         const active = l.href.startsWith('/') && !l.href.includes('#') && path.startsWith(l.href);
         return <a href={l.href} class:list={[navLink, active && '!text-gold']} aria-current={active ? 'page' : undefined}>{l.label}</a>;
       })}
-      <a href={route('reservations', lang)} class="btn btn-primary !px-5 !py-[11px]">{t.book}</a>
+      <BookButton class="btn btn-primary !px-5 !py-[11px]">{t.book}</BookButton>
     </nav>
 
     <div class="flex items-center gap-3 lg:hidden">
@@ -153,7 +154,7 @@ const mobileLink = 'border-b border-line py-3.5 font-medium no-underline text-pa
         const active = l.href.startsWith('/') && !l.href.includes('#') && path.startsWith(l.href);
         return <a href={l.href} class:list={[mobileLink, active && '!text-gold']} aria-current={active ? 'page' : undefined}>{l.label}</a>;
       })}
-      <a href={route('reservations', lang)} class="btn btn-primary mt-5 justify-center">{t.book}</a>
+      <BookButton class="btn btn-primary mt-5 justify-center">{t.book}</BookButton>
     </div>
   </nav>
 </header>

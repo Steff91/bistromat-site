@@ -1,0 +1,11 @@
+---
+// Optional page: built only when FEATURES.chefsTable is on (src/config.ts).
+import View from '../../views/ChefsTable.astro';
+import { FEATURES } from '../../config';
+
+export function getStaticPaths() {
+  return FEATURES.chefsTable ? [{ params: { all: undefined } }] : [];
+}
+---
+
+<View />

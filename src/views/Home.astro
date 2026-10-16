@@ -12,6 +12,7 @@ import Contact from '../components/sections/Contact.astro';
 import Marquee from '../components/Marquee.astro';
 import IconRule from '../components/IconRule.astro';
 import { getLang, tr } from '../i18n';
+import { FEATURES } from '../config';
 
 const lang = getLang(Astro.url);
 ---
@@ -23,8 +24,8 @@ const lang = getLang(Astro.url);
   <MenuTeaser />
   <IconRule />
   <Services />
-  <ChefTable />
-  <Events />
+  {FEATURES.chefsTable && <ChefTable />}
+  {FEATURES.events && <Events />}
   <Reviews />
   <Reservation />
   <Contact />

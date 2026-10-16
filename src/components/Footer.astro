@@ -4,6 +4,7 @@ import LogoMark from './LogoMark.astro';
 import Social from './Social.astro';
 import { getInfo, getLang, route, tr } from '../i18n';
 import { getServices } from '../i18n/content';
+import { FEATURES } from '../config';
 
 const lang = getLang(Astro.url);
 const info = getInfo(lang);
@@ -12,11 +13,11 @@ const year = new Date().getFullYear();
 const link = 'text-[#D9D4CC] no-underline hover:text-paper';
 const nav = [
   { href: route('menu', lang), label: tr(lang, 'Meni', 'Menu') },
-  { href: route('chefsTable', lang), label: "Chef's Table" },
-  { href: route('events', lang), label: tr(lang, 'Događaji', 'Events') },
+  FEATURES.chefsTable && { href: route('chefsTable', lang), label: "Chef's Table" },
+  FEATURES.events && { href: route('events', lang), label: tr(lang, 'Događaji', 'Events') },
   { href: route('reservations', lang), label: tr(lang, 'Rezervacije', 'Reservations') },
   { href: route('contact', lang), label: tr(lang, 'Kontakt', 'Contact') },
-];
+].filter(Boolean) as { href: string; label: string }[];
 ---
 
 <footer class="border-t border-line bg-ink-deep">

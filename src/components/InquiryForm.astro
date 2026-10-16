@@ -65,8 +65,8 @@ const L = {
       ? ['Table booking', 'Private event', 'Catering', 'Gift voucher', 'Collaboration', 'Working at Bistromat', 'Other']
       : ['Rezervacija stola', 'Privatni događaj', 'Ketering', 'Poklon vaučer', 'Saradnja', 'Posao u Bistromatu', 'Ostalo']
     : en
-      ? ['Table booking', "Chef's Table", 'Events', 'Collaboration', 'Working at Bistromat', 'Other']
-      : ['Rezervacija stola', "Chef's Table", 'Događaji', 'Saradnja', 'Posao u Bistromatu', 'Ostalo'],
+      ? ['Table booking', ...(FEATURES.chefsTable ? ["Chef's Table"] : []), ...(FEATURES.events ? ['Events'] : []), 'Collaboration', 'Working at Bistromat', 'Other']
+      : ['Rezervacija stola', ...(FEATURES.chefsTable ? ["Chef's Table"] : []), ...(FEATURES.events ? ['Događaji'] : []), 'Saradnja', 'Posao u Bistromatu', 'Ostalo'],
   voucherKind: tr(lang, 'Vrsta vaučera', 'Voucher type'),
   voucherCount: tr(lang, 'Broj vaučera', 'Number of vouchers'),
   recipient: tr(lang, 'Ime primaoca', "Recipient's name"),

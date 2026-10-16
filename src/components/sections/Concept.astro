@@ -1,5 +1,6 @@
 ---
 import { getInfo, getLang, tr } from '../../i18n';
+import { FEATURES } from '../../config';
 
 const lang = getLang(Astro.url);
 const info = getInfo(lang);
@@ -8,12 +9,16 @@ const pillars = lang === 'en'
   ? [
       { title: 'Open kitchen', text: 'Watch every dish come together, from prep to plate.' },
       { title: 'French classics', text: 'Escoffier technique, carefully sourced local ingredients and classics such as snails, onion soup and Coq au Vin.' },
-      { title: 'Wine, cocktails, music', text: 'Wine evenings, Vinyl & Dine, cocktail nights and guest chefs.' },
+      FEATURES.events
+        ? { title: 'Wine, cocktails, music', text: 'Wine evenings, Vinyl & Dine, cocktail nights and guest chefs.' }
+        : { title: 'Wine and cocktails', text: 'A wine list of Serbian, regional and international wines, and cocktails from our bar.' },
     ]
   : [
       { title: 'Otvorena kuhinja', text: 'Gledate kako nastaje svako jelo, od pripreme do tanjira.' },
       { title: 'Francuski klasici', text: 'Tehnike po Escoffier-u, pažljivo birane lokalne namirnice i klasici poput puževa, supe od luka i Coq au Vin.' },
-      { title: 'Vino, kokteli, muzika', text: 'Vinske večeri, Vinyl & Dine, koktel večeri i gostujući šefovi.' },
+      FEATURES.events
+        ? { title: 'Vino, kokteli, muzika', text: 'Vinske večeri, Vinyl & Dine, koktel večeri i gostujući šefovi.' }
+        : { title: 'Vino i kokteli', text: 'Vinska karta sa vinima iz Srbije, regiona i sveta i kokteli sa našeg bara.' },
     ];
 ---
 

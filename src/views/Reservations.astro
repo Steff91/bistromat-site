@@ -17,9 +17,9 @@ const input = 'rounded-md border border-[#3A3A3A] bg-[#161616] p-3.5 font-sans t
 const guests = Array.from({ length: res.maxGuests }, (_, i) => i + 1);
 
 const alternatives = [
-  { href: route('chefsTable', lang), label: "Chef's Table", text: tr(lang, 'Degustaciona večer uz šefa, mesta se rezervišu pojedinačno.', 'A tasting evening with the chef; seats are booked individually.') },
+  FEATURES.chefsTable && { href: route('chefsTable', lang), label: "Chef's Table", text: tr(lang, 'Degustaciona večer uz šefa, mesta se rezervišu pojedinačno.', 'A tasting evening with the chef; seats are booked individually.') },
   FEATURES.services && { href: partiesHref, label: tr(lang, 'Privatne proslave', 'Private parties'), text: tr(lang, `Za grupe veće od ${res.maxGuests} osoba ili ceo restoran.`, `For groups of more than ${res.maxGuests} or the whole restaurant.`) },
-  { href: route('events', lang), label: tr(lang, 'Događaji', 'Events'), text: tr(lang, 'Vinyl & Dine, vinske i koktel večeri.', 'Vinyl & Dine, wine and cocktail evenings.') },
+  FEATURES.events && { href: route('events', lang), label: tr(lang, 'Događaji', 'Events'), text: tr(lang, 'Vinyl & Dine, vinske i koktel večeri.', 'Vinyl & Dine, wine and cocktail evenings.') },
   !FEATURES.services && { href: route('contact', lang), label: tr(lang, 'Veće grupe', 'Larger groups'), text: tr(lang, `Za više od ${res.maxGuests} osoba ili ceo restoran, javite nam se.`, `For more than ${res.maxGuests} guests or the whole restaurant, get in touch.`) },
 ].filter(Boolean) as { href: string; label: string; text: string }[];
 const groupHref = FEATURES.services ? `${partiesHref}#upit` : route('contact', lang);

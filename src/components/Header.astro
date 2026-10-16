@@ -2,6 +2,7 @@
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
 import LangSwitch from './LangSwitch.astro';
+import { FEATURES } from '../config';
 import { getLang, route, servicesBase, tr, type Lang } from '../i18n';
 import { getServices, serviceHref } from '../i18n/content';
 
@@ -18,10 +19,10 @@ const inquiryHref = `${await serviceHref('privatne-proslave', lang)}#upit`;
 
 const linksBefore = [{ href: route('menu', lang), label: tr(lang, 'Meni', 'Menu') }];
 const linksAfter = [
-  { href: route('chefsTable', lang), label: "Chef's Table" },
-  { href: route('events', lang), label: tr(lang, 'Događaji', 'Events') },
+  FEATURES.chefsTable && { href: route('chefsTable', lang), label: "Chef's Table" },
+  FEATURES.events && { href: route('events', lang), label: tr(lang, 'Događaji', 'Events') },
   { href: route('contact', lang), label: tr(lang, 'Kontakt', 'Contact') },
-];
+].filter(Boolean) as { href: string; label: string }[];
 const t = {
   nav: tr(lang, 'Glavna navigacija', 'Main navigation'),
   services: tr(lang, 'Usluge', 'Services'),

@@ -20,9 +20,10 @@ const shortcuts = FEATURES.services ? [
   { href: await serviceHref('poklon-vauceri', lang), label: tr(lang, 'Poklon vaučeri', 'Gift vouchers'), text: tr(lang, "Večera, Chef's Table ili radionica na poklon.", "A dinner, Chef's Table or workshop as a gift.") },
 ] : [
   { href: route('reservations', lang), label: tr(lang, 'Rezervacija stola', 'Table booking'), text: tr(lang, 'Pozovite nas ili rezervišite online.', 'Call us or book online.') },
-  { href: route('chefsTable', lang), label: "Chef's Table", text: tr(lang, 'Degustaciona večer uz šefa za mali broj gostiju.', 'A tasting evening with the chef for a handful of guests.') },
-  { href: route('events', lang), label: tr(lang, 'Događaji', 'Events'), text: tr(lang, 'Vinyl & Dine, vinske i koktel večeri.', 'Vinyl & Dine, wine and cocktail evenings.') },
-];
+  { href: route('menu', lang), label: tr(lang, 'Meni', 'Menu'), text: tr(lang, 'Sezonski meni, vinska karta i kokteli.', 'Seasonal menu, wine list and cocktails.') },
+  FEATURES.chefsTable && { href: route('chefsTable', lang), label: "Chef's Table", text: tr(lang, 'Degustaciona večer uz šefa za mali broj gostiju.', 'A tasting evening with the chef for a handful of guests.') },
+  FEATURES.events && { href: route('events', lang), label: tr(lang, 'Događaji', 'Events'), text: tr(lang, 'Vinyl & Dine, vinske i koktel večeri.', 'Vinyl & Dine, wine and cocktail evenings.') },
+].filter(Boolean) as { href: string; label: string; text: string }[];
 ---
 
 <Base

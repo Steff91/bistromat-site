@@ -1,8 +1,10 @@
 ---
+import { FEATURES } from '../../config';
 import Event from '../../views/Event.astro';
 import { getEvents } from '../../i18n/content';
 
 export async function getStaticPaths() {
+  if (!FEATURES.events) return [];
   return (await getEvents('sr')).map((e) => ({ params: { slug: e.slug }, props: { event: e } }));
 }
 ---

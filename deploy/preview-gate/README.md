@@ -9,6 +9,6 @@ behind a branded "Coming soon" page. Requires Apache with `mod_rewrite` and PHP 
 
 Change the password: `php -r 'echo hash("sha256", "new-password");'` → `PASSWORD_SHA256` in `gate.php`.
 Log everyone out: put a new random value in `ACCESS_TOKEN` (gate.php) **and** in `.htaccess`.
-Go live: delete `.htaccess` (or replace it with the production one), `gate.php` and `gate-assets/`.
+Go live: delete `gate.php` and `gate-assets/` and upload the built site; its `.htaccess` (from `public/`) replaces the gate one.
 
 Not used by the GitHub deploy (rsync --delete would remove these files).

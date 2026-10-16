@@ -26,7 +26,7 @@ const info = getInfo(lang);
       </div>
       <div data-reveal style="--i:2">
         <p class="eyebrow mb-1.5">{tr(lang, 'Kontakt', 'Contact')}</p>
-        <p class="m-0"><a href={`tel:${info.phoneHref}`}>{info.phone}</a></p>
+        <p class="m-0"><a href={`tel:${info.phoneHref}`} class="no-underline hover:text-gold">{info.phone}</a></p>
         <div class="mt-1.5"><Social /></div>
       </div>
     </div>

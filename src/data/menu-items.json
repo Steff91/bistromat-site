@@ -6,7 +6,7 @@
       "en": "Cold starters",
       "items": [
         { "sr": { "name": "Steak Tartare", "desc": "Od junećeg bifteka sa 10 finih začina, domaći brioš, puter" }, "en": { "name": "Steak Tartare", "desc": "Beef fillet with 10 fine herbs, homemade brioche, butter" }, "price": "2.480" },
-        { "sr": { "name": "Foie Gras", "desc": "Domaći brioš, slatko od dunje" }, "en": { "name": "Foie Gras", "desc": "Pâté with Grand Marnier, homemade brioche, quince jam" }, "price": "2.660" },
+        { "sr": { "name": "Foie Gras", "desc": "Pašteta sa Grand Marnier likerom, domaći brioš, slatko od dunje" }, "en": { "name": "Foie Gras", "desc": "Pâté with Grand Marnier, homemade brioche, quince jam" }, "price": "2.660" },
         { "sr": { "name": "Tartar od cvekle", "desc": "Mus od kozijeg sira sa planine Goč, prah i čips od cvekle, zeleno ulje" }, "en": { "name": "Beetroot tartare", "desc": "Goat cheese mousse from Mount Goč, beetroot powder and crisps, green oil" }, "price": "1.300" },
         { "sr": { "name": "Tuna tartar", "desc": "Dresing, crni susam, ulje od limete" }, "en": { "name": "Tuna tartare", "desc": "Dressing, black sesame seeds, lime oil" }, "price": "2.650" }
       ]

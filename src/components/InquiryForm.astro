@@ -1,5 +1,6 @@
 ---
 import { getInfo, getLang, route, tr } from '../i18n';
+import { FEATURES } from '../config';
 
 type Variant = 'event' | 'catering' | 'workshop' | 'voucher' | 'seats' | 'contact';
 
@@ -59,9 +60,13 @@ const L = {
   slot: tr(lang, 'Termin', 'Date'),
   people: tr(lang, 'Broj osoba', 'Number of people'),
   topic: tr(lang, 'Tema', 'Topic'),
-  topics: en
-    ? ['Table booking', 'Private event', 'Catering', 'Gift voucher', 'Collaboration', 'Working at Bistromat', 'Other']
-    : ['Rezervacija stola', 'Privatni događaj', 'Ketering', 'Poklon vaučer', 'Saradnja', 'Posao u Bistromatu', 'Ostalo'],
+  topics: FEATURES.services
+    ? en
+      ? ['Table booking', 'Private event', 'Catering', 'Gift voucher', 'Collaboration', 'Working at Bistromat', 'Other']
+      : ['Rezervacija stola', 'Privatni događaj', 'Ketering', 'Poklon vaučer', 'Saradnja', 'Posao u Bistromatu', 'Ostalo']
+    : en
+      ? ['Table booking', "Chef's Table", 'Events', 'Collaboration', 'Working at Bistromat', 'Other']
+      : ['Rezervacija stola', "Chef's Table", 'Događaji', 'Saradnja', 'Posao u Bistromatu', 'Ostalo'],
   voucherKind: tr(lang, 'Vrsta vaučera', 'Voucher type'),
   voucherCount: tr(lang, 'Broj vaučera', 'Number of vouchers'),
   recipient: tr(lang, 'Ime primaoca', "Recipient's name"),

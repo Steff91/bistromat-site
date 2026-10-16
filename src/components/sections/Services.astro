@@ -10,6 +10,7 @@ const inquiryHref = `${await serviceHref('privatne-proslave', lang)}#upit`;
 const more = tr(lang, 'Saznaj više', 'Learn more');
 ---
 
+{services.length > 0 && (
 <section id={tr(lang, 'usluge', 'services')}>
   <div class="container-site py-24">
     <div class="mb-12 flex flex-wrap items-end justify-between gap-6">
@@ -55,3 +56,4 @@ const more = tr(lang, 'Saznaj više', 'Learn more');
     </div>
   </div>
 </section>
+)}

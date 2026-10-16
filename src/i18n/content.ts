@@ -4,6 +4,7 @@
 // under its Serbian slug, so nothing goes missing when only one language is edited.
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { merge, servicesBase, eventsBase, type Lang } from './index';
+import { FEATURES } from '../config';
 
 type ServiceData = CollectionEntry<'services'>['data'];
 type EventData = CollectionEntry<'events'>['data'];
@@ -62,6 +63,7 @@ async function localize<D>(
 }
 
 export async function getServices(lang: Lang) {
+  if (!FEATURES.services) return [] as Localized<ServiceData>[];
   const list = await localize<ServiceData>('services', 'servicesEn', servicesBase, lang);
   return list.sort((a, b) => a.data.order - b.data.order);
 }

@@ -47,6 +47,7 @@ const mobileLink = 'border-b border-line py-3.5 font-medium no-underline text-pa
         return <a href={l.href} class:list={[navLink, active && '!text-gold']} aria-current={active ? 'page' : undefined}>{l.label}</a>;
       })}
 
+      {services.length > 0 && (
       <button
         type="button"
         id="mega-trigger"
@@ -60,6 +61,7 @@ const mobileLink = 'border-b border-line py-3.5 font-medium no-underline text-pa
         {t.services}
         <span class="mega-chevron inline-flex"><Icon name="chevron-right" size={9} /></span>
       </button>
+      )}
 
       {linksAfter.map((l) => {
         const active = l.href.startsWith('/') && !l.href.includes('#') && path.startsWith(l.href);
@@ -85,6 +87,7 @@ const mobileLink = 'border-b border-line py-3.5 font-medium no-underline text-pa
   </div>
 
   <!-- Desktop mega menu -->
+  {services.length > 0 && (
   <div id="mega-menu" class="mega absolute inset-x-0 top-full hidden border-b border-line bg-ink lg:block" data-open="false">
     <div class="container-site py-10">
       <div class="grid grid-cols-4 gap-px border border-line bg-line">
@@ -111,6 +114,7 @@ const mobileLink = 'border-b border-line py-3.5 font-medium no-underline text-pa
       </div>
     </div>
   </div>
+  )}
 
   <!-- Mobile menu -->
   <nav id="mobile-nav" aria-label={t.mobileNav} class="mobile-nav max-h-[calc(100dvh-80px)] overflow-y-auto border-t border-line lg:hidden" hidden>
@@ -120,6 +124,7 @@ const mobileLink = 'border-b border-line py-3.5 font-medium no-underline text-pa
         return <a href={l.href} class:list={[mobileLink, active && '!text-gold']} aria-current={active ? 'page' : undefined}>{l.label}</a>;
       })}
 
+      {services.length > 0 && (<>
       <button
         type="button"
         id="mobile-services-toggle"
@@ -141,6 +146,7 @@ const mobileLink = 'border-b border-line py-3.5 font-medium no-underline text-pa
           >{s.data.title}</a>
         ))}
       </div>
+      </>)}
 
       {linksAfter.map((l) => {
         const active = l.href.startsWith('/') && !l.href.includes('#') && path.startsWith(l.href);

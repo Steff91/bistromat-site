@@ -1,6 +1,7 @@
 ---
 import Placeholder from '../Placeholder.astro';
 import { getInfo, getLang, route, tr } from '../../i18n';
+import { FEATURES } from '../../config';
 
 const lang = getLang(Astro.url);
 const info = getInfo(lang);
@@ -19,10 +20,12 @@ const info = getInfo(lang);
     </p>
     <div class="mt-10 flex flex-wrap gap-3.5" data-reveal style="--i:3">
       <a href={route('reservations', lang)} class="btn btn-primary">{tr(lang, 'Rezerviši sto', 'Book a table')}</a>
-      <a href={`#${tr(lang, 'usluge', 'services')}`} class="btn btn-outline">{tr(lang, 'Proslave i događaji', 'Parties & events')}</a>
+      {FEATURES.services
+        ? <a href={`#${tr(lang, 'usluge', 'services')}`} class="btn btn-outline">{tr(lang, 'Proslave i događaji', 'Parties & events')}</a>
+        : <a href={route('menu', lang)} class="btn btn-outline">{tr(lang, 'Pogledaj meni', 'See the menu')}</a>}
     </div>
   </div>
   <div class="min-w-0 flex-[1_1_420px]" data-reveal style="--i:2">
-    <Placeholder label={tr(lang, 'Foto: otvorena kuhinja', 'Photo: open kitchen')} src="/images/otvorena-kuhinja.webp" alt={tr(lang, 'Šef Bistromata za radnim stolom u otvorenoj kuhinji', 'Bistromat chef at work in the open kitchen')} eager class="h-[540px]" />
+    <Placeholder label={tr(lang, 'Foto: otvorena kuhinja', 'Photo: open kitchen')} src="/images/sala-otvorena-kuhinja.webp" alt={tr(lang, 'Sala Bistromata sa pogledom na otvorenu kuhinju', 'The Bistromat dining room looking onto the open kitchen')} eager class="h-[540px]" />
   </div>
 </section>

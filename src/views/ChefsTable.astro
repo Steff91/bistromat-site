@@ -8,6 +8,7 @@ import Icon from '../components/Icon.astro';
 import { upcomingDates, formatDate, dateLabel, seatsLeftLabel } from '../lib/chef-table';
 import { getChefTable, getLang, route, timeLabel, tr } from '../i18n';
 import { serviceHref } from '../i18n/content';
+import { FEATURES } from '../config';
 
 const lang = getLang(Astro.url);
 const en = lang === 'en';
@@ -203,7 +204,7 @@ const faqSchema = {
   )}
 
   <!-- Private Chef's Table -->
-  <section class="bg-paper text-ink">
+  {FEATURES.services && <section class="bg-paper text-ink">
     <div class="container-site flex flex-wrap items-center justify-between gap-8 py-16">
       <div class="max-w-[620px]" data-reveal>
         <p class="eyebrow !text-gold-dark">{tr(lang, 'Za vašu grupu', 'For your group')}</p>
@@ -214,7 +215,7 @@ const faqSchema = {
         {tr(lang, "Privatni Chef's Table", "Private Chef's Table")} <Icon name="chevron-right" size={11} />
       </a>
     </div>
-  </section>
+  </section>}
 </Base>
 
 

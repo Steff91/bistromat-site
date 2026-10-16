@@ -4,6 +4,7 @@ import Icon from '../components/Icon.astro';
 import ConsentEmbed from '../components/ConsentEmbed.astro';
 import { getInfo, getLang, getReservations, route, tr } from '../i18n';
 import { serviceHref } from '../i18n/content';
+import { FEATURES } from '../config';
 
 const lang = getLang(Astro.url);
 const info = getInfo(lang);
@@ -17,9 +18,11 @@ const guests = Array.from({ length: res.maxGuests }, (_, i) => i + 1);
 
 const alternatives = [
   { href: route('chefsTable', lang), label: "Chef's Table", text: tr(lang, 'Degustaciona večer uz šefa, mesta se rezervišu pojedinačno.', 'A tasting evening with the chef; seats are booked individually.') },
-  { href: partiesHref, label: tr(lang, 'Privatne proslave', 'Private parties'), text: tr(lang, `Za grupe veće od ${res.maxGuests} osoba ili ceo restoran.`, `For groups of more than ${res.maxGuests} or the whole restaurant.`) },
+  FEATURES.services && { href: partiesHref, label: tr(lang, 'Privatne proslave', 'Private parties'), text: tr(lang, `Za grupe veće od ${res.maxGuests} osoba ili ceo restoran.`, `For groups of more than ${res.maxGuests} or the whole restaurant.`) },
   { href: route('events', lang), label: tr(lang, 'Događaji', 'Events'), text: tr(lang, 'Vinyl & Dine, vinske i koktel večeri.', 'Vinyl & Dine, wine and cocktail evenings.') },
-];
+  !FEATURES.services && { href: route('contact', lang), label: tr(lang, 'Veće grupe', 'Larger groups'), text: tr(lang, `Za više od ${res.maxGuests} osoba ili ceo restoran, javite nam se.`, `For more than ${res.maxGuests} guests or the whole restaurant, get in touch.`) },
+].filter(Boolean) as { href: string; label: string; text: string }[];
+const groupHref = FEATURES.services ? `${partiesHref}#upit` : route('contact', lang);
 ---
 
 <Base
@@ -83,8 +86,8 @@ const alternatives = [
             <div class="col-span-full flex flex-wrap items-center gap-5">
               <button type="submit" class="btn btn-primary cursor-pointer border-0">{tr(lang, 'Pošalji rezervaciju', 'Send booking')}</button>
               {en
-                ? <span class="font-sans text-[15px] text-dim">For more than {res.maxGuests} guests, <a href={`${partiesHref}#upit`}>send an inquiry</a>.</span>
-                : <span class="font-sans text-[15px] text-dim">Za više od {res.maxGuests} osoba <a href={`${partiesHref}#upit`}>pošaljite upit</a>.</span>}
+                ? <span class="font-sans text-[15px] text-dim">For more than {res.maxGuests} guests, <a href={groupHref}>send an inquiry</a>.</span>
+                : <span class="font-sans text-[15px] text-dim">Za više od {res.maxGuests} osoba <a href={groupHref}>pošaljite upit</a>.</span>}
               <p class="m-0 w-full font-sans text-[14px] text-dim">
                 {en ? <>By sending this form you agree to the processing of your data as described in our <a href={route('privacy', lang)}>Privacy policy</a>.</> : <>Slanjem forme prihvatate obradu podataka u skladu sa <a href={route('privacy', lang)}>Politikom privatnosti</a>.</>}
               </p>

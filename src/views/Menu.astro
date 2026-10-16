@@ -5,6 +5,7 @@ import MenuFlipbook from '../components/MenuFlipbook.astro';
 import Icon from '../components/Icon.astro';
 import { getInfo, getLang, getMenu, route, tr } from '../i18n';
 import { serviceHref } from '../i18n/content';
+import { FEATURES } from '../config';
 
 const lang = getLang(Astro.url);
 const info = getInfo(lang);
@@ -83,13 +84,13 @@ const en = lang === 'en';
         <p class="eyebrow mb-2">{tr(lang, 'Sezonski meni', 'Seasonal menu')}</p>
         <p class="m-0 font-sans text-muted">{tr(lang, 'Karta prati sezonu, a šef svake nedelje dodaje jela van menija. Pitajte osoblje za današnju ponudu.', "The menu follows the seasons, and every week the chef adds dishes off the menu. Ask our staff about today's specials.")}</p>
       </div>
-      <div data-reveal style="--i:2">
+      {FEATURES.services && <div data-reveal style="--i:2">
         <p class="eyebrow mb-2">{tr(lang, 'Privatni događaji', 'Private events')}</p>
         <p class="m-0 font-sans text-muted">{tr(lang, 'Za proslave i poslovne večere meni sastavljamo po vašoj meri.', 'For celebrations and business dinners we put together a menu around you.')}</p>
         <a href={partiesHref} class="mt-3 inline-flex items-center gap-2 text-[14px]">
           {tr(lang, 'Proslave i događaji', 'Parties & events')} <Icon name="chevron-right" size={10} />
         </a>
-      </div>
+      </div>}
     </div>
   </section>
 

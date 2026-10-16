@@ -8,15 +8,20 @@ import ConsentEmbed from '../components/ConsentEmbed.astro';
 import { mapIframe } from '../lib/embeds';
 import { getInfo, getLang, route, tr } from '../i18n';
 import { serviceHref } from '../i18n/content';
+import { FEATURES } from '../config';
 
 const lang = getLang(Astro.url);
 const info = getInfo(lang);
 const en = lang === 'en';
 const hasEmail = Boolean(info.email);
-const shortcuts = [
+const shortcuts = FEATURES.services ? [
   { href: route('reservations', lang), label: tr(lang, 'Rezervacija stola', 'Table booking'), text: tr(lang, 'Pozovite nas ili rezervišite online.', 'Call us or book online.') },
   { href: await serviceHref('privatne-proslave', lang), label: tr(lang, 'Privatne proslave', 'Private parties'), text: tr(lang, 'Ceo restoran za vašu proslavu, 4–6 sati.', 'The whole restaurant for your celebration, 4–6 hours.') },
   { href: await serviceHref('poklon-vauceri', lang), label: tr(lang, 'Poklon vaučeri', 'Gift vouchers'), text: tr(lang, "Večera, Chef's Table ili radionica na poklon.", "A dinner, Chef's Table or workshop as a gift.") },
+] : [
+  { href: route('reservations', lang), label: tr(lang, 'Rezervacija stola', 'Table booking'), text: tr(lang, 'Pozovite nas ili rezervišite online.', 'Call us or book online.') },
+  { href: route('chefsTable', lang), label: "Chef's Table", text: tr(lang, 'Degustaciona večer uz šefa za mali broj gostiju.', 'A tasting evening with the chef for a handful of guests.') },
+  { href: route('events', lang), label: tr(lang, 'Događaji', 'Events'), text: tr(lang, 'Vinyl & Dine, vinske i koktel večeri.', 'Vinyl & Dine, wine and cocktail evenings.') },
 ];
 ---
 

@@ -32,12 +32,14 @@ const nav = [
       {nav.map((l) => <a href={l.href} class={link}>{l.label}</a>)}
     </nav>
 
+    {services.length > 0 && (
     <nav aria-label={tr(lang, 'Usluge', 'Services')} class="flex flex-col gap-2.5 text-[15px]">
       <p class="m-0 mb-1.5 text-[13px] uppercase tracking-[0.16em] text-gold">{tr(lang, 'Usluge', 'Services')}</p>
       {services.map((s) => (
         <a href={s.href} class={link}>{s.data.title}</a>
       ))}
     </nav>
+    )}
 
     <div class="flex flex-col gap-2.5 text-[15px]">
       <p class="m-0 mb-1.5 text-[13px] uppercase tracking-[0.16em] text-gold">{tr(lang, 'Kontakt', 'Contact')}</p>

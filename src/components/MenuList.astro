@@ -1,17 +1,27 @@
 ---
-// Full food menu as HTML (indexable), grouped in collapsible sections.
-// Data: src/data/menu-items.json (Serbian + English per item).
+// A menu as HTML (indexable), grouped in collapsible sections.
+// Data: src/data/menu-items.json (food, default), wine-list.json, drinks.json — Serbian + English per item.
+// Item fields: name, desc?, price, unit? (per kg…), size? (0,33 l), glass? (price per glass, wine).
 import Icon from './Icon.astro';
-import data from '../data/menu-items.json';
-import { getLang } from '../i18n';
+import food from '../data/menu-items.json';
+import { getLang, tr } from '../i18n';
 
+type Item = { sr: { name: string; desc?: string }; en: { name: string; desc?: string }; price: string; unit?: string; size?: string; glass?: string };
+type Data = { currency: string; sections: { sr: string; en: string; items: Item[] }[] };
+
+interface Props {
+  data?: Data;
+  /** Open the first section on load */
+  openFirst?: boolean;
+}
+const { data = food as Data, openFirst = true } = Astro.props;
 const lang = getLang(Astro.url);
 const price = (p: string, unit?: string) => `${p} ${data.currency}${unit ? ` / ${unit}` : ''}`;
 ---
 
 <div class="menu-list border-t border-line">
   {data.sections.map((s, i) => (
-    <details class="menu-sec border-b border-line" open={i === 0}>
+    <details class="menu-sec border-b border-line" open={openFirst && i === 0}>
       <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-6">
         <h3 class="menu-sec-title m-0 text-[20px] font-medium tracking-[-0.01em]">
           {s[lang]}
@@ -24,11 +34,12 @@ const price = (p: string, unit?: string) => `${p} ${data.currency}${unit ? ` / $
           {s.items.map((it) => (
             <li>
               <div class="flex items-baseline gap-3">
-                <span class="font-medium">{it[lang].name}</span>
+                <span class="font-medium">{it[lang].name}{it.size && <span class="ml-2 font-sans text-[14px] font-normal text-dim">{it.size}</span>}</span>
                 <span class="leader" aria-hidden="true"></span>
                 <span class="shrink-0 font-sans text-muted">{price(it.price, it.unit)}</span>
               </div>
               {it[lang].desc && <p class="m-0 mt-1 max-w-[640px] font-sans text-[15px] text-dim">{it[lang].desc}</p>}
+              {it.glass && <p class="m-0 mt-1 font-sans text-[15px] text-dim">{tr(lang, 'Čaša', 'Glass')}: {price(it.glass)}</p>}
             </li>
           ))}
         </ul>

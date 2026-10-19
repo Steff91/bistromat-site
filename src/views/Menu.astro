@@ -4,6 +4,8 @@ import BrandIcon from '../components/BrandIcon.astro';
 import Base from '../layouts/Base.astro';
 import MenuFlipbook from '../components/MenuFlipbook.astro';
 import MenuList from '../components/MenuList.astro';
+import wineList from '../data/wine-list.json';
+import drinks from '../data/drinks.json';
 import menuItems from '../data/menu-items.json';
 import Icon from '../components/Icon.astro';
 import { getInfo, getLang, getMenu, route, tr } from '../i18n';
@@ -83,9 +85,27 @@ const menuSchema = {
       <p class="eyebrow" data-reveal>{tr(lang, 'Ručak i večera', 'Lunch and dinner')}</p>
       <h2 id="ceo-meni" class="h-section m-0" data-reveal style="--i:1">{tr(lang, 'Ceo meni', 'The full menu')}</h2>
       <p class="mt-4 mb-10 max-w-[560px] font-sans text-muted" data-reveal style="--i:2">
-        {tr(lang, 'Sva jela sa trenutne karte. Vinsku kartu i koktele prelistajte iznad.', 'Every dish on the current menu. Browse the wine list and cocktails above.')}
+        {tr(lang, 'Sva jela sa trenutne karte. Ispod su vinska karta, pića i kokteli.', 'Every dish on the current menu. The wine list, drinks and cocktails are below.')}
       </p>
       <div data-reveal style="--i:3"><MenuList /></div>
+
+      <div id={tr(lang, 'vinska-karta', 'wine-list')} class="mt-20 scroll-mt-28">
+        <p class="eyebrow" data-reveal>{tr(lang, 'Vina', 'Wine')}</p>
+        <h2 class="h-section m-0" data-reveal style="--i:1">{tr(lang, 'Vinska karta', 'Wine list')}</h2>
+        <p class="mt-4 mb-10 max-w-[560px] font-sans text-muted" data-reveal style="--i:2">
+          {tr(lang, 'Vina iz Srbije, regiona i sveta. Cene su za bocu; gde je navedena cena čaše, vino se služi i na čašu.', 'Wines from Serbia, the region and the world. Prices are per bottle; where a glass price is shown, the wine is also served by the glass.')}
+        </p>
+        <div data-reveal style="--i:3"><MenuList data={wineList} openFirst={false} /></div>
+      </div>
+
+      <div id={tr(lang, 'pica', 'drinks')} class="mt-20 scroll-mt-28">
+        <p class="eyebrow" data-reveal>{tr(lang, 'Bar', 'Bar')}</p>
+        <h2 class="h-section m-0" data-reveal style="--i:1">{tr(lang, 'Pića i kokteli', 'Drinks and cocktails')}</h2>
+        <p class="mt-4 mb-10 max-w-[560px] font-sans text-muted" data-reveal style="--i:2">
+          {tr(lang, 'Kafa, sokovi, pivo, kokteli i žestoka pića.', 'Coffee, soft drinks, beer, cocktails and spirits.')}
+        </p>
+        <div data-reveal style="--i:3"><MenuList data={drinks} openFirst={false} /></div>
+      </div>
     </div>
   </section>
 

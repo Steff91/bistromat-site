@@ -137,6 +137,70 @@ collections:
                   - { name: price, label: Cena (npr. 2.480), widget: string }
                   - { name: unit, label: Jedinica (npr. kg), widget: string, required: false }
 
+      - name: wineList
+        label: Vinska karta
+        file: src/data/wine-list.json
+        fields:
+          - { name: currency, label: Valuta, widget: hidden, default: RSD }
+          - name: sections
+            label: Kategorije
+            widget: list
+            summary: "{{fields.sr}}"
+            fields:
+              - { name: sr, label: Naziv (srpski), widget: string }
+              - { name: en, label: Naziv (engleski), widget: string }
+              - name: items
+                label: Vina
+                widget: list
+                summary: "{{fields.sr.name}} · {{fields.price}}"
+                fields:
+                  - name: sr
+                    label: Srpski
+                    widget: object
+                    fields:
+                      - { name: name, label: Naziv, widget: string }
+                      - { name: desc, label: Opis, widget: string, required: false }
+                  - name: en
+                    label: Engleski
+                    widget: object
+                    fields:
+                      - { name: name, label: Naziv, widget: string }
+                      - { name: desc, label: Opis, widget: string, required: false }
+                  - { name: price, label: Cena (npr. 2.480), widget: string }
+                  - { name: glass, label: Cena čaše (prazno = samo boca), widget: string, required: false }
+
+      - name: drinks
+        label: Pića i kokteli
+        file: src/data/drinks.json
+        fields:
+          - { name: currency, label: Valuta, widget: hidden, default: RSD }
+          - name: sections
+            label: Kategorije
+            widget: list
+            summary: "{{fields.sr}}"
+            fields:
+              - { name: sr, label: Naziv (srpski), widget: string }
+              - { name: en, label: Naziv (engleski), widget: string }
+              - name: items
+                label: Pića
+                widget: list
+                summary: "{{fields.sr.name}} · {{fields.price}}"
+                fields:
+                  - name: sr
+                    label: Srpski
+                    widget: object
+                    fields:
+                      - { name: name, label: Naziv, widget: string }
+                      - { name: desc, label: Opis, widget: string, required: false }
+                  - name: en
+                    label: Engleski
+                    widget: object
+                    fields:
+                      - { name: name, label: Naziv, widget: string }
+                      - { name: desc, label: Opis, widget: string, required: false }
+                  - { name: price, label: Cena (npr. 2.480), widget: string }
+                  - { name: size, label: Količina (npr. 0,33 l), widget: string, required: false }
+
       - name: chefTable
         label: Chef's Table
         file: src/data/chef-table.json

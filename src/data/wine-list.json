@@ -1,0 +1,393 @@
+{
+ "currency": "RSD",
+ "sections": [
+  {
+   "sr": "Penušava vina",
+   "en": "Sparkling wines",
+   "items": [
+    {
+     "sr": {
+      "name": "Simonnet-Febvre Blanc de Blancs"
+     },
+     "en": {
+      "name": "Simonnet-Febvre Blanc de Blancs"
+     },
+     "price": "3.450"
+    },
+    {
+     "sr": {
+      "name": "Masottina Rosé Brut"
+     },
+     "en": {
+      "name": "Masottina Rosé Brut"
+     },
+     "price": "2.760",
+     "glass": "620"
+    },
+    {
+     "sr": {
+      "name": "Cava Flama d'Or"
+     },
+     "en": {
+      "name": "Cava Flama d'Or"
+     },
+     "price": "2.800",
+     "glass": "550"
+    },
+    {
+     "sr": {
+      "name": "Deutz Classic Brut"
+     },
+     "en": {
+      "name": "Deutz Classic Brut"
+     },
+     "price": "12.000"
+    }
+   ]
+  },
+  {
+   "sr": "Bela vina – Srbija i region",
+   "en": "White wines – Serbia and the region",
+   "items": [
+    {
+     "sr": {
+      "name": "Tamjanika Slika, Radovan"
+     },
+     "en": {
+      "name": "Tamjanika Slika, Radovan"
+     },
+     "price": "3.100",
+     "glass": "630"
+    },
+    {
+     "sr": {
+      "name": "Fabula Mala Bela Chardonnay, Chichateau"
+     },
+     "en": {
+      "name": "Fabula Mala Bela Chardonnay, Chichateau"
+     },
+     "price": "3.100"
+    },
+    {
+     "sr": {
+      "name": "Neoplanta, Đurđić"
+     },
+     "en": {
+      "name": "Neoplanta, Đurđić"
+     },
+     "price": "3.000",
+     "glass": "620"
+    },
+    {
+     "sr": {
+      "name": "Malvazija, Meneghetti"
+     },
+     "en": {
+      "name": "Malvazija, Meneghetti"
+     },
+     "price": "4.400",
+     "glass": "750"
+    },
+    {
+     "sr": {
+      "name": "Pošip, Čara"
+     },
+     "en": {
+      "name": "Pošip, Čara"
+     },
+     "price": "4.550"
+    },
+    {
+     "sr": {
+      "name": "Župljanka 100%, Radovan"
+     },
+     "en": {
+      "name": "Župljanka 100%, Radovan"
+     },
+     "price": "5.100"
+    }
+   ]
+  },
+  {
+   "sr": "Bela vina – svet",
+   "en": "White wines – world",
+   "items": [
+    {
+     "sr": {
+      "name": "Grand Bateau Blanc"
+     },
+     "en": {
+      "name": "Grand Bateau Blanc"
+     },
+     "price": "3.250",
+     "glass": "680"
+    },
+    {
+     "sr": {
+      "name": "Mâcon-Lugny, Louis Latour"
+     },
+     "en": {
+      "name": "Mâcon-Lugny, Louis Latour"
+     },
+     "price": "4.400",
+     "glass": "780"
+    },
+    {
+     "sr": {
+      "name": "Pinot Bianco Schulthauser, St. Michael-Eppan"
+     },
+     "en": {
+      "name": "Pinot Bianco Schulthauser, St. Michael-Eppan"
+     },
+     "price": "4.750"
+    },
+    {
+     "sr": {
+      "name": "Chardonnay G Lot, Luca Wines"
+     },
+     "en": {
+      "name": "Chardonnay G Lot, Luca Wines"
+     },
+     "price": "7.200"
+    },
+    {
+     "sr": {
+      "name": "Riesling Princes Abbés, Domaines Schlumberger"
+     },
+     "en": {
+      "name": "Riesling Princes Abbés, Domaines Schlumberger"
+     },
+     "price": "4.400"
+    },
+    {
+     "sr": {
+      "name": "Albariño O Rosal, Pazo de Seoane"
+     },
+     "en": {
+      "name": "Albariño O Rosal, Pazo de Seoane"
+     },
+     "price": "4.750"
+    },
+    {
+     "sr": {
+      "name": "Sauvignon Blanc Black Label, Babich"
+     },
+     "en": {
+      "name": "Sauvignon Blanc Black Label, Babich"
+     },
+     "price": "4.750"
+    },
+    {
+     "sr": {
+      "name": "Chablis, Domaine des Malandes"
+     },
+     "en": {
+      "name": "Chablis, Domaine des Malandes"
+     },
+     "price": "6.200"
+    }
+   ]
+  },
+  {
+   "sr": "Rose",
+   "en": "Rosé",
+   "items": [
+    {
+     "sr": {
+      "name": "Pink Punk, Chichateau"
+     },
+     "en": {
+      "name": "Pink Punk, Chichateau"
+     },
+     "price": "3.000"
+    },
+    {
+     "sr": {
+      "name": "By Ott, Domaines Ott"
+     },
+     "en": {
+      "name": "By Ott, Domaines Ott"
+     },
+     "price": "4.200",
+     "glass": "740"
+    },
+    {
+     "sr": {
+      "name": "Château Romassan"
+     },
+     "en": {
+      "name": "Château Romassan"
+     },
+     "price": "7.000"
+    }
+   ]
+  },
+  {
+   "sr": "Crvena vina – Srbija",
+   "en": "Red wines – Serbia",
+   "items": [
+    {
+     "sr": {
+      "name": "Prokupac Prilika, Radovan"
+     },
+     "en": {
+      "name": "Prokupac Prilika, Radovan"
+     },
+     "price": "3.350",
+     "glass": "670"
+    },
+    {
+     "sr": {
+      "name": "Fabula Mala, Chichateau"
+     },
+     "en": {
+      "name": "Fabula Mala, Chichateau"
+     },
+     "price": "3.500",
+     "glass": "680"
+    },
+    {
+     "sr": {
+      "name": "Probus, Đurđić"
+     },
+     "en": {
+      "name": "Probus, Đurđić"
+     },
+     "price": "4.550"
+    }
+   ]
+  },
+  {
+   "sr": "Crvena vina – svet",
+   "en": "Red wines – world",
+   "items": [
+    {
+     "sr": {
+      "name": "Cicada Rouge, Chante Cigale"
+     },
+     "en": {
+      "name": "Cicada Rouge, Chante Cigale"
+     },
+     "price": "3.000",
+     "glass": "640"
+    },
+    {
+     "sr": {
+      "name": "Malbec Pizzella, La Posta"
+     },
+     "en": {
+      "name": "Malbec Pizzella, La Posta"
+     },
+     "price": "4.400",
+     "glass": "750"
+    },
+    {
+     "sr": {
+      "name": "Primitivo di Manduria, Surani"
+     },
+     "en": {
+      "name": "Primitivo di Manduria, Surani"
+     },
+     "price": "3.600",
+     "glass": "650"
+    },
+    {
+     "sr": {
+      "name": "Finca San Martín, La Rioja Alta (Rioja)"
+     },
+     "en": {
+      "name": "Finca San Martín, La Rioja Alta (Rioja)"
+     },
+     "price": "4.200"
+    },
+    {
+     "sr": {
+      "name": "Grand Bateau Rouge Bordeaux"
+     },
+     "en": {
+      "name": "Grand Bateau Rouge Bordeaux"
+     },
+     "price": "3.650"
+    },
+    {
+     "sr": {
+      "name": "Pinot Noir Glorieta, La Posta"
+     },
+     "en": {
+      "name": "Pinot Noir Glorieta, La Posta"
+     },
+     "price": "4.400"
+    },
+    {
+     "sr": {
+      "name": "Cepa Gavilán, Viña Pedrosa (Ribera del Duero)"
+     },
+     "en": {
+      "name": "Cepa Gavilán, Viña Pedrosa (Ribera del Duero)"
+     },
+     "price": "4.950"
+    },
+    {
+     "sr": {
+      "name": "Old Vine Syrah Double Massal Selection"
+     },
+     "en": {
+      "name": "Old Vine Syrah Double Massal Selection"
+     },
+     "price": "7.000"
+    },
+    {
+     "sr": {
+      "name": "Château Greysac"
+     },
+     "en": {
+      "name": "Château Greysac"
+     },
+     "price": "4.550"
+    },
+    {
+     "sr": {
+      "name": "Châteauneuf-du-Pape, Domaine Chante Cigale"
+     },
+     "en": {
+      "name": "Châteauneuf-du-Pape, Domaine Chante Cigale"
+     },
+     "price": "6.800"
+    },
+    {
+     "sr": {
+      "name": "Chianti Classico Fonterutoli, Mazzei"
+     },
+     "en": {
+      "name": "Chianti Classico Fonterutoli, Mazzei"
+     },
+     "price": "4.550"
+    }
+   ]
+  },
+  {
+   "sr": "Desertna vina",
+   "en": "Dessert wines",
+   "items": [
+    {
+     "sr": {
+      "name": "Moscato d'Asti Palas, Michele Chiarlo"
+     },
+     "en": {
+      "name": "Moscato d'Asti Palas, Michele Chiarlo"
+     },
+     "price": "3.000"
+    },
+    {
+     "sr": {
+      "name": "Tokaji Furmint Late Harvest, Château Dereszla"
+     },
+     "en": {
+      "name": "Tokaji Furmint Late Harvest, Château Dereszla"
+     },
+     "price": "3.700"
+    }
+   ]
+  }
+ ]
+}

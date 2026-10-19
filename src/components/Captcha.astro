@@ -1,32 +1,32 @@
 ---
-// Cloudflare Turnstile spam check for site forms. Renders nothing until info.json → turnstileSiteKey is set.
-// The secret key lives only on the server (form-config.php → TURNSTILE_SECRET), checked in send.php.
-// The Cloudflare script loads only when a form comes near the viewport or gets focus.
+// Google reCAPTCHA v2 ("I'm not a robot" checkbox) for site forms. Renders nothing until info.json → recaptchaSiteKey is set.
+// The secret key lives only on the server (form-config.php → RECAPTCHA_SECRET), checked in send.php.
+// The Google script loads only when a form comes near the viewport or gets focus.
 import { getInfo, getLang, tr } from '../i18n';
 
 const lang = getLang(Astro.url);
-const info = getInfo(lang) as { turnstileSiteKey?: string };
-const key = info.turnstileSiteKey ?? '';
+const info = getInfo(lang) as { recaptchaSiteKey?: string };
+const key = info.recaptchaSiteKey ?? '';
 ---
 
 {key && (
   <div class="col-span-full">
-    <div class="cf-turnstile" data-sitekey={key} data-theme="dark" data-language={lang === 'en' ? 'en' : 'sr'} data-size="flexible"></div>
+    <div class="g-recaptcha" data-sitekey={key} data-theme="dark"></div>
     <p class="captcha-wait m-0 mt-2 hidden font-sans text-[14px] text-gold" role="alert">
-      {tr(lang, 'Sačekajte trenutak da se završi provera, pa pošaljite ponovo.', 'Please wait a moment for the check to finish, then send again.')}
+      {tr(lang, 'Potvrdite da niste robot, pa pošaljite ponovo.', 'Please confirm you are not a robot, then send again.')}
     </p>
   </div>
 )}
 
 <script>
-  const widgets = document.querySelectorAll<HTMLElement>('.cf-turnstile');
+  const widgets = document.querySelectorAll<HTMLElement>('.g-recaptcha');
   if (widgets.length) {
     let loaded = false;
     const load = () => {
       if (loaded) return;
       loaded = true;
       const s = document.createElement('script');
-      s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+      s.src = 'https://www.google.com/recaptcha/api.js' + (document.documentElement.lang === 'en' ? '?hl=en' : '');
       s.async = true;
       s.defer = true;
       document.head.append(s);
@@ -36,9 +36,9 @@ const key = info.turnstileSiteKey ?? '';
       const form = w.closest('form');
       if (!form) return;
       form.addEventListener('focusin', load, { once: true });
-      // Don't send before the check has produced a token
+      // Don't send before the checkbox is ticked
       form.addEventListener('submit', (e) => {
-        const token = form.querySelector<HTMLInputElement>('input[name="cf-turnstile-response"]');
+        const token = form.querySelector<HTMLTextAreaElement>('textarea[name="g-recaptcha-response"]');
         if (!token?.value) {
           e.preventDefault();
           e.stopImmediatePropagation();

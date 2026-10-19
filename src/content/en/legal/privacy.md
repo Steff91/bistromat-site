@@ -44,7 +44,7 @@ We share data only with service providers who help us run the business and proce
 
 - Eventlin — the online table booking system,
 - Behold — showing our latest Instagram posts on the home page (images load from their server, which therefore sees your IP address; it sets no cookies),
-- Cloudflare (Turnstile) — spam protection on the forms (sets no tracking cookies),
+- Google (reCAPTCHA) — spam protection on the forms; it loads only when you open a form and may set cookies needed for that check ([Google privacy policy](https://policies.google.com/privacy)),
 - a hosting provider — hosting the website and processing form messages,
 - an email provider — sending and receiving messages.
 

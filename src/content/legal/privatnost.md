@@ -43,7 +43,7 @@ Podatke delimo samo sa pružaocima usluga koji nam pomažu u radu i koji ih obra
 
 - Eventlin — sistem za online rezervacije stola,
 - Behold — prikaz naših najnovijih Instagram objava na početnoj strani (slike se učitavaju sa njihovog servera, pa on vidi vašu IP adresu; kolačiće ne postavlja),
-- Cloudflare (Turnstile) — provera protiv spama na formama (ne postavlja kolačiće za praćenje),
+- Google (reCAPTCHA) — provera protiv spama na formama; učitava se tek kada otvorite formu i može postaviti kolačiće neophodne za tu proveru ([Google politika privatnosti](https://policies.google.com/privacy)),
 - pružalac hosting usluga — smeštaj sajta i obrada poruka sa formi,
 - pružalac email usluga — prijem i slanje poruka.
 

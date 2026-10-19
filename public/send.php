@@ -7,7 +7,7 @@
  *   <?php const FORM_TO = 'office@bistromat.rs';
  * Several addresses: 'a@x.rs, b@y.rs'. Without form-config.php mail goes to office@bistromat.rs.
  * Optional in form-config.php: const FORM_FROM = 'sajt@bistromat.rs'; (an address on this domain)
- * Captcha: const TURNSTILE_SECRET = '0x4AAA...'; (Cloudflare Turnstile secret key; site key goes in info.json)
+ * Captcha: const RECAPTCHA_SECRET = '6L...'; (Google reCAPTCHA v2 secret key; site key goes in info.json)
  */
 
 if (is_file(__DIR__ . '/form-config.php')) require __DIR__ . '/form-config.php';
@@ -41,12 +41,12 @@ if (!empty($_POST['website'])) {
     exit;
 }
 
-// Cloudflare Turnstile check (only when a secret key is configured)
-function turnstile_ok(string $token): bool {
-    if (!defined('TURNSTILE_SECRET') || TURNSTILE_SECRET === '') return true;
+// Google reCAPTCHA check (only when a secret key is configured)
+function captcha_ok(string $token): bool {
+    if (!defined('RECAPTCHA_SECRET') || RECAPTCHA_SECRET === '') return true;
     if ($token === '') return false;
-    $data = http_build_query(['secret' => TURNSTILE_SECRET, 'response' => $token, 'remoteip' => $_SERVER['HTTP_CF_CONNECTING_IP'] ?? $_SERVER['REMOTE_ADDR'] ?? '']);
-    $url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+    $data = http_build_query(['secret' => RECAPTCHA_SECRET, 'response' => $token, 'remoteip' => $_SERVER['HTTP_CF_CONNECTING_IP'] ?? $_SERVER['REMOTE_ADDR'] ?? '']);
+    $url = 'https://www.google.com/recaptcha/api/siteverify';
     if (function_exists('curl_init')) {
         $ch = curl_init($url);
         curl_setopt_array($ch, [CURLOPT_POST => true, CURLOPT_POSTFIELDS => $data, CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 10]);
@@ -70,7 +70,7 @@ function oneline(string $v): string {
     return trim(preg_replace('/[\r\n]+/', ' ', $v));
 }
 
-$captchaOk = turnstile_ok((string) ($_POST['cf-turnstile-response'] ?? ''));
+$captchaOk = captcha_ok((string) ($_POST['g-recaptcha-response'] ?? ''));
 
 $labels = [
     'usluga' => 'Forma', 'tema' => 'Tema', 'ime' => 'Ime i prezime', 'email' => 'Email', 'telefon' => 'Telefon',
@@ -79,7 +79,7 @@ $labels = [
     'ucesnici' => 'Broj učesnika', 'privatni_termin' => 'Privatni termin', 'vaucer' => 'Vaučer', 'kolicina' => 'Količina',
     'primalac' => 'Primalac', 'posveta' => 'Posveta', 'napomena' => 'Napomena', 'poruka' => 'Poruka',
 ];
-$skip = ['redirect', 'website', 'jezik', 'cf-turnstile-response'];
+$skip = ['redirect', 'website', 'jezik', 'g-recaptcha-response'];
 
 $fields = [];
 foreach ($_POST as $k => $v) {

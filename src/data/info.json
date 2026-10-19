@@ -74,5 +74,5 @@
   "eventlinName": "Bistromat",
   "eventlinMerchantId": "97984543-50e4-4cce-88f6-55ae2b30734b",
   "formAction": "/send.php",
-  "turnstileSiteKey": ""
+  "recaptchaSiteKey": ""
 }

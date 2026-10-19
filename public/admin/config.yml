@@ -67,7 +67,7 @@ collections:
           - { name: eventlinName, label: Eventlin naziv (name), widget: string, required: false }
           - { name: eventlinMerchantId, label: Eventlin merchant ID (prazno = bez online rezervacija), widget: string, required: false }
           - { name: formAction, label: Adresa za slanje forme (/send.php), widget: string, required: false }
-          - { name: turnstileSiteKey, label: Cloudflare Turnstile site key, widget: string, required: false, hint: "Prazno = bez captcha provere" }
+          - { name: recaptchaSiteKey, label: Google reCAPTCHA v2 site key, widget: string, required: false, hint: "Prazno = bez captcha provere" }
 
       - name: reservations
         label: Rezervacije

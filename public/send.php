@@ -7,7 +7,8 @@
  *   <?php const FORM_TO = 'office@bistromat.rs';
  * Several addresses: 'a@x.rs, b@y.rs'. Without form-config.php mail goes to office@bistromat.rs.
  * Optional in form-config.php: const FORM_FROM = 'sajt@bistromat.rs'; (an address on this domain)
- * Captcha: const RECAPTCHA_SECRET = '6L...'; (Google reCAPTCHA v2 secret key; site key goes in info.json)
+ * Captcha: const RECAPTCHA_SECRET = '6L...'; (Google reCAPTCHA v3 secret key; site key goes in info.json)
+ *          optional: const RECAPTCHA_MIN_SCORE = 0.5;
  */
 
 if (is_file(__DIR__ . '/form-config.php')) require __DIR__ . '/form-config.php';
@@ -58,7 +59,9 @@ function captcha_ok(string $token): bool {
         ]]));
     }
     $json = $res ? json_decode($res, true) : null;
-    return !empty($json['success']);
+    // v3: score 0.0 (bot) – 1.0 (human); 0.5 is Google's recommended threshold
+    $minScore = defined('RECAPTCHA_MIN_SCORE') ? RECAPTCHA_MIN_SCORE : 0.5;
+    return !empty($json['success']) && (!isset($json['score']) || $json['score'] >= $minScore);
 }
 
 function clean($v): string {

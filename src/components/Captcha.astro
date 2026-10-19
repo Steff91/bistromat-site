@@ -1,8 +1,9 @@
 ---
-// Google reCAPTCHA v2 ("I'm not a robot" checkbox) for site forms. Renders nothing until info.json → recaptchaSiteKey is set.
-// The secret key lives only on the server (form-config.php → RECAPTCHA_SECRET), checked in send.php.
+// Google reCAPTCHA v3 (invisible, score based) for site forms. Renders nothing until info.json → recaptchaSiteKey is set.
+// The secret key lives only on the server (form-config.php → RECAPTCHA_SECRET); send.php checks the token and score.
 // The Google script loads only when a form comes near the viewport or gets focus.
-import { getInfo, getLang, tr } from '../i18n';
+// The floating badge is hidden; Google allows that when this notice is shown next to the form.
+import { getInfo, getLang } from '../i18n';
 
 const lang = getLang(Astro.url);
 const info = getInfo(lang) as { recaptchaSiteKey?: string };
@@ -10,51 +11,72 @@ const key = info.recaptchaSiteKey ?? '';
 ---
 
 {key && (
-  <div class="col-span-full">
-    <div class="g-recaptcha" data-sitekey={key} data-theme="dark"></div>
-    <p class="captcha-wait m-0 mt-2 hidden font-sans text-[14px] text-gold" role="alert">
-      {tr(lang, 'Potvrdite da niste robot, pa pošaljite ponovo.', 'Please confirm you are not a robot, then send again.')}
+  <div class="col-span-full" data-recaptcha={key}>
+    <input type="hidden" name="g-recaptcha-response" value="" />
+    <p class="m-0 font-sans text-[13px] text-dim">
+      {lang === 'en'
+        ? <>This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Terms of Service</a> apply.</>
+        : <>Sajt je zaštićen reCAPTCHA proverom; primenjuju se Google <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">politika privatnosti</a> i <a href="https://policies.google.com/terms" target="_blank" rel="noopener">uslovi korišćenja</a>.</>}
     </p>
   </div>
 )}
 
-<script>
-  const widgets = document.querySelectorAll<HTMLElement>('.g-recaptcha');
-  if (widgets.length) {
-    let loaded = false;
-    const load = () => {
-      if (loaded) return;
-      loaded = true;
-      const s = document.createElement('script');
-      s.src = 'https://www.google.com/recaptcha/api.js' + (document.documentElement.lang === 'en' ? '?hl=en' : '');
-      s.async = true;
-      s.defer = true;
-      document.head.append(s);
-    };
+<style is:global>
+  .grecaptcha-badge { visibility: hidden !important; }
+</style>
 
-    widgets.forEach((w) => {
-      const form = w.closest('form');
+<script>
+  type Grecaptcha = { ready(cb: () => void): void; execute(key: string, opts: { action: string }): Promise<string> };
+  const holders = document.querySelectorAll<HTMLElement>('[data-recaptcha]');
+
+  if (holders.length) {
+    const key = holders[0].dataset.recaptcha!;
+    let loading: Promise<Grecaptcha> | null = null;
+    const load = () =>
+      (loading ??= new Promise<Grecaptcha>((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = `https://www.google.com/recaptcha/api.js?render=${encodeURIComponent(key)}`;
+        s.async = true;
+        s.onload = () => {
+          const g = (window as unknown as { grecaptcha: Grecaptcha }).grecaptcha;
+          g.ready(() => resolve(g));
+        };
+        s.onerror = reject;
+        document.head.append(s);
+      }));
+
+    holders.forEach((h) => {
+      const form = h.closest('form');
       if (!form) return;
-      form.addEventListener('focusin', load, { once: true });
-      // Don't send before the checkbox is ticked
+      const field = h.querySelector<HTMLInputElement>('input[name="g-recaptcha-response"]')!;
+      // Coming back via the browser's Back button: start over with a new token
+      window.addEventListener('pageshow', () => { field.value = ''; delete form.dataset.captchaTried; });
+      form.addEventListener('focusin', () => { load().catch(() => {}); }, { once: true });
+
+      // Get a fresh token right before sending (tokens expire after 2 minutes)
       form.addEventListener('submit', (e) => {
-        const token = form.querySelector<HTMLTextAreaElement>('textarea[name="g-recaptcha-response"]');
-        if (!token?.value) {
-          e.preventDefault();
-          e.stopImmediatePropagation();
-          load();
-          form.querySelector('.captcha-wait')?.classList.remove('hidden');
-        }
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+        if (btn) btn.disabled = true;
+        const timeout = new Promise<never>((_, reject) => setTimeout(() => reject(new Error('timeout')), 8000));
+        Promise.race([load().then((g) => g.execute(key, { action: 'submit' })), timeout])
+          .then((token) => { field.value = token; })
+          .catch(() => {}) // send anyway; the server decides
+          .finally(() => {
+            if (btn) btn.disabled = false;
+            form.dataset.captchaTried = '1';
+            // The browser already validated the fields on the first submit; send without re-firing events
+            HTMLFormElement.prototype.submit.call(form);
+          });
       });
     });
 
     if ('IntersectionObserver' in window) {
       const io = new IntersectionObserver((entries) => {
-        if (entries.some((e) => e.isIntersecting)) { io.disconnect(); load(); }
+        if (entries.some((e) => e.isIntersecting)) { io.disconnect(); load().catch(() => {}); }
       }, { rootMargin: '400px 0px' });
-      widgets.forEach((w) => io.observe(w));
-    } else {
-      load();
+      holders.forEach((h) => io.observe(h));
     }
   }
 </script>

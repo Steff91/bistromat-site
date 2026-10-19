@@ -7,6 +7,7 @@
  *   <?php const FORM_TO = 'office@bistromat.rs';
  * Several addresses: 'a@x.rs, b@y.rs'. Without form-config.php mail goes to office@bistromat.rs.
  * Optional in form-config.php: const FORM_FROM = 'sajt@bistromat.rs'; (an address on this domain)
+ * Captcha: const TURNSTILE_SECRET = '0x4AAA...'; (Cloudflare Turnstile secret key; site key goes in info.json)
  */
 
 if (is_file(__DIR__ . '/form-config.php')) require __DIR__ . '/form-config.php';
@@ -40,6 +41,26 @@ if (!empty($_POST['website'])) {
     exit;
 }
 
+// Cloudflare Turnstile check (only when a secret key is configured)
+function turnstile_ok(string $token): bool {
+    if (!defined('TURNSTILE_SECRET') || TURNSTILE_SECRET === '') return true;
+    if ($token === '') return false;
+    $data = http_build_query(['secret' => TURNSTILE_SECRET, 'response' => $token, 'remoteip' => $_SERVER['HTTP_CF_CONNECTING_IP'] ?? $_SERVER['REMOTE_ADDR'] ?? '']);
+    $url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+    if (function_exists('curl_init')) {
+        $ch = curl_init($url);
+        curl_setopt_array($ch, [CURLOPT_POST => true, CURLOPT_POSTFIELDS => $data, CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 10]);
+        $res = curl_exec($ch);
+        curl_close($ch);
+    } else {
+        $res = @file_get_contents($url, false, stream_context_create(['http' => [
+            'method' => 'POST', 'header' => 'Content-Type: application/x-www-form-urlencoded', 'content' => $data, 'timeout' => 10,
+        ]]));
+    }
+    $json = $res ? json_decode($res, true) : null;
+    return !empty($json['success']);
+}
+
 function clean($v): string {
     if (is_array($v)) $v = implode(', ', $v);
     $v = trim(str_replace("\0", '', (string) $v));
@@ -49,6 +70,8 @@ function oneline(string $v): string {
     return trim(preg_replace('/[\r\n]+/', ' ', $v));
 }
 
+$captchaOk = turnstile_ok((string) ($_POST['cf-turnstile-response'] ?? ''));
+
 $labels = [
     'usluga' => 'Forma', 'tema' => 'Tema', 'ime' => 'Ime i prezime', 'email' => 'Email', 'telefon' => 'Telefon',
     'datum' => 'Datum', 'vreme' => 'Vreme', 'termin' => 'Termin', 'osobe' => 'Broj osoba', 'gosti' => 'Broj gostiju',
@@ -56,7 +79,7 @@ $labels = [
     'ucesnici' => 'Broj učesnika', 'privatni_termin' => 'Privatni termin', 'vaucer' => 'Vaučer', 'kolicina' => 'Količina',
     'primalac' => 'Primalac', 'posveta' => 'Posveta', 'napomena' => 'Napomena', 'poruka' => 'Poruka',
 ];
-$skip = ['redirect', 'website', 'jezik'];
+$skip = ['redirect', 'website', 'jezik', 'cf-turnstile-response'];
 
 $fields = [];
 foreach ($_POST as $k => $v) {
@@ -101,7 +124,7 @@ $headers = [
 ];
 if ($email) $headers[] = 'Reply-To: ' . ($name ? $enc($name) . ' ' : '') . '<' . $email . '>';
 
-$ok = @mail(FORM_TO, $enc($subject), $body, implode("\r\n", $headers), '-f' . $from);
+$ok = $captchaOk && @mail(FORM_TO, $enc($subject), $body, implode("\r\n", $headers), '-f' . $from);
 
 if ($ok) {
     header('Location: ' . $redirect, true, 303);
@@ -110,8 +133,8 @@ if ($ok) {
 
 http_response_code(500);
 $t = $lang === 'en'
-    ? ['Message not sent', 'Sorry, your message could not be sent. Please call us on', 'Back']
-    : ['Poruka nije poslata', 'Izvinite, poruka trenutno ne može da se pošalje. Pozovite nas na', 'Nazad'];
+    ? ['Message not sent', $captchaOk ? 'Sorry, your message could not be sent. Please call us on' : 'The spam check failed. Please go back and send the form again, or call us on', 'Back']
+    : ['Poruka nije poslata', $captchaOk ? 'Izvinite, poruka trenutno ne može da se pošalje. Pozovite nas na' : 'Provera protiv spama nije uspela. Vratite se i pošaljite formu ponovo, ili nas pozovite na', 'Nazad'];
 ?><!doctype html>
 <html lang="<?= $lang === 'en' ? 'en' : 'sr-Latn' ?>">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title><?= $t[0] ?> — Bistromat</title>

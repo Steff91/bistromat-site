@@ -44,7 +44,8 @@ We share data only with service providers who help us run the business and proce
 
 - Eventlin — the online table booking system,
 - Behold — showing our latest Instagram posts on the home page (images load from their server, which therefore sees your IP address; it sets no cookies),
-- a hosting provider — hosting the website,
+- Cloudflare (Turnstile) — spam protection on the forms (sets no tracking cookies),
+- a hosting provider — hosting the website and processing form messages,
 - an email provider — sending and receiving messages.
 
 Some service providers may process data outside Serbia. In that case, the transfer takes place only with appropriate safeguards required by law.

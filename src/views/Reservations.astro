@@ -3,6 +3,7 @@ import BookButton from '../components/BookButton.astro';
 import Placeholder from '../components/Placeholder.astro';
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
+import Captcha from '../components/Captcha.astro';
 import ConsentEmbed from '../components/ConsentEmbed.astro';
 import { getInfo, getLang, getReservations, route, tr } from '../i18n';
 import { serviceHref } from '../i18n/content';
@@ -96,6 +97,7 @@ const groupHref = FEATURES.services ? `${partiesHref}#upit` : route('contact', l
             <label class:list={[field, 'col-span-full']}>{tr(lang, 'Napomena (prilika, alergije, sto uz kuhinju…)', 'Notes (occasion, allergies, a table by the kitchen…)')}
               <textarea name="napomena" rows="3" class:list={[input, 'resize-y']}></textarea>
             </label>
+            <Captcha />
             <div class="col-span-full flex flex-wrap items-center gap-5">
               <button type="submit" class="btn btn-primary cursor-pointer border-0">{tr(lang, 'Pošalji rezervaciju', 'Send booking')}</button>
               {en

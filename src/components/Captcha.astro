@@ -1,0 +1,60 @@
+---
+// Cloudflare Turnstile spam check for site forms. Renders nothing until info.json → turnstileSiteKey is set.
+// The secret key lives only on the server (form-config.php → TURNSTILE_SECRET), checked in send.php.
+// The Cloudflare script loads only when a form comes near the viewport or gets focus.
+import { getInfo, getLang, tr } from '../i18n';
+
+const lang = getLang(Astro.url);
+const info = getInfo(lang) as { turnstileSiteKey?: string };
+const key = info.turnstileSiteKey ?? '';
+---
+
+{key && (
+  <div class="col-span-full">
+    <div class="cf-turnstile" data-sitekey={key} data-theme="dark" data-language={lang === 'en' ? 'en' : 'sr'} data-size="flexible"></div>
+    <p class="captcha-wait m-0 mt-2 hidden font-sans text-[14px] text-gold" role="alert">
+      {tr(lang, 'Sačekajte trenutak da se završi provera, pa pošaljite ponovo.', 'Please wait a moment for the check to finish, then send again.')}
+    </p>
+  </div>
+)}
+
+<script>
+  const widgets = document.querySelectorAll<HTMLElement>('.cf-turnstile');
+  if (widgets.length) {
+    let loaded = false;
+    const load = () => {
+      if (loaded) return;
+      loaded = true;
+      const s = document.createElement('script');
+      s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+      s.async = true;
+      s.defer = true;
+      document.head.append(s);
+    };
+
+    widgets.forEach((w) => {
+      const form = w.closest('form');
+      if (!form) return;
+      form.addEventListener('focusin', load, { once: true });
+      // Don't send before the check has produced a token
+      form.addEventListener('submit', (e) => {
+        const token = form.querySelector<HTMLInputElement>('input[name="cf-turnstile-response"]');
+        if (!token?.value) {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          load();
+          form.querySelector('.captcha-wait')?.classList.remove('hidden');
+        }
+      });
+    });
+
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        if (entries.some((e) => e.isIntersecting)) { io.disconnect(); load(); }
+      }, { rootMargin: '400px 0px' });
+      widgets.forEach((w) => io.observe(w));
+    } else {
+      load();
+    }
+  }
+</script>

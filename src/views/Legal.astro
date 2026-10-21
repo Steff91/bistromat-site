@@ -14,7 +14,7 @@ const { Content, headings } = await render(page);
 const toc = headings.filter((h) => h.depth === 2);
 ---
 
-<Base title={`${page.data.title} — Bistromat`} description={page.data.description} alternates={alternates}>
+<Base title={`${page.data.title} — Bistromat`} description={page.data.description} alternates={alternates} crumb={page.data.title}>
   <section class="container-site pt-16 pb-12">
     <p class="mb-7 text-[14px] text-dim">
       <a href={route('home', lang)} class="text-dim hover:text-paper">{tr(lang, 'Početna', 'Home')}</a> / {page.data.title}

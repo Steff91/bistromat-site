@@ -139,6 +139,15 @@ const schema = {
     {isHome && <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />}
     {breadcrumbSchema && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />}
     <slot name="head" />
+    <!-- Google tag (gtag.js) -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=AW-18461462687"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'AW-18461462687');
+    </script>
   </head>
   <body>
     <TopBar alternates={alternates} />

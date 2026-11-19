@@ -5,7 +5,7 @@ import Base from '../layouts/Base.astro';
 import Placeholder from '../components/Placeholder.astro';
 import InquiryForm from '../components/InquiryForm.astro';
 import Icon from '../components/Icon.astro';
-import { upcomingDates, formatDate, dateLabel, seatsLeftLabel } from '../lib/chef-table';
+import { upcomingDates, formatDate, dateLabel, seatsLeftLabel, isOpen } from '../lib/chef-table';
 import { getChefTable, getLang, route, timeLabel, tr } from '../i18n';
 import { serviceHref } from '../i18n/content';
 import { FEATURES } from '../config';
@@ -16,7 +16,8 @@ const ct = getChefTable(lang);
 const datesId = tr(lang, 'termini', 'dates');
 const privateHref = await serviceHref('chefs-table', lang);
 const dates = upcomingDates(lang);
-const bookable = dates.filter((d) => d.seatsLeft > 0);
+const bookable = dates.filter(isOpen);
+const filled = (s?: string) => !!s && !s.includes('[');
 
 const faqSchema = {
   '@context': 'https://schema.org',
@@ -73,7 +74,7 @@ const faqSchema = {
       {dates.length > 0 ? (
         <ul class="m-0 list-none border-t border-line p-0" data-ct-dates>
           {dates.map((d, i) => {
-            const full = d.seatsLeft <= 0;
+            const full = !isOpen(d);
             return (
               <li class="flex flex-wrap items-center gap-x-10 gap-y-3 border-b border-line py-6" data-date={d.date} data-reveal style={`--i:${i % 4}`}>
                 <div class="min-w-[220px] flex-[0_0_auto]">
@@ -104,11 +105,18 @@ const faqSchema = {
           ? <>New dates coming soon. Follow us on <a href="https://www.instagram.com/bistromat_/">Instagram</a> or call to join the waiting list.</>
           : <>Novi termini uskoro. Pratite nas na <a href="https://www.instagram.com/bistromat_/">Instagramu</a> ili pozovite za listu čekanja.</>}
       </p>
+      {ct.deposit?.account && (
+        <div class="mt-10 border border-gold/60 px-6 py-5" data-reveal>
+          <p class="m-0 text-[14px] font-medium uppercase tracking-[0.12em] text-gold">{tr(lang, 'Obavezna akontacija', 'Deposit required')}</p>
+          <p class="mt-2 mb-0 font-sans text-muted">{ct.deposit.text}</p>
+          <p class="mt-1 mb-0 text-lg font-medium">{ct.deposit.account} · {ct.deposit.holder}</p>
+        </div>
+      )}
     </div>
   </section>
 
   <!-- How the evening goes -->
-  <section aria-labelledby="vece" class="bg-paper text-ink">
+  {ct.timeline.length > 0 && <section aria-labelledby="vece" class="bg-paper text-ink">
     <div class="container-site py-24">
       <p class="eyebrow !text-gold-dark" data-reveal>{tr(lang, 'Kako izgleda veče', 'How the evening goes')}</p>
       <h2 id="vece" class="h-section m-0 mb-12" data-reveal style="--i:1">{tr(lang, 'Od dobrodošlice do deserta', 'From welcome to dessert')}</h2>
@@ -122,10 +130,10 @@ const faqSchema = {
         ))}
       </ol>
     </div>
-  </section>
+  </section>}
 
-  <!-- Chef -->
-  <section aria-labelledby="sef" class="container-site py-24">
+  <!-- Chef (only once the bio is written) -->
+  {filled(ct.chef.bio) && <section aria-labelledby="sef" class="container-site py-24">
     <div class="flex flex-wrap items-center gap-14">
       <div class="min-w-0 flex-[1_1_380px]" data-reveal>
         <Placeholder label={tr(lang, 'Foto: šef', 'Photo: chef')} src={ct.chef.image || undefined} alt={ct.chef.name} class="h-[520px]" />
@@ -134,18 +142,18 @@ const faqSchema = {
         <p class="eyebrow" data-reveal>{ct.chef.role}</p>
         <h2 id="sef" class="h-section m-0" data-reveal style="--i:1">{ct.chef.name}</h2>
         <p class="mt-6 font-sans text-base text-muted" data-reveal style="--i:2">{ct.chef.bio}</p>
-        <blockquote class="mt-8 mb-0 border-l-0 p-0 text-xl leading-snug" data-reveal style="--i:3">
+        {filled(ct.chef.quote) && <blockquote class="mt-8 mb-0 border-l-0 p-0 text-xl leading-snug" data-reveal style="--i:3">
           <span class="text-gold">“</span><em class="font-normal">{ct.chef.quote}</em><span class="text-gold">”</span>
-        </blockquote>
+        </blockquote>}
       </div>
     </div>
-  </section>
+  </section>}
 
   <!-- Sample menu -->
   <section aria-labelledby="primer" class="border-y border-line bg-ink-deep">
     <div class="container-site py-24">
       <div class="mx-auto max-w-[760px]">
-        <p class="eyebrow text-center" data-reveal>{tr(lang, 'Primer menija', 'Sample menu')}</p>
+        <p class="eyebrow text-center" data-reveal>{ct.sampleMenu.label || tr(lang, 'Primer menija', 'Sample menu')}</p>
         <h2 id="primer" class="h-section m-0 text-center" data-reveal style="--i:1">{ct.sampleMenu.title}</h2>
         <ol class="mt-12 mb-0 list-none p-0">
           {ct.sampleMenu.courses.map((c, i) => (
@@ -158,13 +166,13 @@ const faqSchema = {
             </li>
           ))}
         </ol>
-        <p class="mt-6 mb-0 text-center font-sans text-[15px] text-dim">{tr(lang, 'Meni se menja za svako veče. Ovo je primer jedne od prethodnih večeri.', 'The menu changes every evening. This is an example from a past one.')}</p>
+        <p class="mt-6 mb-0 text-center font-sans text-[15px] text-dim">{ct.sampleMenu.note || tr(lang, 'Meni se menja za svako veče. Ovo je primer jedne od prethodnih večeri.', 'The menu changes every evening. This is an example from a past one.')}</p>
       </div>
     </div>
   </section>
 
   <!-- Past evenings -->
-  <section aria-labelledby="prethodne" class="container-site py-24">
+  {ct.past.length > 0 && <section aria-labelledby="prethodne" class="container-site py-24">
     <p class="eyebrow" data-reveal>{tr(lang, 'Prethodne večeri', 'Past evenings')}</p>
     <h2 id="prethodne" class="h-section m-0 mb-11" data-reveal style="--i:1">{tr(lang, 'Gostujući šefovi i vinarije', 'Guest chefs and wineries')}</h2>
     <div class="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-6">
@@ -178,7 +186,7 @@ const faqSchema = {
         </figure>
       ))}
     </div>
-  </section>
+  </section>}
 
   <!-- FAQ -->
   <section aria-labelledby="pitanja" class="border-t border-line">

@@ -2,7 +2,7 @@
 import BrandIcon from '../BrandIcon.astro';
 import Placeholder from '../Placeholder.astro';
 import Icon from '../Icon.astro';
-import { nextAvailable, formatDate } from '../../lib/chef-table';
+import { nextAvailable, formatDate, seatsLeftLabel } from '../../lib/chef-table';
 import { getLang, route, timeLabel, tr } from '../../i18n';
 
 const lang = getLang(Astro.url);
@@ -24,7 +24,7 @@ const page = route('chefsTable', lang);
           <p class="m-0 text-[14px] uppercase tracking-[0.12em] text-gold-dark">{tr(lang, 'Sledeći termin', 'Next date')}</p>
           <p class="mt-2 mb-0 text-lg font-semibold">{formatDate(next.date, lang)} · {timeLabel(next.time, lang)}</p>
           <p class="mt-1 mb-0 font-sans text-body-dark">
-            {next.theme}{next.guest && ` ${next.guest}`} · {tr(lang, `još ${next.seatsLeft} mesta`, `${next.seatsLeft} seats left`)}
+            {next.theme}{next.guest && ` ${next.guest}`} · {seatsLeftLabel(next.seatsLeft, lang)}
           </p>
         </div>
       )}

@@ -5,5 +5,5 @@ export const FEATURES = {
   /** Events: archive, event pages, home section, menu link */
   events: false,
   /** Chef's Table: page, home section, menu link */
-  chefsTable: false,
+  chefsTable: true,
 };

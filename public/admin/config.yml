@@ -222,7 +222,7 @@ collections:
               - { name: theme, label: Tema, widget: string }
               - { name: guest, label: Gost (šef ili vinarija), widget: string, required: false }
               - { name: price, label: Cena, widget: string }
-              - { name: seatsLeft, label: Slobodna mesta (0 = popunjeno), widget: number, value_type: int, min: 0 }
+              - { name: seatsLeft, label: Slobodna mesta (0 = popunjeno, prazno = bez broja), widget: number, value_type: int, min: 0, required: false }
           - name: timeline
             label: Kako izgleda veče
             widget: list
@@ -239,11 +239,21 @@ collections:
               - { name: bio, label: Biografija, widget: text }
               - { name: quote, label: Citat, widget: text }
               - { name: image, label: Fotografija, widget: image, required: false }
+          - name: deposit
+            label: Akontacija
+            widget: object
+            required: false
+            fields:
+              - { name: text, label: Tekst, widget: string }
+              - { name: account, label: Broj računa, widget: string, required: false }
+              - { name: holder, label: Primalac, widget: string, required: false }
           - name: sampleMenu
-            label: Primer menija
+            label: Meni večeri
             widget: object
             fields:
+              - { name: label, label: Oznaka iznad naslova, widget: string, required: false }
               - { name: title, label: Naslov, widget: string }
+              - { name: note, label: Napomena ispod menija, widget: string, required: false }
               - name: courses
                 label: Sledovi
                 widget: list
@@ -527,11 +537,21 @@ collections:
               - { name: role, label: Uloga, widget: string }
               - { name: bio, label: Biografija, widget: text }
               - { name: quote, label: Citat, widget: text }
+          - name: deposit
+            label: Akontacija
+            widget: object
+            required: false
+            fields:
+              - { name: text, label: Tekst, widget: string }
+              - { name: account, label: Broj računa, widget: string, required: false }
+              - { name: holder, label: Primalac, widget: string, required: false }
           - name: sampleMenu
-            label: Primer menija
+            label: Meni večeri
             widget: object
             fields:
+              - { name: label, label: Oznaka iznad naslova, widget: string, required: false }
               - { name: title, label: Naslov, widget: string }
+              - { name: note, label: Napomena ispod menija, widget: string, required: false }
               - name: courses
                 label: Sledovi (isti redosled)
                 widget: list

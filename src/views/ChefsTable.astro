@@ -92,7 +92,7 @@ const faqSchema = {
                   {full ? (
                     <span class="btn btn-outline pointer-events-none opacity-40" aria-hidden="true">{tr(lang, 'Rezerviši', 'Book')}</span>
                   ) : (
-                    <a href="#upit" class="btn btn-outline" data-book={d.date}>{tr(lang, 'Rezerviši', 'Book')}</a>
+                    <a href="#upit" class="btn btn-outline" data-ct-book={d.date}>{tr(lang, 'Rezerviši', 'Book')}</a>
                   )}
                 </div>
               </li>
@@ -243,9 +243,9 @@ const faqSchema = {
   }
 
   // "Rezerviši" on a date preselects it in the form.
-  document.querySelectorAll<HTMLAnchorElement>('[data-book]').forEach((a) =>
+  document.querySelectorAll<HTMLAnchorElement>('[data-ct-book]').forEach((a) =>
     a.addEventListener('click', () => {
-      if (select) select.value = a.dataset.book ?? '';
+      if (select) select.value = a.dataset.ctBook ?? '';
     }),
   );
 </script>

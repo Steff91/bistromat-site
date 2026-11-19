@@ -7,14 +7,11 @@ import InquiryForm from '../components/InquiryForm.astro';
 import Icon from '../components/Icon.astro';
 import { upcomingDates, formatDate, dateLabel, seatsLeftLabel, isOpen } from '../lib/chef-table';
 import { getChefTable, getLang, route, timeLabel, tr } from '../i18n';
-import { serviceHref } from '../i18n/content';
-import { FEATURES } from '../config';
 
 const lang = getLang(Astro.url);
 const en = lang === 'en';
 const ct = getChefTable(lang);
 const datesId = tr(lang, 'termini', 'dates');
-const privateHref = await serviceHref('chefs-table', lang);
 const dates = upcomingDates(lang);
 const bookable = dates.filter(isOpen);
 const filled = (s?: string) => !!s && !s.includes('[');
@@ -212,19 +209,6 @@ const faqSchema = {
     </div>
   )}
 
-  <!-- Private Chef's Table -->
-  {FEATURES.services && <section class="bg-paper text-ink">
-    <div class="container-site flex flex-wrap items-center justify-between gap-8 py-16">
-      <div class="max-w-[620px]" data-reveal>
-        <p class="eyebrow !text-gold-dark">{tr(lang, 'Za vašu grupu', 'For your group')}</p>
-        <h2 class="h-section m-0">{tr(lang, "Ceo šefov sto samo za vas", "The whole chef's table, just for you")}</h2>
-        <p class="mt-3 mb-0 font-sans text-body-dark">{tr(lang, 'Za rođendane, godišnjice i poslovne večere šef priprema degustaciju samo za vašu grupu, u terminu koji vam odgovara.', 'For birthdays, anniversaries and business dinners, the chef prepares a tasting for your group only, on a date that suits you.')}</p>
-      </div>
-      <a href={privateHref} class="btn btn-dark" data-reveal style="--i:1">
-        {tr(lang, "Privatni Chef's Table", "Private Chef's Table")} <Icon name="chevron-right" size={11} />
-      </a>
-    </div>
-  </section>}
 </Base>
 
 

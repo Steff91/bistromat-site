@@ -146,24 +146,26 @@ const faqSchema = {
     </div>
   </section>}
 
-  <!-- Sample menu -->
-  <section aria-labelledby="primer" class="border-y border-line bg-ink-deep">
-    <div class="container-site py-24">
-      <div class="mx-auto max-w-[760px]">
-        <p class="eyebrow text-center" data-reveal>{ct.sampleMenu.label || tr(lang, 'Primer menija', 'Sample menu')}</p>
-        <h2 id="primer" class="h-section m-0 text-center" data-reveal style="--i:1">{ct.sampleMenu.title}</h2>
-        <ol class="mt-12 mb-0 list-none p-0">
+  <!-- Menu of the evening (light section, same two-column layout as the FAQ) -->
+  <section aria-labelledby="primer" class="bg-paper text-ink">
+    <div class="container-site flex flex-wrap gap-14 py-24">
+      <div class="min-w-0 flex-[1_1_280px]">
+        <p class="eyebrow !text-gold-dark" data-reveal>{ct.sampleMenu.label || tr(lang, 'Primer menija', 'Sample menu')}</p>
+        <h2 id="primer" class="h-section m-0" data-reveal style="--i:1">{ct.sampleMenu.title}</h2>
+        <p class="mt-5 mb-0 font-sans text-body-dark" data-reveal style="--i:2">{ct.sampleMenu.note || tr(lang, 'Meni se menja za svako veče. Ovo je primer jedne od prethodnih večeri.', 'The menu changes every evening. This is an example from a past one.')}</p>
+      </div>
+      <div class="min-w-0 flex-[2_1_520px]">
+        <ol class="m-0 list-none border-t border-[#BDB7AD] p-0">
           {ct.sampleMenu.courses.map((c, i) => (
-            <li class="grid grid-cols-1 gap-1 border-b border-dashed border-[#3A3A3A] py-5 sm:grid-cols-[140px_1fr]" data-reveal style={`--i:${i % 4}`}>
-              <span class="text-[14px] uppercase tracking-[0.1em] text-gold">{c.course}</span>
+            <li class="grid grid-cols-1 gap-1 border-b border-[#BDB7AD] py-5 sm:grid-cols-[120px_1fr] sm:gap-6" data-reveal style={`--i:${i % 4}`}>
+              <span class="pt-0.5 text-[14px] uppercase tracking-[0.1em] text-gold-dark">{c.course}</span>
               <span>
                 <span class="block font-medium">{c.dish}</span>
-                <span class="mt-1 block font-sans text-[15px] text-dim">{tr(lang, 'Uz', 'With')}: {c.wine}</span>
+                <span class="mt-1 block font-sans text-[15px] text-body-dark">{tr(lang, 'Uz', 'With')}: {c.wine}</span>
               </span>
             </li>
           ))}
         </ol>
-        <p class="mt-6 mb-0 text-center font-sans text-[15px] text-dim">{ct.sampleMenu.note || tr(lang, 'Meni se menja za svako veče. Ovo je primer jedne od prethodnih večeri.', 'The menu changes every evening. This is an example from a past one.')}</p>
       </div>
     </div>
   </section>

@@ -12,12 +12,19 @@ export function upcomingDates(lang: Lang = 'sr', today = new Date()) {
 }
 
 export function nextAvailable(lang: Lang = 'sr') {
-  return upcomingDates(lang).find((d) => d.seatsLeft > 0);
+  return upcomingDates(lang).find((d) => isOpen(d));
 }
 
 export function dateLabel(d: ChefTableDate, lang: Lang = 'sr') {
   return `${formatDate(d.date, lang)} · ${d.theme}${d.guest ? ` ${d.guest}` : ''}`;
 }
 
-export const seatsLeftLabel = (n: number, lang: Lang) =>
-  n <= 0 ? tr(lang, 'Popunjeno', 'Fully booked') : tr(lang, `Još ${n} mesta`, `${n} seats left`);
+/** seatsLeft: a number, 0 = fully booked, empty = open without a count shown */
+export const isOpen = (d: { seatsLeft?: number | null }) => d.seatsLeft == null || d.seatsLeft > 0;
+
+export const seatsLeftLabel = (n: number | null | undefined, lang: Lang) =>
+  n == null
+    ? tr(lang, 'Slobodna mesta', 'Seats available')
+    : n <= 0
+      ? tr(lang, 'Popunjeno', 'Fully booked')
+      : tr(lang, `Još ${n} mesta`, `${n} seats left`);
